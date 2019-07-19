@@ -1,41 +1,22 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Windows.Forms;
+using Discord;
 
 namespace DiscordHaxx
 {
     class Program
     {
-        [STAThread]
+        public static List<DiscordClient> Bots { get; private set; }
+
+
         static void Main()
         {
-            UpdateTitle();
+            Bots = new List<DiscordClient>();
 
-            OpenFileDialog dialog = new OpenFileDialog()
-            {
-                Filter = "Text file |*.txt",
-                Title = "Choose a file to load tokens from",
-                InitialDirectory = new FileInfo(Application.ExecutablePath).DirectoryName
-            };
+            foreach (var token in File.ReadAllLines("Tokens.txt"))
+                Bots.Add(new DiscordClient(token));
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                Raidbot.TokenPath = dialog.FileName;
-                Raidbot.LoadClients(File.ReadAllLines(dialog.FileName));
-            }
-
-            while (true)
-            {
-                CommandHandler.ShowActions();
-                Console.WriteLine();
-                Console.Write("Action: ");
-                CommandHandler.HandleCommand(int.Parse(Console.ReadLine()));
-            }
-        }
-
-        public static void UpdateTitle()
-        {
-            Console.Title = $"DiscordHaxx [BETA] | Bots: {Raidbot.Clients.Count}";
+            Server.Start();
         }
     }
 }

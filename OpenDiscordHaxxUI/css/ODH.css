@@ -1,0 +1,11 @@
+.odh-body {
+    background-color: rgb(36, 44, 50);
+    height: 100%;
+}
+
+.odh-nav-link {
+    height: 38px;
+    font-size: 24px;
+    margin-left: -20px;
+    letter-spacing: 1px;
+}

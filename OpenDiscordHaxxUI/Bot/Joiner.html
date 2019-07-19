@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<script>
+    function Submit() {
+        SendData(JSON.stringify({ "op": "join", "invite": document.getElementById("invite").value }));
+    }
+</script>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial scale=1.0">
+    <link rel="Icon" type="image/x-icon" href="../Images/AnarchyCircular.png">
+    <title>Joiner - OpenDH</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Robot">
+    <link href="../css/ODH.css" rel="stylesheet">
+    <link href="../bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="../js/Bot.js"></script>
+</head>
+
+<nav class="navbar navbar-expand-sm" style="height: 58px; font-family: Roboto Light; background-color: rgb(46, 52, 58)">
+    <a href="../Index.html"> <img src="../Images/AnarchyCircular.png" width="40px" height="50px" class="navbar-brand" style="margin-top: -1px; margin-left: -8px"> </a>
+    <ul class="navbar-item">
+        <a class="nav-link odh-nav-link" href="Joiner.html" style="color: rgb(200, 200, 200)">Joiner</a>
+    </ul>
+    <ul class="navbar-item">
+        <a class="nav-link odh-nav-link" href="Leaver.html" style="color: rgb(200, 200, 200)">Leaver</a>
+    </ul>
+    <ul class="navbar-item">
+        <a class="nav-link odh-nav-link" href="Flooder.html" style="color: rgb(200, 200, 200)">Flooder</a>
+    </ul>
+    <ul class="navbar-item">
+        <a class="nav-link odh-nav-link" href="Friender.html" style="color: rgb(200, 200, 200)">Friender</a>
+    </ul>
+</nav>
+
+<body class="odh-body">
+    <center>
+        <p style="padding-top: 4%; font-size: 40px; font-family: Roboto Light; color: rgb(155, 155, 155)">Joiner</p>
+
+        <input class="form-control bg-dark border-dark" style="width: 340px; font-family: Roboto Light; color: rgb(190, 190, 190)" placeholder="Invite" id="invite">
+        <br><br>
+
+        <button class="btn btn-dark" style="letter-spacing: 0,5px; width: 240px;" onclick="Submit()">Start</button>
+    </center>
+</body>
+</html>

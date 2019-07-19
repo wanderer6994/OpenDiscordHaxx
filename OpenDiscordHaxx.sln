@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29025.244
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenDiscordHaxx", "OpenDiscordHaxx\OpenDiscordHaxx.csproj", "{C1500C78-0AAF-4879-8781-5EA88B198433}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenDiscordHaxx", "OpenDiscordHaxx\OpenDiscordHaxx.csproj", "{3CD86024-869C-41C1-A18C-A33346C26CD5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anarchy", "..\Anarchy\Anarchy\Anarchy.csproj", "{18C13E5D-D4D2-4310-993C-2F2644DB8D54}"
 EndProject
@@ -13,10 +13,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C1500C78-0AAF-4879-8781-5EA88B198433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1500C78-0AAF-4879-8781-5EA88B198433}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1500C78-0AAF-4879-8781-5EA88B198433}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1500C78-0AAF-4879-8781-5EA88B198433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD86024-869C-41C1-A18C-A33346C26CD5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD86024-869C-41C1-A18C-A33346C26CD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD86024-869C-41C1-A18C-A33346C26CD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD86024-869C-41C1-A18C-A33346C26CD5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{18C13E5D-D4D2-4310-993C-2F2644DB8D54}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{18C13E5D-D4D2-4310-993C-2F2644DB8D54}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18C13E5D-D4D2-4310-993C-2F2644DB8D54}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C1500C78-0AAF-4879-8781-5EA88B198433}</ProjectGuid>
+    <ProjectGuid>{3CD86024-869C-41C1-A18C-A33346C26CD5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>DiscordHaxx</RootNamespace>
     <AssemblyName>OpenDiscordHaxx</AssemblyName>
@@ -32,14 +32,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,14 +49,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Discord\Checker.cs" />
-    <Compile Include="Discord\Raidbot.cs" />
-    <Compile Include="CommandHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Raidbot\Flooder.cs" />
+    <Compile Include="Raidbot\Friender.cs" />
+    <Compile Include="Raidbot\IBot.cs" />
+    <Compile Include="Raidbot\Joiner.cs" />
+    <Compile Include="Raidbot\Leaver.cs" />
+    <Compile Include="Server\CommandHandler.cs" />
+    <Compile Include="Server\Requests\FloodRequest.cs" />
+    <Compile Include="Server\Requests\FriendRequest.cs" />
+    <Compile Include="Server\Requests\JoinRequest.cs" />
+    <Compile Include="Server\Requests\LeaveRequest.cs" />
+    <Compile Include="Server\Requests\Opcode.cs" />
+    <Compile Include="Server\Requests\Request.cs" />
+    <Compile Include="Server\Server.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="app.manifest" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Anarchy\Anarchy\Anarchy.csproj">
