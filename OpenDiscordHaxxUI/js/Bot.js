@@ -10,20 +10,16 @@ function SendData(jsonData) {
 
 
 function Callback(http) {
-    const successAlert = `
-    <div class="alert alert-success" style="position: fixed; bottom: 0; margin-left: 14px;">
-    <strong>Success!</strong> bot should be starting shortly
-    </div>`;
-    const failedAlert = `
-    <div class="alert alert-danger" style="position: fixed; bottom: 0; margin-left: 14px;">
-    <strong>Failed</strong> an error occured
-    </div>`;
-    
     const alert = document.createElement('alert');
-    if (http.status == 200)
-        alert.innerHTML = successAlert;
-    else
-        alert.innerHTML = failedAlert;
+    alert.style = 'position: fixed; bottom: 0; margin-left: 14px;';
+    if (http.status == 200) {
+        alert.classList = 'alert alert-success';
+        alert.innerHTML = '<strong>Success!</strong> bot should be starting shortly';
+    }
+    else {
+        alert.classList = 'alert alert-danger';
+        alert.innerHTML = "<strong>Failed</strong> " + http.responseText;
+    }
     
     document.body.appendChild(alert);
 

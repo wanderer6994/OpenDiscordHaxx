@@ -14,6 +14,7 @@ namespace DiscordHaxx
 
         public Joiner(JoinRequest request)
         {
+            
             try
             {
                 _invite = new DiscordClient().GetInvite(request.Invite.Split('/').Last());
@@ -21,11 +22,17 @@ namespace DiscordHaxx
             catch (DiscordHttpException e)
             {
                 if (e.Code == DiscordError.InvalidInvite || e.Code == DiscordError.UnknownInvite)
+                {
                     Console.WriteLine($"[FATAL] {request.Invite} is invalid");
+                    
+                    throw new CheckException("Invalid invite");
+                }
                 else
+                {
                     Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
 
-                throw;
+                    throw new CheckException($"Code: {e.Code}");
+                }
             }
         }
 

@@ -9,22 +9,12 @@ namespace DiscordHaxx
 {
     public class Friender : IBot
     {
-        private string _username;
-        private uint _discriminator;
+        private FriendRequest _recipient;
 
 
         public Friender(FriendRequest request)
         {
-            string[] credentials = request.User.Split('#');
-
-            if (credentials.Length < 2 || !uint.TryParse(credentials[1], out _discriminator))
-            {
-                Console.WriteLine($"[FATAL] Invalid user format");
-
-                throw new InvalidOperationException();
-            }
-
-            _username = credentials[0];
+            _recipient = request;
         }
 
 
@@ -36,7 +26,7 @@ namespace DiscordHaxx
                 {
                     try
                     {
-                        bot.SendFriendRequest(_username, _discriminator);
+                        bot.SendFriendRequest(_recipient.Username, _recipient.Discriminator);
 
                         break;
                     }

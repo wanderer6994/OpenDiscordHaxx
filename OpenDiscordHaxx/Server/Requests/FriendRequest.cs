@@ -4,7 +4,10 @@ namespace DiscordHaxx
 {
     public class FriendRequest : Request
     {
-        [JsonProperty("user")]
-        public string User { get; private set; }
+        [JsonProperty("username")]
+        public string Username { get; private set; }
+
+        [JsonProperty("discriminator")]
+        public uint Discriminator { get; private set; }
     }
 }
