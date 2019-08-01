@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
@@ -7,28 +7,40 @@
     <link rel="Icon" type="image/x-icon" href="Images/AnarchyCircular.png">
     <title>Dashboard - OpenDH</title>
 
-    <link href="https://fonts.googleapis.com/css?family=Robot">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link href="css/ODH.css" rel="stylesheet">
-    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
 </head>
 
-<nav class="navbar navbar-expand-sm" style="height: 58px; font-family: Roboto Light; background-color: rgb(46, 52, 58)">
-    <a href="Index.html"> <img src="Images/AnarchyCircular.png" width="40px" height="50px" class="navbar-brand" style="margin-top: -1px; margin-left: -8px"> </a>
-    <ul class="navbar-item">
-        <a class="nav-link odh-nav-link" href="Bot/Joiner.html" style="color: rgb(200, 200, 200)">Joiner</a>
-    </ul>
-    <ul class="navbar-item">
-        <a class="nav-link odh-nav-link" href="Bot/Leaver.html" style="color: rgb(200, 200, 200)">Leaver</a>
-    </ul>
-    <ul class="navbar-item">
-        <a class="nav-link odh-nav-link" href="Bot/Flooder.html" style="color: rgb(200, 200, 200)">Flooder</a>
-    </ul>
-    <ul class="navbar-item">
-        <a class="nav-link odh-nav-link" href="Bot/Friender.html" style="color: rgb(200, 200, 200)">Friender</a>
-    </ul>
-</nav>
+<nav class="navbar navbar-inverse" style="font-family: Roboto; font-weight: 300; border-radius: 0">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <a class="navbar-brand" style="letter-spacing: 1px" href="#">DiscordHaxx</a>
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="dropdown active">
+              <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="Index.html">Dashboard</a></li>
+                <li><a href="#">Bots</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle active" data-toggle="dropdown">Start attack<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="Bot/Joiner.html">Joiner</a></li>
+                    <li><a href="Bot/Leaver.html">Leaver</a></li>
+                    <li><a href="Bot/Flooder.html">Flooder</a></li>
+                    <li><a href="Bot/Friender.html">Friender</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav> 
 
-<body class="odh-body">
-    <p style="padding: 20%; font-size: 40px; font-family: Roboto Light; color: rgb(155, 155, 155)" align="center">Nothing here yet</p>
+<body class="odh-body" style="background-color: rgb(54,57,63)">
 </body>
 </html>

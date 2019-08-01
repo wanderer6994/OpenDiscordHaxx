@@ -17,7 +17,7 @@ namespace DiscordHaxx
             
             try
             {
-                _invite = new DiscordClient().GetInvite(request.Invite.Split('/').Last());
+                //_invite = new DiscordClient().GetInvite(request.Invite.Split('/').Last());
             }
             catch (DiscordHttpException e)
             {

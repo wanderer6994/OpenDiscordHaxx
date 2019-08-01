@@ -14,7 +14,17 @@ namespace DiscordHaxx
             Bots = new List<DiscordClient>();
 
             foreach (var token in File.ReadAllLines("Tokens.txt"))
-                Bots.Add(new DiscordClient(token));
+            {
+                try
+                {
+                    Bots.Add(new DiscordClient(token));
+                }
+                catch //lazy 
+                {
+                }
+            }
+
+            System.Console.WriteLine($"{Bots.Count} added");
 
             Server.Start();
         }
