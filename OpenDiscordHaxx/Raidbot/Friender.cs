@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 
@@ -9,7 +6,7 @@ namespace DiscordHaxx
 {
     public class Friender : IBot
     {
-        private FriendRequest _recipient;
+        private readonly FriendRequest _recipient;
 
 
         public Friender(FriendRequest request)
@@ -20,7 +17,7 @@ namespace DiscordHaxx
 
         public void Start()
         {
-            Parallel.ForEach(Program.Bots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+            Parallel.ForEach(Server.Bots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
                 while (true)
                 {

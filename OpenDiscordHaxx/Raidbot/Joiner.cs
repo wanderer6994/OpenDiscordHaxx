@@ -39,7 +39,7 @@ namespace DiscordHaxx
 
         public void Start()
         {
-            Parallel.ForEach(Program.Bots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+            Parallel.ForEach(Server.Bots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
                 while (true)
                 {

@@ -1,32 +1,23 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using Discord;
 
 namespace DiscordHaxx
 {
     class Program
     {
-        public static List<DiscordClient> Bots { get; private set; }
-
-
         static void Main()
         {
-            Bots = new List<DiscordClient>();
+            Server.ServerStatus = "Loading bots";
+            SocketServer.Start();
+            Server.LoadAccounts();
 
-            foreach (var token in File.ReadAllLines("Tokens.txt"))
-            {
-                try
-                {
-                    Bots.Add(new DiscordClient(token));
-                }
-                catch //lazy 
-                {
-                }
-            }
+            Server.ServerStatus = "Online";
 
-            System.Console.WriteLine($"{Bots.Count} added");
+            //HttpServer.Start();
 
-            Server.Start();
+            Thread.Sleep(-1);
         }
     }
 }

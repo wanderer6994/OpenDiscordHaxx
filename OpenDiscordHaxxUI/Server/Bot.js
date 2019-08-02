@@ -1,24 +1,29 @@
-function SendData(jsonData) {
-    const http = new XMLHttpRequest();
-    http.onreadystatechange = function() {
-        if (http.readyState == 4)
-            Callback(http);
-    }
-    http.open("POST", "http://localhost", true);
-    http.send(jsonData);
+let socket;
+
+window.onload = function() {
+    socket = new WebSocket("ws://localhost/bot");
+    socket.onmessage = function(args) {
+        
+        const payload = JSON.parse(args.data);
+
+        ShowResult(payload);
+    };
+};
+
+function StartBot(data) {
+    socket.send(JSON.stringify(data));
 }
 
-
-function Callback(http) {
+function ShowResult(data) {
     const alert = document.createElement('alert');
     alert.style = 'position: fixed; bottom: 0; margin-left: 14px;';
-    if (http.status == 200) {
+    if (data.succeeded) {
         alert.classList = 'alert alert-success';
         alert.innerHTML = '<strong>Success!</strong> bot should be starting shortly';
     }
     else {
         alert.classList = 'alert alert-danger';
-        alert.innerHTML = "<strong>Failed</strong> " + http.responseText;
+        alert.innerHTML = "<strong>Failed</strong> " + data.message;
     }
     
     document.body.appendChild(alert);

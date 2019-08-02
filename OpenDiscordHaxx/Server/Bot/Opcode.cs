@@ -1,6 +1,6 @@
 ﻿namespace DiscordHaxx
 {
-    public enum Opcode
+    public enum BotOpcode
     {
         Join,
         Leave,

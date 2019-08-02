@@ -2,7 +2,7 @@
 
 namespace DiscordHaxx
 {
-    public class LeaveRequest : Request
+    public class LeaveRequest : BotRequest
     {
         [JsonProperty("guild_id")]
         public ulong GuildId { get; private set; }

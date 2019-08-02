@@ -20,7 +20,7 @@ namespace DiscordHaxx
         {
             while (true)
             {
-                List<DiscordClient> validBots = Program.Bots;
+                List<DiscordClient> validBots = Server.Bots;
                 List<DiscordClient> nextBots = validBots;
 
                 Parallel.ForEach(validBots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>

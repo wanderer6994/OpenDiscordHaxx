@@ -3,16 +3,16 @@ using Newtonsoft.Json;
 
 namespace DiscordHaxx
 {
-    public class Request
+    public class BotRequest
     {
         [JsonProperty("op")]
 #pragma warning disable CS0649
         private readonly string _op;
 #pragma warning restore CS0649
 
-        public Opcode Opcode
+        public BotOpcode Opcode
         {
-            get { return (Opcode)Enum.Parse(typeof(Opcode), _op, true); }
+            get { return (BotOpcode)Enum.Parse(typeof(BotOpcode), _op, true); }
         }
     }
 }

@@ -1,21 +1,25 @@
-﻿using System.Net;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using WebSocketSharp.Server;
 
 namespace DiscordHaxx
 {
-    public static class Server
+    public static class SocketServer
     {
+        private static WebSocketServer _server;
+        public static bool Running { get; private set; }
+
         public static void Start()
         {
-            HttpListener listener = new HttpListener();
-            listener.Prefixes.Add("http://localhost/");
-            listener.Start();
-            while (true)
-            {
-                var context = listener.GetContext();
-                
-                Task.Run(() => CommandHandler.Handle(context));
-            }
+            _server = new WebSocketServer("ws://localhost");
+            _server.AddWebSocketService<Dashboard>("/dashboard");
+            _server.AddWebSocketService<Bot>("/bot");
+            _server.Start();
+            Running = true;
+        }
+
+        public static void Send<T>(DashboardRequest<T> request) where T : new()
+        {
+            _server.WebSocketServices["/dashboard"].Sessions.Broadcast(JsonConvert.SerializeObject(request));
         }
     }
 }

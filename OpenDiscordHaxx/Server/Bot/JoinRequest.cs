@@ -2,7 +2,7 @@
 
 namespace DiscordHaxx
 {
-    public class JoinRequest : Request
+    public class JoinRequest : BotRequest
     {
         [JsonProperty("invite")]
         public string Invite { get; private set; }
