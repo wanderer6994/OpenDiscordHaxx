@@ -61,6 +61,7 @@
     <Compile Include="Raidbot\IBot.cs" />
     <Compile Include="Raidbot\Joiner.cs" />
     <Compile Include="Raidbot\Leaver.cs" />
+    <Compile Include="Server\Bot\BotList.cs" />
     <Compile Include="Server\Bot\CommandHandler.cs" />
     <Compile Include="Server\Bot\FloodRequest.cs" />
     <Compile Include="Server\Bot\FriendRequest.cs" />

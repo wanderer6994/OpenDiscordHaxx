@@ -13,6 +13,7 @@ namespace DiscordHaxx
             _server = new WebSocketServer("ws://localhost");
             _server.AddWebSocketService<Dashboard>("/dashboard");
             _server.AddWebSocketService<Bot>("/bot");
+            _server.AddWebSocketService<BotList>("/bot/list");
             _server.Start();
             Running = true;
         }

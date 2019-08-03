@@ -17,11 +17,6 @@ namespace DiscordHaxx
 
     public class Bot : WebSocketBehavior
     {
-        protected override void OnOpen()
-        {
-            base.OnOpen();
-        }
-
         protected override void OnMessage(MessageEventArgs e)
         {
             BotSuccessStatus status = new BotSuccessStatus();
