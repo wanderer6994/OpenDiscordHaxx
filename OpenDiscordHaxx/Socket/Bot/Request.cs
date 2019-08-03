@@ -10,9 +10,9 @@ namespace DiscordHaxx
         private readonly string _op;
 #pragma warning restore CS0649
 
-        public BotOpcode Opcode
+        public RaidOpcode Opcode
         {
-            get { return (BotOpcode)Enum.Parse(typeof(BotOpcode), _op, true); }
+            get { return (RaidOpcode)Enum.Parse(typeof(RaidOpcode), _op, true); }
         }
     }
 }

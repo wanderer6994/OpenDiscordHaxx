@@ -13,9 +13,7 @@ namespace DiscordHaxx
             SocketServer.Start();
             Server.LoadAccounts();
 
-            Server.ServerStatus = "Online";
-
-            //HttpServer.Start();
+            Server.ServerStatus = "Ready";
 
             Thread.Sleep(-1);
         }

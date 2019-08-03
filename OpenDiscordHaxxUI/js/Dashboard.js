@@ -1,6 +1,11 @@
 let socket;
 
 window.onload = function() {
+    OpenSocket();
+};
+
+
+function OpenSocket() {
     socket = new WebSocket("ws://localhost/dashboard");
     socket.onmessage = function(args) {
         
@@ -10,23 +15,28 @@ window.onload = function() {
             case 0: //server status updated (this does not account for the server dying)
                 StatusUpdate(payload.data);
                 break;
+            case 1: //brief information / overlook
+                OverlookUpdate(payload.data);
+                break;
         }
     };
     //this probably means the server is down or we don't have a connection to the internet
     socket.onerror = function(error) {
-        StatusUpdate({ status: "Unreachable" })
+        StatusUpdate({ status: "Unreachable" });
+
+        setInterval(OpenSocket, 6000);
     };
-};
+}
 
 
-//sets the serverStatus <p>'s text to the new status, as well as changing it's color depending on the status
+//sets serverStatus's text to the new status, as well as changing it's color depending on the status
 function StatusUpdate(data) {
     const statusLabel = document.getElementById('serverStatus');
 
     statusLabel.innerText = data.status.toUpperCase();
 
     switch (statusLabel.innerText) {
-        case "ONLINE":
+        case "READY":
             statusLabel.style.color = "rgb(50,205,50)";
             break;
         case "LOADING BOTS":
@@ -34,8 +44,15 @@ function StatusUpdate(data) {
             break;
         case "UNREACHABLE":
             statusLabel.style.color = "rgb(130,0,0)";
+            OverlookUpdate({ accounts: 0, attacks: 0 });
             break;
         default:
             statusLabel.style.color = "rgb(170,192,195)";
     }
+}
+
+
+function OverlookUpdate(data) {
+    document.getElementById('accountAmount').innerHTML = 'Loaded accounts: <span style="color: rgb(230,252,255)">' + data.accounts + '</span>';
+    document.getElementById('attackAmount').innerHTML = 'Ongoing attacks: <span style="color: rgb(230,252,255)">' + data.attacks + '</span>';
 }

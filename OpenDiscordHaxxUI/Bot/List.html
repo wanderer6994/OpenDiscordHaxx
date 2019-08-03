@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 
+<style>
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+  background-color: rgb(62,66,73);
+}
+</style>
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
     <meta charset="utf-8" />
@@ -41,19 +47,17 @@
 </nav> 
 
 <body style="background-color: rgb(54,57,63); height: 100%">
-    <div class="form-control" style="background-color: rgb(66,70,77); border-color: rgb(47,49,54); margin: auto; width:50%; height: 76%">
-        <table class="table" style="color: white;">
+
+    <p id="unreachable" style="color: rgb(230,252,255); font-family: Roboto; font-weight: 100; font-size: 50px; display:none; text-align: center;">The server is unreachable,<br>try again later.</p>
+
+    <div id="bot-list-form" class="form-control" style="background-color: rgb(66,70,77); border-color: rgb(47,49,54); margin: auto; width:70%; height: auto; margin-bottom: 20px">
+        <table class="table table-hover" style="color: rgb(230,252,255);">
             <thead>
                 <th>@</th>
                 <th>ID</th>
                 <th>Verification</th>
             </thead>
-            <tbody>
-                <tr class="table-dark">
-                    <td>Nigger#0420</td>
-                    <td>1337</td>
-                    <td>Phone verified</td>
-                </tr>
+            <tbody id="bot-list">
             </tbody>
         </table>
     </div>

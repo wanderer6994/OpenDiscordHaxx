@@ -9,7 +9,7 @@ namespace DiscordHaxx
 
 
         [JsonProperty("data")]
-        public T Data { get; private set; }
+        public T Data { get; set; }
 
 
         public DashboardRequest(DashboardOpcode op)

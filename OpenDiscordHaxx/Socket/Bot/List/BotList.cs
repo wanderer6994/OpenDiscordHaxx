@@ -4,20 +4,6 @@ using WebSocketSharp.Server;
 
 namespace DiscordHaxx
 {
-    class BotListItem
-    {
-        [JsonProperty("at")]
-        public string At { get; set; }
-
-
-        [JsonProperty("id")]
-        public ulong Id { get; set; }
-
-
-        [JsonProperty("verification")]
-        public string Verification { get; set; }
-    }
-
     public class BotList : WebSocketBehavior
     {
         protected override void OnOpen()
@@ -32,7 +18,7 @@ namespace DiscordHaxx
                 else if (client.User.EmailVerified)
                     bot.Verification = "Email verified";
                 else
-                    bot.Verification = "None";
+                    bot.Verification = "None or locked";
 
                 bots.Add(bot);
             }

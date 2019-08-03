@@ -75,6 +75,8 @@ namespace DiscordHaxx
                     }
                 }
             });
+
+            Server.OngoingAttacks--;
         }
     }
 }

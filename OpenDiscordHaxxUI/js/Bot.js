@@ -19,7 +19,7 @@ function ShowResult(data) {
     alert.style = 'position: fixed; bottom: 0; margin-left: 14px;';
     if (data.succeeded) {
         alert.classList = 'alert alert-success';
-        alert.innerHTML = '<strong>Success!</strong> bot should be starting shortly';
+        alert.innerHTML = '<strong>Success!</strong> ' + data.message;
     }
     else {
         alert.classList = 'alert alert-danger';
