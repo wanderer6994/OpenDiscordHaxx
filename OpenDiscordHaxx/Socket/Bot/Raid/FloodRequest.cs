@@ -10,16 +10,5 @@ namespace DiscordHaxx
 
         [JsonProperty("message")]
         public string Message { get; private set; }
-
-
-        [JsonProperty("tts")]
-#pragma warning disable CS0649
-        private string _tts;
-#pragma warning restore CS0649
-
-        public bool Tts
-        {
-            get { return _tts == "on"; }
-        }
     }
 }

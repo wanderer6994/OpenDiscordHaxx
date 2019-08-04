@@ -29,7 +29,7 @@ namespace DiscordHaxx
                     {
                         try
                         {
-                            bot.SendMessage(_request.ChannelId, _request.Message, _request.Tts);
+                            bot.SendMessage(_request.ChannelId, _request.Message);
 
                             break;
                         }
