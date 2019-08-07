@@ -2,7 +2,7 @@
 
 namespace DiscordHaxx
 {
-    public class FloodRequest : BotRequest
+    public class FloodRequest : RaidRequest
     {
         [JsonProperty("channel_id")]
         public ulong ChannelId { get; private set; }

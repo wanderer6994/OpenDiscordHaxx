@@ -1,18 +1,46 @@
+.dark-container {
+    border-color: rgb(47,49,54) !important;
+    background-color: rgb(66,70,77) !important;
+}
+
+
+.odh-dropdown-menu {
+    background-color: rgb(34,34,34) !important;
+}
+
+
+.odh-dropdown {
+    color: rgb(190,192,195) !important;
+    font-family: 'Roboto';
+}
+
+
+.odh-dropdown:hover {
+    background-color: rgb(38,38,38) !important;
+}
+
+
 .odh-body {
-    background-color: rgb(36, 44, 50);
+    background-color: rgb(54,57,63); 
     height: 100%;
 }
 
-.odh-nav-link {
-    height: 38px;
-    font-size: 24px;
-    margin-left: -20px;
+
+.odh-title {
+    color: rgb(230,252,255) !important;
+    font-family: 'Roboto';
+    font-weight: 100;
+    text-align: center;
 }
+
 
 .odh-btn {
     background-color: rgb(41,43,47) !important; 
     border-color: rgb(36,40,43) !important;
     color: rgb(230,252,255) !important;
+    letter-spacing: 0.5px;
+    font-family: 'Roboto';
+    font-weight: 100;
 }
 
 
@@ -20,4 +48,5 @@
     background-color: rgb(47,49,54) !important; 
     border-color: rgb(40,44,47) !important;
     color: rgb(230,252,255) !important;
+    font-family: 'Roboto';
 }

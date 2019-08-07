@@ -26,7 +26,7 @@ namespace DiscordHaxx
             {
                 IBot bot = null;
 
-                switch (JsonConvert.DeserializeObject<BotRequest>(e.Data).Opcode)
+                switch (JsonConvert.DeserializeObject<RaidRequest>(e.Data).Opcode)
                 {
                     case RaidOpcode.Join:
                         bot = new Joiner(JsonConvert.DeserializeObject<JoinRequest>(e.Data));

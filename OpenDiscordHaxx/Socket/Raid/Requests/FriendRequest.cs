@@ -2,7 +2,7 @@
 
 namespace DiscordHaxx
 {
-    public class FriendRequest : BotRequest
+    public class FriendRequest : RaidRequest
     {
         [JsonProperty("username")]
         public string Username { get; private set; }

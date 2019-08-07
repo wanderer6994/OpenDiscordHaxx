@@ -1,5 +1,11 @@
 let socket;
 
+const DashboardOpcode = {
+    StatusUpdate: 0,
+    OverlookUpdate: 1
+}
+
+
 window.onload = function() {
     OpenSocket();
 };
@@ -12,10 +18,10 @@ function OpenSocket() {
         const payload = JSON.parse(args.data);
 
         switch (payload.opcode) {
-            case 0: //server status updated (this does not account for the server dying)
+            case DashboardOpcode.StatusUpdate: //this does not account for the server dying
                 StatusUpdate(payload.data);
                 break;
-            case 1: //brief information / overlook
+            case DashboardOpcode.OverlookUpdate:
                 OverlookUpdate(payload.data);
                 break;
         }

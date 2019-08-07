@@ -4,53 +4,105 @@
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: rgb(62,66,73);
 }
+
+
 </style>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
+    <!-- Other shit -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial scale=1.0">
-    <link rel="Icon" type="image/x-icon" href="../Images/AnarchyCircular.png">
+    <link rel="Icon" type="image/x-icon" href="../Images/Anarchy.png">
     <title>Bots - OpenDH</title>
 
-    <script src="../js/BotList.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/ODH.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+
+    <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
+    <script src="../js/ContextMenu.js"></script>
+    <script src="../js/Toast.js"></script>
+    <script src="../js/BotList.js"></script>
 </head>
 
-<nav class="navbar navbar-inverse" style="border-radius: 0">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <a class="navbar-brand" style="font-family: Roboto;" href="../Dashboard.html">DiscordHaxx</a>
-          </div>
-          <ul class="nav navbar-nav">
-            <li class="dropdown active">
-              <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
-              <ul class="dropdown-menu">
-                <li><a href="../Dashboard.html">Dashboard</a></li>
-                <li><a href="List.html">Bots</a></li>
-              </ul>
-            </li>
-            <li class="dropdown">
-                <a class="dropdown-toggle active" data-toggle="dropdown">Start attack<span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="Joiner.html">Joiner</a></li>
-                    <li><a href="Leaver.html">Leaver</a></li>
-                    <li><a href="Flooder.html">Flooder</a></li>
-                    <li><a href="Friender.html">Friender</a></li>
-                </ul>
-            </li>
-        </ul>
+
+<nav class="navbar navbar-inverse" style="border: none">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" style="font-family: Roboto;" href="../Dashboard.html">DiscordHaxx</a>
     </div>
+    <ul class="nav navbar-nav">
+      <li class="dropdown active">
+        <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
+        <ul class="dropdown-menu odh-dropdown-menu">
+          <li><a href="../Dashboard.html" class="odh-dropdown">Dashboard</a></li>
+          <li><a href="List.html" class="odh-dropdown">Bots</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">Start attack<span class="caret"></span></a>
+          <ul class="dropdown-menu odh-dropdown-menu">
+              <li><a href="Joiner.html" class="odh-dropdown">Joiner</a></li>
+              <li><a href="Leaver.html" class="odh-dropdown">Leaver</a></li>
+              <li><a href="Flooder.html" class="odh-dropdown">Flooder</a></li>
+              <li><a href="Friender.html" class="odh-dropdown">Friender</a></li>
+          </ul>
+      </li>
+  </ul>
+</div>
 </nav> 
 
-<body style="background-color: rgb(54,57,63); height: 100%">
+<body class="odh-body">
+    <!-- Bot list context menu -->
+    <ul id="bot-list-context-menu" class="dropdown-menu odh-dropdown-menu" role="menu" style="display:none">
+        <li><a href="#" class="odh-dropdown">Modify</a></li>
+        <li><a href="#" class="odh-dropdown">Get token</a></li>
+        <li><a href="#" class="odh-dropdown">Remove from list</a></li>
+    </ul>
 
-    <p id="unreachable" style="color: rgb(230,252,255); font-family: Roboto; font-weight: 100; font-size: 50px; display:none; text-align: center;">The server is unreachable,<br>try again later.</p>
+    <!-- Account modification popup -->
+    <div id="modify-bot-modal" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content dark-container" style="color: rgb(230,252,255)">
+                <div class="modal-header">
+                <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <h3 id="modify-title" class="modal-title">Modify account</h3>
+                </div>
+                <div class="modal-body">
+                  <p>yeah no there's nothing here yet</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <div id="bot-list-form" class="form-control" style="background-color: rgb(66,70,77); border-color: rgb(47,49,54); margin: auto; width:70%; height: auto; margin-bottom: 20px">
+
+    <!-- Account token popup -->
+    <div id="bot-token-modal" class="modal fade" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content dark-container" style="color: rgb(230,252,255)">
+                <div class="modal-body">
+                  <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                  <h3 id="bot-token-title" class="modal-title">Token for account</h3>
+                  
+                  <p id="bot-token" style="margin-top: 12px"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Displays that the server is unreachable -->
+    <p id="unreachable" class="odh-title" style="font-size: 50px; display:none; text-align: center;">The server is unreachable,<br>try again later.</p>
+
+
+    <!-- Bot list -->
+    <div id="bot-list-container" class="form-control dark-container" style="background-color: rgb(66,70,77); border-color: rgb(47,49,54); margin: auto; width:70%; height: auto; margin-bottom: 20px">
         <table class="table table-hover" style="color: rgb(230,252,255);">
             <thead>
                 <th>@</th>

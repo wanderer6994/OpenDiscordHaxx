@@ -1,29 +1,13 @@
-let socket;
-
-window.onload = function() {
-    socket = new WebSocket("ws://localhost/bot");
-    socket.onmessage = function(args) {
-        
-        const payload = JSON.parse(args.data);
-
-        ShowResult(payload);
-    };
-};
-
-function StartBot(data) {
-    socket.send(JSON.stringify(data));
-}
-
-function ShowResult(data) {
+function ShowToast(success, message) {
     const alert = document.createElement('alert');
     alert.style = 'position: fixed; bottom: 0; margin-left: 14px;';
-    if (data.succeeded) {
+    if (success) {
         alert.classList = 'alert alert-success';
-        alert.innerHTML = '<strong>Success!</strong> ' + data.message;
+        alert.innerHTML = '<strong>Success!</strong> ' + message;
     }
     else {
         alert.classList = 'alert alert-danger';
-        alert.innerHTML = "<strong>Failed</strong> " + data.message;
+        alert.innerHTML = "<strong>Failed</strong> " + message;
     }
     
     document.body.appendChild(alert);

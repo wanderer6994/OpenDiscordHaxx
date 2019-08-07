@@ -1,18 +1,14 @@
 .dashboard-container {
-    border-color: rgb(47,49,54) !important;
-    background-color: rgb(66,70,77) !important; 
     margin: 19px;
 }
 
 .dashboard-title {
-    color: rgb(230,252,255) !important; 
-    text-align: center; 
     margin: 5px;
-    font-family: Roboto; 
+    font-weight: 300;
     font-size: 20px;
 }
 
 .dashboard-content {
-    margin:auto;
+    margin: auto;
     width: 50%;
 }

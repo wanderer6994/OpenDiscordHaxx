@@ -9,7 +9,7 @@ namespace DiscordHaxx
 
 
         [JsonProperty("id")]
-        public ulong Id { get; set; }
+        public string Id { get; set; }
 
 
         [JsonProperty("verification")]
