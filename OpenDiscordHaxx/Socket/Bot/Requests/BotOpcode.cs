@@ -3,6 +3,7 @@
     public enum BotOpcode
     {
         List,
-        Token
+        Token,
+        BotModification
     }
 }

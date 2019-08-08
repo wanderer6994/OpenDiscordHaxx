@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Threading;
-using Discord;
+﻿using System.Threading;
 
 namespace DiscordHaxx
 {

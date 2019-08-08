@@ -1,43 +1,37 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebSocketSharp;
 using WebSocketSharp.Server;
+using Discord;
 
 namespace DiscordHaxx
 {
     public class Bot : WebSocketBehavior
     {
-        protected override void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
             switch (JsonConvert.DeserializeObject<BotRequest>(e.Data).Opcode)
             {
                 case BotOpcode.List:
-                    List<BotListItem> bots = new List<BotListItem>();
+                    List<BotInfo> bots = new List<BotInfo>();
                     foreach (var client in Server.Bots)
-                    {
-                        BotListItem bot = new BotListItem() { At = client.User.ToString(), Id = client.User.Id.ToString() };
-
-                        if (client.User.TwoFactorAuth)
-                            bot.Verification = "Phone verified";
-                        else if (client.User.EmailVerified)
-                            bot.Verification = "Email verified";
-                        else
-                            bot.Verification = "None or locked";
-
-                        bots.Add(bot);
-                    }
+                        bots.Add(BotInfo.FromClient(client));
 
                     Send(JsonConvert.SerializeObject(new ListRequest(BotOpcode.List) { List = bots }));
                     break;
                 case BotOpcode.Token:
-                    TokenRequest req = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
-                    req.Token = Server.Bots.First(client => client.User.Id == ulong.Parse(req.Id)).Token;
+                    TokenRequest tokenReq = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
+                    tokenReq.Token = Server.Bots.First(c => c.User.Id == tokenReq.Id).Token;
 
-                    Send(JsonConvert.SerializeObject(req));
+                    Send(JsonConvert.SerializeObject(tokenReq));
+                    break;
+                case BotOpcode.BotModification:
+                    ModRequest modReq = JsonConvert.DeserializeObject<ModRequest>(e.Data);
+
+                    DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
+
+                    if (modClient.User.Hypesquad != modReq.Hypesquad)
+                        modClient.User.SetHypesquad(modReq.Hypesquad);
                     break;
             }
         }

@@ -7,7 +7,7 @@ window.onload = function() {
         
         const payload = JSON.parse(args.data);
 
-        ShowToast(payload.succeeded, payload.message);
+        ShowToast(payload.succeeded ? 'success' : 'danger', payload.message);
     }
 }
 

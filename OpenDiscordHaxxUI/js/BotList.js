@@ -2,7 +2,8 @@ let socket;
 
 const ListOpcode = {
     List: 0,
-    Token: 1
+    Token: 1,
+    BotModification: 2
 }
 
 
@@ -10,7 +11,7 @@ window.onload = function() {
     socket = new WebSocket("ws://localhost/bot");
 
     socket.onopen = function() {
-        socket.send(JSON.stringify({ op: 0 }));
+        SendJson({ op: 0 });
     }
 
     socket.onmessage = function(args) {
@@ -19,39 +20,7 @@ window.onload = function() {
 
         switch (payload.op) {
             case ListOpcode.List:
-                const table = document.getElementById('bot-list');
-
-                let html = '';
-            
-                for (let i = 0; i < payload.list.length; i++) {
-                    let row = '<tr id="row-' + i + '" style="border-style: hidden !important">\n';
-                    row += "<td>" + payload.list[i].at + '</td>\n';
-                    row += "<td>" + payload.list[i].id + '</td>\n';
-                    row += "<td>" + payload.list[i].verification + '</td>\n';
-                    row += "</tr>";
-            
-                    html += row;
-                }
-            
-                table.innerHTML = html;
-            
-                for (let i = 0; i < payload.list.length; i++) {
-                    $('#row-' + i).contextMenu({
-                        menuSelector: "#bot-list-context-menu",
-                        menuSelected: function (invokedOn, selectedMenu) {
-                            const info = GetRowInformation(invokedOn[0]);
-
-                            switch (selectedMenu.text()) {
-                                case 'Modify':
-                                    Modify(info);
-                                    break;
-                                case 'Get token':
-                                    GetToken(info);
-                                    break;
-                            }
-                        }
-                    });
-                }
+                OnList(payload.list);
                 break;
             case ListOpcode.Token:
                 $('#bot-token-modal').modal({ show: true });
@@ -69,14 +38,70 @@ window.onload = function() {
 }
 
 
-function Modify(info) {
-    $('#modify-bot-modal').modal({ show: true });
-
-    document.getElementById('modify-title').innerText = 'Modify ' + info.at;
+function SendJson(jsonData) {
+    socket.send(JSON.stringify(jsonData));
 }
 
 
-function GetToken(info) {
+function OnList(botList) {
+    const table = document.getElementById('bot-list');
+
+    let html = '';
+
+    for (let i = 0; i < botList.length; i++) {
+        let row = '<tr id="row-' + i + '" style="border-style: hidden !important">\n';
+        row += "<td>" + botList[i].at + '</td>\n';
+        row += "<td>" + botList[i].id + '</td>\n';
+        row += '<td> ' + botList[i].hypesquad + '</td>\n';
+        row += "<td>" + botList[i].verification + '</td>\n';
+        row += "</tr>";
+
+        html += row;
+    }
+
+    table.innerHTML = html;
+
+    table.childNodes.forEach(row => {
+        $('#' + row.id).contextMenu({
+            menuSelector: "#bot-list-context-menu",
+            menuSelected: OnContextMenuUsed
+        });
+    });
+}
+
+
+function OnContextMenuUsed(invokedOn, selectedMenu) {
+    const info = GetRowInformation(invokedOn[0]);
+
+    switch (selectedMenu.text()) {
+        case 'Modify':
+            OnModify(info);
+            break;
+        case 'Get token':
+            OnGetToken(info);
+            break;
+    }
+}
+
+
+function OnModify(info) {
+    $('#modify-bot-modal').modal({ show: true });
+
+    document.getElementById('modify-title').innerText = 'Modify ' + info.at;
+    document.getElementById('modify-id').innerText = info.id;
+    const hype = document.getElementById('modify-hype');
+    
+    for (i = 0; i < hype.options.length; i++) {
+        if (hype.options[i].innerText == info.hypesquad)
+        {
+            hype.selectedIndex = i;
+            break;
+        }
+    }
+}
+
+
+function OnGetToken(info) {
     socket.send(JSON.stringify({ op: 1, id: info.id }));
 }
 
@@ -86,5 +111,6 @@ function GetRowInformation(invoked) {
 
     return { at: row.childNodes[1].innerText, 
              id: row.childNodes[3].innerText, 
-             verification: row.childNodes[5].innerText }
+             hypesquad: row.childNodes[5].innerText,
+             verification: row.childNodes[7].innerText };
 }

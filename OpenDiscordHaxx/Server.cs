@@ -1,9 +1,6 @@
 ﻿using Discord;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -55,9 +52,9 @@ namespace DiscordHaxx
             {
                 int previousAmount = 0;
 
-                while (ServerStatus == "Loading bots")
+                while (true)
                 {
-                    if (Bots.Count > previousAmount)
+                    if (Bots.Count != previousAmount)
                     {
                         previousAmount = Bots.Count;
 

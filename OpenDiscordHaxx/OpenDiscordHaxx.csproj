@@ -66,11 +66,16 @@
     <Compile Include="Socket\Bot\Requests\BotOpcode.cs" />
     <Compile Include="Socket\Bot\Requests\BotRequest.cs" />
     <Compile Include="Socket\Bot\Requests\ListRequest.cs" />
+    <Compile Include="Socket\Bot\Requests\ModRequest.cs" />
+    <Compile Include="Socket\Checker\Requests\BotChecked.cs" />
+    <Compile Include="Socket\Checker\Checker.cs" />
+    <Compile Include="Socket\Checker\Opcode.cs" />
+    <Compile Include="Socket\Checker\Requests\Checker.cs" />
     <Compile Include="Socket\Raid\Requests\FloodRequest.cs" />
     <Compile Include="Socket\Raid\Requests\FriendRequest.cs" />
     <Compile Include="Socket\Raid\Requests\JoinRequest.cs" />
     <Compile Include="Socket\Raid\Requests\LeaveRequest.cs" />
-    <Compile Include="Socket\Bot\Requests\BotListItem.cs" />
+    <Compile Include="Socket\Bot\Requests\BotInfo.cs" />
     <Compile Include="Socket\Raid\Requests\Opcode.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Socket\Raid\RaidBot.cs" />

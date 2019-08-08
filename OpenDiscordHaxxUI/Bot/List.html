@@ -32,6 +32,15 @@
 </head>
 
 
+<script>
+    function Modify() {
+      SendJson({ op: ListOpcode.BotModification, 
+                 id: document.getElementById('modify-id').innerText, 
+                 hypesquad: document.getElementById('modify-hype').value });
+    }
+</script>
+
+
 <nav class="navbar navbar-inverse" style="border: none">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -54,6 +63,7 @@
               <li><a href="Friender.html" class="odh-dropdown">Friender</a></li>
           </ul>
       </li>
+      <li><a href="Checker.html">Checker</a></li>
   </ul>
 </div>
 </nav> 
@@ -63,19 +73,30 @@
     <ul id="bot-list-context-menu" class="dropdown-menu odh-dropdown-menu" role="menu" style="display:none">
         <li><a href="#" class="odh-dropdown">Modify</a></li>
         <li><a href="#" class="odh-dropdown">Get token</a></li>
-        <li><a href="#" class="odh-dropdown">Remove from list</a></li>
     </ul>
 
     <!-- Account modification popup -->
     <div id="modify-bot-modal" class="modal fade" role="dialog" aria-hidden="true">
+        <span id="modify-id" style="display: none"></span>
+
         <div class="modal-dialog">
-            <div class="modal-content dark-container" style="color: rgb(230,252,255)">
+            <div class="modal-content dark-container" style="height: 400px">
                 <div class="modal-header">
                 <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
-                <h3 id="modify-title" class="modal-title">Modify account</h3>
+                <h4 id="modify-title" class="modal-title">Modify account</h4>
                 </div>
                 <div class="modal-body">
-                  <p>yeah no there's nothing here yet</p>
+                  <h3>Hypesquad</h3>
+                  
+                  <select id="modify-hype" class="form-control odh-input" style="width: 300px">
+                    <option style="font-family: Roboto; font-weight: 100">None</option>
+                    <option style="font-family: Roboto; font-weight: 100">Bravery</option>
+                    <option style="font-family: Roboto; font-weight: 100">Brilliance</option>
+                    <option style="font-family: Roboto; font-weight: 100">Balance</option>
+                  </select>
+
+
+                  <button class="btn odh-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 292px; right: 15px;" onclick="Modify()">Apply</button>
                 </div>
             </div>
         </div>
@@ -85,7 +106,7 @@
     <!-- Account token popup -->
     <div id="bot-token-modal" class="modal fade" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
-            <div class="modal-content dark-container" style="color: rgb(230,252,255)">
+            <div class="modal-content dark-container">
                 <div class="modal-body">
                   <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
                   <h3 id="bot-token-title" class="modal-title">Token for account</h3>
@@ -102,12 +123,13 @@
 
 
     <!-- Bot list -->
-    <div id="bot-list-container" class="form-control dark-container" style="background-color: rgb(66,70,77); border-color: rgb(47,49,54); margin: auto; width:70%; height: auto; margin-bottom: 20px">
+    <div id="bot-list-container" class="form-control dark-container" style="margin: auto; width:70%; height: auto; margin-bottom: 20px">
         <table class="table table-hover" style="color: rgb(230,252,255);">
             <thead>
-                <th>@</th>
-                <th>ID</th>
-                <th>Verification</th>
+                <th style="font-weight: 300; width: 25%">@</th>
+                <th style="font-weight: 300; width: 25%">ID</th>
+                <th style="font-weight: 300; width: 25%">Hypesquad</th>
+                <th style="font-weight: 300; width: 25%">Verification</th>
             </thead>
             <tbody id="bot-list">
             </tbody>

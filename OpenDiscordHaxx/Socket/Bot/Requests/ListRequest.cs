@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace DiscordHaxx
@@ -14,6 +10,6 @@ namespace DiscordHaxx
 
 
         [JsonProperty("list")]
-        public List<BotListItem> List { get; set; }
+        public List<BotInfo> List { get; set; }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace DiscordHaxx
 {
@@ -15,7 +10,14 @@ namespace DiscordHaxx
 
 
         [JsonProperty("id")]
-        public string Id { get; set; }
+#pragma warning disable CS0649
+        private string _id;
+#pragma warning restore CS0649
+
+        public ulong Id
+        {
+            get { return ulong.Parse(_id); }
+        }
 
 
         [JsonProperty("token")]
