@@ -6,7 +6,6 @@ namespace DiscordHaxx
     {
         static void Main()
         {
-            Server.ServerStatus = "Loading bots";
             SocketServer.Start();
             Server.LoadAccounts();
 

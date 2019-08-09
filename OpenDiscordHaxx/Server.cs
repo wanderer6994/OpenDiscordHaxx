@@ -1,4 +1,5 @@
-﻿using Discord;
+﻿using System;
+using Discord;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -16,12 +17,9 @@ namespace DiscordHaxx
             {
                 _serverStatus = value;
 
-                if (SocketServer.Running)
-                {
-                    var req = new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate);
-                    req.Data.Status = _serverStatus;
-                    SocketServer.Broadcast(req);
-                }
+                var req = new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate);
+                req.Data.Status = _serverStatus;
+                SocketServer.Broadcast("/dashboard", req);
             }
         }
 
@@ -31,6 +29,8 @@ namespace DiscordHaxx
 
         public static void LoadAccounts()
         {
+            ServerStatus = "Loading bots";
+
             StartAccountBroadcaster();
 
             foreach (var token in File.ReadAllLines("Tokens.txt"))
@@ -39,8 +39,10 @@ namespace DiscordHaxx
                 {
                     Bots.Add(new DiscordClient(token));
                 }
-                catch //lazy 
+                catch (DiscordHttpException) { }
+                catch (Exception e)
                 {
+                    Console.WriteLine($"Unknown error when loading account:\n{e}");
                 }
             }
         }
@@ -61,7 +63,7 @@ namespace DiscordHaxx
                         var req = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
                         req.Data.Accounts = Bots.Count;
                         req.Data.Attacks = OngoingAttacks;
-                        SocketServer.Broadcast(req);
+                        SocketServer.Broadcast("/dashboard", req);
 
                         Thread.Sleep(1000);
                     }
@@ -71,7 +73,6 @@ namespace DiscordHaxx
         #endregion
 
 
-        #region attacks
         private static int _attacks;
         public static int OngoingAttacks
         {
@@ -83,9 +84,8 @@ namespace DiscordHaxx
                 var req = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
                 req.Data.Accounts = Bots.Count;
                 req.Data.Attacks = OngoingAttacks;
-                SocketServer.Broadcast(req);
+                SocketServer.Broadcast("/dashboard", req);
             }
         }
-        #endregion
     }
 }

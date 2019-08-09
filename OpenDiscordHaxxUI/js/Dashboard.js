@@ -30,7 +30,7 @@ function OpenSocket() {
     socket.onerror = function(error) {
         StatusUpdate({ status: "Unreachable" });
 
-        setInterval(OpenSocket, 6000);
+        setTimeout(OpenSocket, 4000);
     };
 }
 

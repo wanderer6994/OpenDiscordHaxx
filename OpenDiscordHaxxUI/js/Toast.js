@@ -14,7 +14,7 @@ function ShowToast(type, htmlContent) {
     
     document.body.appendChild(toast);
 
-    setTimeout(RemoveToast, 4000, toast);
+    setTimeout(RemoveToast, 3500, toast);
 }
 
 
@@ -30,5 +30,5 @@ function RemoveToast(alertElement) {
         }
 
         alertElement.style.opacity -= 0.01;
-    }, 10);
+    }, 7);
 }

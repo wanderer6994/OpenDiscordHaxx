@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 
 <style>
+/*for dark table selection thing*/
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
   background-color: rgb(62,66,73);
 }
 
-
+/*for bot-list*/
+th {
+  font-weight: 300; 
+  width: 25%;
+}
 </style>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
@@ -123,10 +128,10 @@
     <div id="bot-list-container" class="form-control dark-container" style="margin: auto; width:70%; height: auto; margin-bottom: 20px">
         <table class="table table-hover" style="color: rgb(230,252,255);">
             <thead>
-                <th style="font-weight: 300; width: 25%">@</th>
-                <th style="font-weight: 300; width: 25%">ID</th>
-                <th style="font-weight: 300; width: 25%">Hypesquad</th>
-                <th style="font-weight: 300; width: 25%">Verification</th>
+                <th>@</th>
+                <th>ID</th>
+                <th>Hypesquad</th>
+                <th>Verification</th>
             </thead>
             <tbody id="bot-list">
             </tbody>
