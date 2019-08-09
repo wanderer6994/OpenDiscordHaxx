@@ -24,13 +24,14 @@
 
 
     <!-- JS -->
-    <script src="../js/Toast.js"></script>
-    <script src="../js/RaidBot.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="../js/Toast.js"></script>
+    <script src="../js/Unreachable.js"></script>
+    <script src="../js/RaidBot.js"></script>
 </head>
 
-<nav class="navbar navbar-inverse" style="border: none">
+<nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" style="font-family: Roboto;" href="../Dashboard.html">DiscordHaxx</a>
@@ -38,18 +39,18 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
-          <ul class="dropdown-menu odh-dropdown-menu">
-            <li><a href="../Dashboard.html" class="odh-dropdown">Dashboard</a></li>
-            <li><a href="List.html" class="odh-dropdown">Bots</a></li>
+          <ul class="dropdown-menu dark-dropdown-menu">
+            <li><a href="../Dashboard.html" class="dark-dropdown">Dashboard</a></li>
+            <li><a href="List.html" class="dark-dropdown">Bots</a></li>
           </ul>
         </li>
         <li class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Start attack<span class="caret"></span></a>
-            <ul class="dropdown-menu odh-dropdown-menu">
-                <li><a href="Joiner.html" class="odh-dropdown">Joiner</a></li>
-                <li><a href="Leaver.html" class="odh-dropdown">Leaver</a></li>
-                <li><a href="Flooder.html" class="odh-dropdown">Flooder</a></li>
-                <li><a href="Friender.html" class="odh-dropdown">Friender</a></li>
+            <ul class="dropdown-menu dark-dropdown-menu">
+                <li><a href="Joiner.html" class="dark-dropdown">Joiner</a></li>
+                <li><a href="Leaver.html" class="dark-dropdown">Leaver</a></li>
+                <li><a href="Flooder.html" class="dark-dropdown">Flooder</a></li>
+                <li><a href="Friender.html" class="dark-dropdown">Friender</a></li>
             </ul>
         </li>
         <li><a href="Checker.html">Checker</a></li>
@@ -57,15 +58,15 @@
   </div>
   </nav>
 
-<body class="odh-body">
+<body class="dark-body">
     <center>
-        <h1 class="odh-title" style="margin-top: 40px;">Leaver</h1>
+        <h1 class="dark-title" style="margin-top: 40px;">Leaver</h1>
         <br>
 
-        <input type="number" min="1" class="form-control odh-input" style="width: 340px;" placeholder="Server ID" id="guild_id">
+        <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Server ID" id="guild_id">
         <br><br>
 
-        <button class="btn odh-btn" style="width: 240px;" onclick="Submit()">Start</button>
+        <button class="btn dark-btn" style="width: 240px;" onclick="Submit()">Start</button>
     </center>
 </body>
 </html>

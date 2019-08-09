@@ -5,7 +5,9 @@ namespace DiscordHaxx
     public class BotCheckedRequest : CheckerRequest
     {
         public BotCheckedRequest(CheckerOpcode op) : base(op)
-        { }
+        {
+            Progress = new CheckerProgress();
+        }
 
 
         [JsonProperty("valid")]
@@ -14,5 +16,9 @@ namespace DiscordHaxx
 
         [JsonProperty("bot")]
         public BotInfo Bot { get; set; }
+
+
+        [JsonProperty("progress")]
+        public CheckerProgress Progress { get; set; }
     }
 }

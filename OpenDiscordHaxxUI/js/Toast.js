@@ -1,3 +1,10 @@
+const ToastType = {
+    Info: 'info',
+    Success: 'success',
+    Error: 'danger'
+}
+
+
 function ShowToast(type, htmlContent) {
     const toast = document.createElement('alert');
     toast.style = 'position: fixed; bottom: 0; margin-left: 14px;';

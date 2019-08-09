@@ -28,6 +28,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script> 
     <script src="../js/ContextMenu.js"></script>
     <script src="../js/Toast.js"></script>
+    <script src="../js/Unreachable.js"></script>
     <script src="../js/BotList.js"></script>
 </head>
 
@@ -41,7 +42,7 @@
 </script>
 
 
-<nav class="navbar navbar-inverse" style="border: none">
+<nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
   <div class="container-fluid">
     <div class="navbar-header">
       <a class="navbar-brand" style="font-family: Roboto;" href="../Dashboard.html">DiscordHaxx</a>
@@ -49,18 +50,18 @@
     <ul class="nav navbar-nav">
       <li class="dropdown active">
         <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
-        <ul class="dropdown-menu odh-dropdown-menu">
-          <li><a href="../Dashboard.html" class="odh-dropdown">Dashboard</a></li>
-          <li><a href="List.html" class="odh-dropdown">Bots</a></li>
+        <ul class="dropdown-menu dark-dropdown-menu">
+          <li><a href="../Dashboard.html" class="dark-dropdown">Dashboard</a></li>
+          <li><a href="List.html" class="dark-dropdown">Bots</a></li>
         </ul>
       </li>
       <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Start attack<span class="caret"></span></a>
-          <ul class="dropdown-menu odh-dropdown-menu">
-              <li><a href="Joiner.html" class="odh-dropdown">Joiner</a></li>
-              <li><a href="Leaver.html" class="odh-dropdown">Leaver</a></li>
-              <li><a href="Flooder.html" class="odh-dropdown">Flooder</a></li>
-              <li><a href="Friender.html" class="odh-dropdown">Friender</a></li>
+          <ul class="dropdown-menu dark-dropdown-menu">
+              <li><a href="Joiner.html" class="dark-dropdown">Joiner</a></li>
+              <li><a href="Leaver.html" class="dark-dropdown">Leaver</a></li>
+              <li><a href="Flooder.html" class="dark-dropdown">Flooder</a></li>
+              <li><a href="Friender.html" class="dark-dropdown">Friender</a></li>
           </ul>
       </li>
       <li><a href="Checker.html">Checker</a></li>
@@ -68,11 +69,11 @@
 </div>
 </nav> 
 
-<body class="odh-body">
+<body class="dark-body">
     <!-- Bot list context menu -->
-    <ul id="bot-list-context-menu" class="dropdown-menu odh-dropdown-menu" role="menu" style="display:none">
-        <li><a href="#" class="odh-dropdown">Modify</a></li>
-        <li><a href="#" class="odh-dropdown">Get token</a></li>
+    <ul id="bot-list-context-menu" class="dropdown-menu dark-dropdown-menu" role="menu" style="display:none">
+        <li><a href="#" class="dark-dropdown">Modify</a></li>
+        <li><a href="#" class="dark-dropdown">Get token</a></li>
     </ul>
 
     <!-- Account modification popup -->
@@ -88,7 +89,7 @@
                 <div class="modal-body">
                   <h3>Hypesquad</h3>
                   
-                  <select id="modify-hype" class="form-control odh-input" style="width: 300px">
+                  <select id="modify-hype" class="form-control dark-input" style="width: 300px">
                     <option style="font-family: Roboto; font-weight: 100">None</option>
                     <option style="font-family: Roboto; font-weight: 100">Bravery</option>
                     <option style="font-family: Roboto; font-weight: 100">Brilliance</option>
@@ -96,7 +97,7 @@
                   </select>
 
 
-                  <button class="btn odh-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 292px; right: 15px;" onclick="Modify()">Apply</button>
+                  <button class="btn dark-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 292px; right: 15px;" onclick="Modify()">Apply</button>
                 </div>
             </div>
         </div>
@@ -116,10 +117,6 @@
             </div>
         </div>
     </div>
-
-
-    <!-- Displays that the server is unreachable -->
-    <p id="unreachable" class="odh-title" style="font-size: 50px; display:none; text-align: center;">The server is unreachable,<br>try again later.</p>
 
 
     <!-- Bot list -->

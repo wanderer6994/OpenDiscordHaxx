@@ -30,11 +30,12 @@ window.onload = function() {
                 break;
         }
     };
-
+    socket.onerror = function() { ServerUnreachable() };
+/*
     socket.onerror = function() {
         document.getElementById('unreachable').style.display = "block";
         document.getElementById('bot-list-container').style.display = "none";
-    }
+    }*/
 }
 
 

@@ -18,16 +18,25 @@ window.onload = function() {
         
         switch (payload.op) {
             case CheckerOpcode.Started:
-                ShowToast('info', 'Checker has started');
+                UpdateProgress(payload.progress);
+
+                ShowToast(ToastType.Info, 'Checker has started');
                 break;
             case CheckerOpcode.BotChecked:
+                UpdateProgress(payload.progress);
                 const results = document.getElementById('checker-results');
 
                 results.value = results.value + payload.bot.at + ' is ' + (payload.valid ? 'valid!' : 'invalid :/') + '\n';
                 break;
             case CheckerOpcode.Done:
-                ShowToast('success', 'Checker has finished');
+                ShowToast(ToastType.Success, 'Checker has finished');
                 break;
         }
     }
+    socket.onerror = function() { ServerUnreachable() };
+}
+
+
+function UpdateProgress(progress) {
+    document.getElementById('progress').innerText = 'Valid: ' + progress.valid + ' | Invalid: ' + progress.invalid + ' | ' + (progress.valid + progress.invalid) + '/' + progress.total;
 }

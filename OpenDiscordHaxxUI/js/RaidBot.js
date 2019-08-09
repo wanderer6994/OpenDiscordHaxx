@@ -7,8 +7,9 @@ window.onload = function() {
         
         const payload = JSON.parse(args.data);
 
-        ShowToast(payload.succeeded ? 'success' : 'danger', payload.message);
+        ShowToast(payload.succeeded ? ToastType.Success : ToastType.Error, payload.message);
     }
+    socket.onerror = function() { ServerUnreachable() };
 }
 
 function StartBot(data) {

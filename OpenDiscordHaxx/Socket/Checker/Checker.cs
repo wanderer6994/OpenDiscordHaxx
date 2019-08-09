@@ -12,13 +12,16 @@ namespace DiscordHaxx
         {
             Task.Run(() =>
             {
-                Send(JsonConvert.SerializeObject(new CheckerRequest(CheckerOpcode.Started)));
+                Send(JsonConvert.SerializeObject(new CheckerStartedRequest(CheckerOpcode.Started)));
 
+                int valid = 0;
+                int invalid = 0;
+                int total = Server.Bots.Count;
                 foreach (var client in new List<DiscordClient>(Server.Bots))
                 {
                     BotCheckedRequest req = new BotCheckedRequest(CheckerOpcode.BotChecked)
                     { Bot = BotInfo.FromClient(client) };
-
+                    
 
                     try
                     {
@@ -30,9 +33,19 @@ namespace DiscordHaxx
                     }
 
 
-                    Send(JsonConvert.SerializeObject(req));
+                    if (req.Valid) valid++;
+                    else invalid++;
 
-                    
+
+                    req.Progress = new CheckerProgress()
+                    {
+                        Valid = valid,
+                        Invalid = invalid,
+                        Total = total
+                    };
+
+
+                    Send(JsonConvert.SerializeObject(req));
                 }
 
 
