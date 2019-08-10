@@ -5,6 +5,7 @@
         Join,
         Leave,
         Flood,
-        Friend
+        Friend,
+        React
     }
 }

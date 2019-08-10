@@ -13,5 +13,7 @@ window.onload = function() {
 }
 
 function StartBot(data) {
+    console.log(data);
+
     socket.send(JSON.stringify(data));
 }

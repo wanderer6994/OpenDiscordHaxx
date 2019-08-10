@@ -8,7 +8,7 @@ const DashboardOpcode = {
 
 window.onload = function() {
     OpenSocket();
-};
+}
 
 
 function OpenSocket() {
@@ -25,13 +25,13 @@ function OpenSocket() {
                 OverlookUpdate(payload.data);
                 break;
         }
-    };
+    }
     //this probably means the server is down or we don't have a connection to the internet
     socket.onerror = function(error) {
         StatusUpdate({ status: "Unreachable" });
 
-        setTimeout(OpenSocket, 4000);
-    };
+        OpenSocket();
+    }
 }
 
 

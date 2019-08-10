@@ -33,8 +33,13 @@ namespace DiscordHaxx
                     }
 
 
-                    if (req.Valid) valid++;
-                    else invalid++;
+                    if (req.Valid)
+                        valid++;
+                    else
+                    {
+                        Server.Bots.Remove(client);
+                        invalid++;
+                    }
 
 
                     req.Progress = new CheckerProgress()

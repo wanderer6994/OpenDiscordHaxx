@@ -29,13 +29,8 @@ window.onload = function() {
                 document.getElementById('bot-token').innerHTML = payload.token;
                 break;
         }
-    };
+    }
     socket.onerror = function() { ServerUnreachable() };
-/*
-    socket.onerror = function() {
-        document.getElementById('unreachable').style.display = "block";
-        document.getElementById('bot-list-container').style.display = "none";
-    }*/
 }
 
 
@@ -50,12 +45,12 @@ function OnList(botList) {
     let html = '';
 
     for (let i = 0; i < botList.length; i++) {
-        let row = '<tr id="row-' + i + '" style="border-style: hidden !important">\n';
-        row += "<td>" + botList[i].at + '</td>\n';
-        row += "<td>" + botList[i].id + '</td>\n';
-        row += '<td> ' + botList[i].hypesquad + '</td>\n';
-        row += "<td>" + botList[i].verification + '</td>\n';
-        row += "</tr>";
+        let row = '<tr id="row-' + i + '">\n';
+        row += '<td>' + botList[i].at + '</td>\n';
+        row += '<td>' + botList[i].id + '</td>\n';
+        row += '<td>' + botList[i].hypesquad + '</td>\n';
+        row += '<td>' + botList[i].verification + '</td>\n';
+        row += '</tr>';
 
         html += row;
     }

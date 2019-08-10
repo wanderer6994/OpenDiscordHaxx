@@ -62,6 +62,7 @@
     <Compile Include="Raidbot\IBot.cs" />
     <Compile Include="Raidbot\Joiner.cs" />
     <Compile Include="Raidbot\Leaver.cs" />
+    <Compile Include="Raidbot\Reactions.cs" />
     <Compile Include="Socket\Bot\Bot.cs" />
     <Compile Include="Socket\Bot\Requests\BotOpcode.cs" />
     <Compile Include="Socket\Bot\Requests\BotRequest.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="Socket\Dashboard\StatusUpdate.cs" />
     <Compile Include="Socket\Dashboard\Opcode.cs" />
     <Compile Include="Socket\Dashboard\Request.cs" />
+    <Compile Include="Socket\Raid\Requests\ReactionsRequest.cs" />
     <Compile Include="Socket\Server.cs" />
   </ItemGroup>
   <ItemGroup>

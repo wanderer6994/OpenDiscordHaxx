@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
-    class BotSuccessStatus
+    class RaidSuccessStatus
     {
         [JsonProperty("succeeded")]
         public bool Succeeded { get; set; }
@@ -20,7 +20,7 @@ namespace DiscordHaxx
     {
         protected override void OnMessage(MessageEventArgs e)
         {
-            BotSuccessStatus status = new BotSuccessStatus();
+            RaidSuccessStatus status = new RaidSuccessStatus();
 
             try
             {
@@ -39,6 +39,9 @@ namespace DiscordHaxx
                         break;
                     case RaidOpcode.Friend:
                         bot = new Friender(JsonConvert.DeserializeObject<FriendRequest>(e.Data));
+                        break;
+                    case RaidOpcode.React:
+                        bot = new Reactions(JsonConvert.DeserializeObject<ReactionsRequest>(e.Data));
                         break;
                 }
 

@@ -20,27 +20,20 @@ namespace DiscordHaxx
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
-                while (true)
+                try
                 {
-                    try
+                    bot.SendFriendRequest(_recipient.Username, _recipient.Discriminator);
+                }
+                catch (DiscordHttpException e)
+                {
+                    switch (e.Code)
                     {
-                        bot.SendFriendRequest(_recipient.Username, _recipient.Discriminator);
-
-                        break;
-                    }
-                    catch (DiscordHttpException e)
-                    {
-                        switch (e.Code)
-                        {
-                            case DiscordError.InvalidRecipient:
-                                Console.WriteLine($"[ERROR] invalid recipient");
-                                break;
-                            default:
-                                Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                                break;
-                        }
-
-                        break;
+                        case DiscordError.InvalidRecipient:
+                            Console.WriteLine($"[ERROR] invalid recipient");
+                            break;
+                        default:
+                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                            break;
                     }
                 }
             });

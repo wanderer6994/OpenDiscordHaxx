@@ -2,8 +2,10 @@
 
 <script>
     function Submit() {
-        StartBot({ 'op': 'flood', 'channel_id': document.getElementById('channel_id').value, 
-                                  'message': document.getElementById('message').value });
+        StartBot({ 'op': 'react', 'channel_id': document.getElementById('channel_id').value, 
+                                  'message_id': document.getElementById('message_id').value,
+                                  'reaction': document.getElementById('reaction').value,
+                                  'add': document.getElementById('add').checked });
     }
 </script>
 
@@ -16,7 +18,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial scale=1.0">
     <link rel="Icon" type="image/x-icon" href="../Images/Anarchy.png">
-    <title>Flooder - OpenDH</title>
+    <title>Reactions - OpenDH</title>
 
 
     <!-- CSS -->
@@ -64,14 +66,23 @@
 
 <body class="dark-body">
     <center>
-        <h1 class="dark-title" style="margin-top: 40px;">Flooder</h1>
+        <h1 class="dark-title" style="margin-top: 40px;">Reactions</h1>
         <br>
 
         <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Channel ID" id="channel_id">
         <br>
-        <input class="form-control dark-input" style="width: 340px;" placeholder="Message" id="message">
-        <br><br>
+        <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Message ID" id="message_id">
+        <br>
+        <input class="form-control dark-input" style="width: 340px;" placeholder="Reaction" id="reaction">
 
-        <button class="btn dark-btn" style="width: 240px;" onclick="Submit()">Start</button>
+        <form style="margin-top: 10px">
+            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
+                <input id="add" type="radio" name="optradio" checked>Add</label>
+
+            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
+                <input type="radio" name="optradio">Remove</label>
+        </form>
+
+        <button class="btn dark-btn" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
     </center>
 </html>
