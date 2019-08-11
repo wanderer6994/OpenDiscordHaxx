@@ -25,7 +25,17 @@ window.onload = function() {
             case ListOpcode.Token:
                 $('#bot-token-modal').modal({ show: true });
 
-                document.getElementById('bot-token-title').innerText = 'Token for ' + payload.id;
+                let at = '';
+
+                document.getElementById('bot-list').childNodes.forEach(row => {
+                    const info = GetRowInformation(row);
+
+                    if (info.id == payload.id)
+                        at = info.at;
+                });
+
+
+                document.getElementById('bot-token-title').innerText = 'Token for ' + at;
                 document.getElementById('bot-token').innerHTML = payload.token;
                 break;
         }
@@ -67,7 +77,7 @@ function OnList(botList) {
 
 
 function OnContextMenuUsed(invokedOn, selectedMenu) {
-    const info = GetRowInformation(invokedOn[0]);
+    const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
 
     switch (selectedMenu.text()) {
         case 'Modify':
@@ -102,9 +112,7 @@ function OnGetToken(info) {
 }
 
 
-function GetRowInformation(invoked) {
-    const row = document.getElementById(invoked.parentNode.id);
-
+function GetRowInformation(row) {
     return { at: row.childNodes[1].innerText, 
              id: row.childNodes[3].innerText, 
              hypesquad: row.childNodes[5].innerText,

@@ -6,17 +6,20 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Leaver : IBot
+    public class Leaver : Bot
     {
         private readonly ulong _guildId;
 
         public Leaver(LeaveRequest request)
         {
+            Attack = new Attack() { Type = RaidOpcode.Leave, Bots = Server.Bots.Count };
+
+
             _guildId = request.GuildId;
         }
 
 
-        public void Start()
+        public override void Start()
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
@@ -53,7 +56,7 @@ namespace DiscordHaxx
             });
 
 
-            Server.OngoingAttacks--;
+            Server.OngoingAttacks.Remove(Attack);
         }
     }
 }

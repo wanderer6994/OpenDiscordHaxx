@@ -5,18 +5,32 @@ using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
-    public class Reactions : IBot
+    public class Reactions : Bot
     {
+        private Attack attack;
+
+        public Attack GetAttack()
+        {
+            return attack;
+        }
+
+        private void SetAttack(Attack value)
+        {
+            attack = value;
+        }
+
         private readonly ReactionsRequest _request;
 
 
         public Reactions(ReactionsRequest req)
         {
+            SetAttack(new Attack() { Type = RaidOpcode.React, Bots = Server.Bots.Count });
+
             _request = req;
         }
 
 
-        public void Start()
+        public override void Start()
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
@@ -47,7 +61,7 @@ namespace DiscordHaxx
                 }
             });
 
-            Server.OngoingAttacks--;
+            Server.OngoingAttacks.Remove(GetAttack());
         }
     }
 }

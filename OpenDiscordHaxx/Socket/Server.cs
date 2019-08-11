@@ -11,10 +11,10 @@ namespace DiscordHaxx
         public static void Start()
         {
             _server = new WebSocketServer("ws://localhost");
-            _server.AddWebSocketService<Dashboard>("/dashboard");
-            _server.AddWebSocketService<Bot>("/bot");
-            _server.AddWebSocketService<RaidBot>("/bot/raid");
-            _server.AddWebSocketService<Checker>("/bot/checker");
+            _server.AddWebSocketService<DashboardEndpoint>("/dashboard");
+            _server.AddWebSocketService<BotEndpoint>("/bot");
+            _server.AddWebSocketService<RaidBotEndpoint>("/bot/raid");
+            _server.AddWebSocketService<CheckerEndpoint>("/bot/checker");
             _server.Start();
 
 
@@ -22,11 +22,11 @@ namespace DiscordHaxx
                 Thread.Sleep(100);
         }
 
-        public static void Broadcast<T>(string endpoint, DashboardRequest<T> request) where T : new()
+        public static void Broadcast<T>(DashboardRequest<T> request) where T : new()
         {
             if (_server.IsListening)
             {
-                _server.WebSocketServices[endpoint].Sessions
+                _server.WebSocketServices["/dashboard"].Sessions
                                 .Broadcast(JsonConvert.SerializeObject(request));
             }
         }

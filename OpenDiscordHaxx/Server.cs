@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.ObjectModel;
 
 namespace DiscordHaxx
 {
@@ -19,7 +20,7 @@ namespace DiscordHaxx
 
                 var req = new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate);
                 req.Data.Status = _serverStatus;
-                SocketServer.Broadcast("/dashboard", req);
+                SocketServer.Broadcast(req);
             }
         }
 
@@ -62,8 +63,8 @@ namespace DiscordHaxx
 
                         var req = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
                         req.Data.Accounts = Bots.Count;
-                        req.Data.Attacks = OngoingAttacks;
-                        SocketServer.Broadcast("/dashboard", req);
+                        req.Data.Attacks = OngoingAttacks.Count;
+                        SocketServer.Broadcast(req);
 
                         Thread.Sleep(1000);
                     }
@@ -73,19 +74,6 @@ namespace DiscordHaxx
         #endregion
 
 
-        private static int _attacks;
-        public static int OngoingAttacks
-        {
-            get { return _attacks; }
-            set
-            {
-                _attacks = value;
-
-                var req = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
-                req.Data.Accounts = Bots.Count;
-                req.Data.Attacks = OngoingAttacks;
-                SocketServer.Broadcast("/dashboard", req);
-            }
-        }
+        public static ObservableCollection<Attack> OngoingAttacks = new ObservableCollection<Attack>();
     }
 }

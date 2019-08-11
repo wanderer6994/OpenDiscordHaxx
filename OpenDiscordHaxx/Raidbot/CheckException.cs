@@ -4,11 +4,11 @@ namespace DiscordHaxx
 {
     class CheckException : Exception
     {
-        public string Error { get; private set; }
+        public string Issue { get; private set; }
 
-        public CheckException(string error)
+        public CheckException(string issue)
         {
-            Error = error;
+            Issue = issue;
         }
     }
 }

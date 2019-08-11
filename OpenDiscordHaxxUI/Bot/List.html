@@ -1,23 +1,5 @@
 <!DOCTYPE html>
 
-<style>
-/*for dark table selection thing*/
-.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color: rgb(62,66,73);
-}
-
-/*for bot-list*/
-th {
-  font-weight: 300;
-  width: 25%;
-}
-
-
-tr {
-  border-style: hidden !important;
-}
-</style>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
     <!-- Other shit -->
@@ -29,6 +11,7 @@ tr {
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/ODH.css">
+    <link rel="stylesheet" href="../css/Dark-table.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
@@ -132,7 +115,7 @@ tr {
 
     <!-- Bot list -->
     <div id="bot-list-container" class="form-control dark-container" style="margin: auto; width:70%; height: auto; margin-bottom: 20px">
-        <table class="table table-hover" style="color: rgb(230,252,255);">
+        <table class="table table-hover">
             <thead>
                 <th>@</th>
                 <th>ID</th>

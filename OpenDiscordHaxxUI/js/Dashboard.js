@@ -2,7 +2,8 @@ let socket;
 
 const DashboardOpcode = {
     StatusUpdate: 0,
-    OverlookUpdate: 1
+    OverlookUpdate: 1,
+    AttacksUpdate: 2
 }
 
 
@@ -19,16 +20,19 @@ function OpenSocket() {
 
         switch (payload.opcode) {
             case DashboardOpcode.StatusUpdate: //this does not account for the server dying
-                StatusUpdate(payload.data);
+                OnStatusUpdate(payload.data);
                 break;
             case DashboardOpcode.OverlookUpdate:
-                OverlookUpdate(payload.data);
+                OnOverlookUpdate(payload.data);
+                break;
+            case DashboardOpcode.AttacksUpdate:
+                OnAttacksUpdate(payload.data);
                 break;
         }
     }
     //this probably means the server is down or we don't have a connection to the internet
     socket.onerror = function(error) {
-        StatusUpdate({ status: "Unreachable" });
+        OnStatusUpdate({ status: "Unreachable" });
 
         OpenSocket();
     }
@@ -36,7 +40,7 @@ function OpenSocket() {
 
 
 //sets serverStatus's text to the new status, as well as changing it's color depending on the status
-function StatusUpdate(data) {
+function OnStatusUpdate(data) {
     const statusLabel = document.getElementById('serverStatus');
 
     statusLabel.innerText = data.status.toUpperCase();
@@ -50,7 +54,8 @@ function StatusUpdate(data) {
             break;
         case "UNREACHABLE":
             statusLabel.style.color = "rgb(130,0,0)";
-            OverlookUpdate({ accounts: 0, attacks: 0 });
+            OnOverlookUpdate({ accounts: 0, attacks: 0 });
+            OnAttacksUpdate({});
             break;
         default:
             statusLabel.style.color = "rgb(170,192,195)";
@@ -58,7 +63,23 @@ function StatusUpdate(data) {
 }
 
 
-function OverlookUpdate(data) {
-    document.getElementById('accountAmount').innerHTML = 'Loaded accounts: <span style="color: rgb(230,252,255)">' + data.accounts + '</span>';
-    document.getElementById('attackAmount').innerHTML = 'Ongoing attacks: <span style="color: rgb(230,252,255)">' + data.attacks + '</span>';
+function OnOverlookUpdate(data) {
+    document.getElementById('account-amount').innerHTML = 'Loaded accounts: <span style="color: rgb(230,252,255)">' + data.accounts + '</span>';
+    document.getElementById('attack-amount').innerHTML = 'Ongoing attacks: <span style="color: rgb(230,252,255)">' + data.attacks + '</span>';
+}
+
+
+function OnAttacksUpdate(attackList) {
+    let html = '';
+
+    for (let i = 0; i < attackList.length; i++) {
+        let row = '<tr id="row-' + i + '" style="letter-spacing: 0.7px; font-size: 17.5px">\n';
+        row += '<td>' + attackList[i].type + '</td>\n';
+        row += '<td>' + attackList[i].bots + '</td>\n';
+        row += '</tr>';
+
+        html += row;
+    }
+
+    document.getElementById('attack-list').innerHTML = html;
 }

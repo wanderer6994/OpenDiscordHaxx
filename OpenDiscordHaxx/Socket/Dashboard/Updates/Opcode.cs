@@ -3,6 +3,7 @@
     public enum DashboardOpcode
     {
         StatusUpdate,
-        OverlookUpdate
+        OverlookUpdate,
+        AttacksUpdate
     }
 }

@@ -7,15 +7,18 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Joiner : IBot
+    public class Joiner : Bot
     {
 #pragma warning disable IDE1006
         private Invite _invite { get; set; }
 #pragma warning restore IDE1006
 
+
         public Joiner(JoinRequest request)
         {
-            
+            Attack = new Attack() { Type = RaidOpcode.Join, Bots = Server.Bots.Count };
+
+
             try
             {
                 _invite = new DiscordClient().GetGuildInvite(request.Invite.Split('/').Last());
@@ -38,7 +41,7 @@ namespace DiscordHaxx
         }
 
 
-        public void Start()
+        public override void Start()
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
@@ -77,7 +80,7 @@ namespace DiscordHaxx
                 }
             });
 
-            Server.OngoingAttacks--;
+            Server.OngoingAttacks.Remove(Attack);
         }
     }
 }

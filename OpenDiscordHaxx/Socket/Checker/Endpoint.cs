@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace DiscordHaxx
 {
-    public class Checker : WebSocketBehavior
+    public class CheckerEndpoint : WebSocketBehavior
     {
         protected override void OnOpen()
         {

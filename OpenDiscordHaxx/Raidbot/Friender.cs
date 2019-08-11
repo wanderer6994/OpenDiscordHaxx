@@ -5,18 +5,20 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Friender : IBot
+    public class Friender : Bot
     {
         private readonly FriendRequest _recipient;
 
 
         public Friender(FriendRequest request)
         {
+            Attack = new Attack() { Type = RaidOpcode.Friend, Bots = Server.Bots.Count };
+
             _recipient = request;
         }
 
 
-        public void Start()
+        public override void Start()
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
@@ -38,7 +40,7 @@ namespace DiscordHaxx
                 }
             });
 
-            Server.OngoingAttacks--;
+            Server.OngoingAttacks.Remove(Attack);
         }
     }
 }

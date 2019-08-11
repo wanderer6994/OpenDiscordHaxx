@@ -16,7 +16,7 @@ namespace DiscordHaxx
     }
 
 
-    public class RaidBot : WebSocketBehavior
+    public class RaidBotEndpoint : WebSocketBehavior
     {
         protected override void OnMessage(MessageEventArgs e)
         {
@@ -24,7 +24,7 @@ namespace DiscordHaxx
 
             try
             {
-                IBot bot = null;
+                Bot bot = null;
 
                 switch (JsonConvert.DeserializeObject<RaidRequest>(e.Data).Opcode)
                 {
@@ -47,7 +47,7 @@ namespace DiscordHaxx
 
                 Task.Run(() => bot.Start());
 
-                Server.OngoingAttacks++;
+                Server.OngoingAttacks.Add(bot.Attack);
 
                 status.Succeeded = true;
                 status.Message = "Bot should be starting shortly";
@@ -55,7 +55,7 @@ namespace DiscordHaxx
             catch (CheckException ex)
             {
                 status.Succeeded = false;
-                status.Message = ex.Error;
+                status.Message = ex.Issue;
             }
             catch (JsonReaderException)
             {

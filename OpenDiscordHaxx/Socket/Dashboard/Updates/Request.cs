@@ -17,5 +17,11 @@ namespace DiscordHaxx
             Opcode = op;
             Data = new T();
         }
+
+
+        public static implicit operator string(DashboardRequest<T> instance)
+        {
+            return JsonConvert.SerializeObject(instance);
+        }
     }
 }

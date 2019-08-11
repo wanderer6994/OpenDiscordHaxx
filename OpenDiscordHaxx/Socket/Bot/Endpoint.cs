@@ -6,7 +6,7 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Bot : WebSocketBehavior
+    public class BotEndpoint : WebSocketBehavior
     {
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {

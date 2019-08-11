@@ -6,17 +6,19 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Flooder : IBot
+    public class Flooder : Bot
     {
         private readonly FloodRequest _request;
 
         public Flooder(FloodRequest request)
         {
+            Attack = new Attack() { Type = RaidOpcode.Flood, Bots = Server.Bots.Count };
+
             _request = request;
         }
 
 
-        public void Start()
+        public override void Start()
         {
             while (true)
             {
