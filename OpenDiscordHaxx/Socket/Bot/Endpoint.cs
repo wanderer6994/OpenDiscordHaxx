@@ -13,11 +13,7 @@ namespace DiscordHaxx
             switch (JsonConvert.DeserializeObject<BotRequest>(e.Data).Opcode)
             {
                 case BotOpcode.List:
-                    List<BotInfo> bots = new List<BotInfo>();
-                    foreach (var client in Server.Bots)
-                        bots.Add(BotInfo.FromClient(client));
-
-                    Send(JsonConvert.SerializeObject(new ListRequest(BotOpcode.List) { List = bots }));
+                    SendList();
                     break;
                 case BotOpcode.Token:
                     TokenRequest tokenReq = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
@@ -32,8 +28,22 @@ namespace DiscordHaxx
 
                     if (modClient.User.Hypesquad != modReq.Hypesquad)
                         modClient.User.SetHypesquad(modReq.Hypesquad);
+
+                    modClient.User.Update();
+
+                    SendList();
                     break;
             }
+        }
+
+
+        private void SendList()
+        {
+            List<BotInfo> bots = new List<BotInfo>();
+            foreach (var client in Server.Bots)
+                bots.Add(BotInfo.FromClient(client));
+
+            Send(JsonConvert.SerializeObject(new ListRequest(BotOpcode.List) { List = bots }));
         }
     }
 }

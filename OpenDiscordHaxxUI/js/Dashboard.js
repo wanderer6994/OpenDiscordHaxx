@@ -9,11 +9,16 @@ const DashboardOpcode = {
 
 
 window.onload = function() {
+    console.log('window loaded');
+
     OpenSocket();
 }
 
 
 function OpenSocket() {
+
+    console.log('attempting to open websocket')
+
     socket = new WebSocket("ws://localhost/dashboard");
     socket.onmessage = function(args) {
         
@@ -34,8 +39,6 @@ function OpenSocket() {
     //this probably means the server is down or we don't have a connection to the internet
     socket.onerror = function(error) {
         OnStatusUpdate({ status: "Unreachable" });
-
-        OpenSocket();
     }
 }
 
@@ -65,12 +68,17 @@ function OnStatusUpdate(data) {
 
 
 function OnOverlookUpdate(data) {
-    document.getElementById('account-amount').innerHTML = 'Loaded accounts: <span style="color: rgb(230,252,255)">' + data.accounts + '</span>';
+    if (typeof data.accounts !== "undefined")
+        document.getElementById('account-amount').innerHTML = 'Loaded accounts: <span style="color: rgb(230,252,255)">' + data.accounts + '</span>';
     document.getElementById('attack-amount').innerHTML = 'Ongoing attacks: <span style="color: rgb(230,252,255)">' + data.attacks + '</span>';
 }
 
 
 function OnAttacksUpdate(attackList) {
+
+    if (typeof attackList.length !== "undefined")
+        OnOverlookUpdate({ attacks: attackList.length });
+
     const list = document.getElementById('attack-list');
     let html = '';
 

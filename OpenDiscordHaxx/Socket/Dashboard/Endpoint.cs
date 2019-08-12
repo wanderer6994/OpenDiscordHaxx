@@ -15,17 +15,8 @@ namespace DiscordHaxx
                                      { Data = new StatusUpdate() { Status = Server.ServerStatus } });
             Send(new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate)
                                      { Data = new OverlookUpdate() { Accounts = Server.Bots.Count, Attacks = Server.OngoingAttacks.Count } });
-
-
-            try
-            {
-                Send(new DashboardRequest<List<Attack>>(DashboardOpcode.AttacksUpdate)
-                { Data = Server.OngoingAttacks.ToList() });
-            }
-            catch
-            {
-
-            }
+            Send(new DashboardRequest<List<Attack>>(DashboardOpcode.AttacksUpdate)
+                                     { Data = Server.OngoingAttacks.ToList() });
         }
 
 
@@ -34,7 +25,6 @@ namespace DiscordHaxx
             switch (JsonConvert.DeserializeObject<JObject>(e.Data).GetValue("op").ToObject<DashboardOpcode>())
             {
                 case DashboardOpcode.KillAttack:
-
                     AttackKillRequest req = JsonConvert.DeserializeObject<AttackKillRequest>(e.Data);
 
                     foreach (var attack in Server.OngoingAttacks)
