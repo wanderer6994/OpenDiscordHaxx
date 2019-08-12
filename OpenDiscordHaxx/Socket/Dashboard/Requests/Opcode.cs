@@ -4,6 +4,7 @@
     {
         StatusUpdate,
         OverlookUpdate,
-        AttacksUpdate
+        AttacksUpdate,
+        KillAttack
     }
 }

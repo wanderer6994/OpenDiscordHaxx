@@ -16,7 +16,7 @@ namespace DiscordHaxx
 
         public Joiner(JoinRequest request)
         {
-            Attack = new Attack() { Type = RaidOpcode.Join, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = RaidOpcode.Join, Bots = Server.Bots.Count };
 
 
             try
@@ -49,6 +49,9 @@ namespace DiscordHaxx
                 {
                     try
                     {
+                        if (ShouldStop)
+                            return;
+
                         bot.JoinGuild(_invite.Code);
 
                         break;

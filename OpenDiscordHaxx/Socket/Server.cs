@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Threading;
 using WebSocketSharp.Server;
 
 namespace DiscordHaxx
@@ -16,10 +15,6 @@ namespace DiscordHaxx
             _server.AddWebSocketService<RaidBotEndpoint>("/bot/raid");
             _server.AddWebSocketService<CheckerEndpoint>("/bot/checker");
             _server.Start();
-
-
-            while (!_server.IsListening)
-                Thread.Sleep(100);
         }
 
         public static void Broadcast<T>(DashboardRequest<T> request) where T : new()

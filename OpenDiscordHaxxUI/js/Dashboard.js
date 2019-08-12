@@ -3,7 +3,8 @@ let socket;
 const DashboardOpcode = {
     StatusUpdate: 0,
     OverlookUpdate: 1,
-    AttacksUpdate: 2
+    AttacksUpdate: 2,
+    KillAttack: 3
 }
 
 
@@ -70,16 +71,51 @@ function OnOverlookUpdate(data) {
 
 
 function OnAttacksUpdate(attackList) {
+    const list = document.getElementById('attack-list');
     let html = '';
 
     for (let i = 0; i < attackList.length; i++) {
         let row = '<tr id="row-' + i + '" style="letter-spacing: 0.7px; font-size: 17.5px">\n';
         row += '<td>' + attackList[i].type + '</td>\n';
         row += '<td>' + attackList[i].bots + '</td>\n';
+        row += '<td style="display: none">' + attackList[i].id + '</td>\n';
         row += '</tr>';
 
         html += row;
     }
 
-    document.getElementById('attack-list').innerHTML = html;
+    list.innerHTML = html;
+
+    list.childNodes.forEach(row => {
+        $('#' + row.id).contextMenu({
+            menuSelector: "#attack-list-context-menu",
+            menuSelected: OnContextMenuUsed
+        });
+    });
+}
+
+
+function OnContextMenuUsed(invokedOn, selectedMenu) {
+    const info = GetRowInformation(invokedOn);
+
+    switch (selectedMenu.text()) {
+        case 'Kill':
+            OnKill(info);
+            break;
+    }
+}
+
+
+function OnKill(info) {
+    socket.send(JSON.stringify({ op: DashboardOpcode.KillAttack, id: info.id }));
+}
+
+
+function GetRowInformation(invokedOn) {
+    const row = document.getElementById(invokedOn[0].parentNode.id);
+
+
+    return { type: row.childNodes[1].innerText, 
+             bots: row.childNodes[3].innerText,
+             id: row.childNodes[5].innerText };
 }

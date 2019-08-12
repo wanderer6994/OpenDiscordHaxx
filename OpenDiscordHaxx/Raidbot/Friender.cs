@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Friender(FriendRequest request)
         {
-            Attack = new Attack() { Type = RaidOpcode.Friend, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = RaidOpcode.Friend, Bots = Server.Bots.Count };
 
             _recipient = request;
         }
@@ -22,6 +22,9 @@ namespace DiscordHaxx
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
+                if (ShouldStop)
+                    return;
+
                 try
                 {
                     bot.SendFriendRequest(_recipient.Username, _recipient.Discriminator);

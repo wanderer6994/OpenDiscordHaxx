@@ -7,24 +7,12 @@ namespace DiscordHaxx
 {
     public class Reactions : Bot
     {
-        private Attack attack;
-
-        public Attack GetAttack()
-        {
-            return attack;
-        }
-
-        private void SetAttack(Attack value)
-        {
-            attack = value;
-        }
-
         private readonly ReactionsRequest _request;
 
 
         public Reactions(ReactionsRequest req)
         {
-            SetAttack(new Attack() { Type = RaidOpcode.React, Bots = Server.Bots.Count });
+            Attack = new Attack(this) { Type = RaidOpcode.React, Bots = Server.Bots.Count };
 
             _request = req;
         }
@@ -34,6 +22,9 @@ namespace DiscordHaxx
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
+                if (ShouldStop)
+                    return;
+
                 try
                 {
                     if (_request.Add)
@@ -61,7 +52,7 @@ namespace DiscordHaxx
                 }
             });
 
-            Server.OngoingAttacks.Remove(GetAttack());
+            Server.OngoingAttacks.Remove(Attack);
         }
     }
 }

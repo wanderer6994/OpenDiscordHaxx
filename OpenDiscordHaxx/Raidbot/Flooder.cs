@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Flooder(FloodRequest request)
         {
-            Attack = new Attack() { Type = RaidOpcode.Flood, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = RaidOpcode.Flood, Bots = Server.Bots.Count };
 
             _request = request;
         }
@@ -20,10 +20,13 @@ namespace DiscordHaxx
 
         public override void Start()
         {
+            List<DiscordClient> validBots = Server.Bots;
+            List<DiscordClient> nextBots = validBots;
+
             while (true)
             {
-                List<DiscordClient> validBots = Server.Bots;
-                List<DiscordClient> nextBots = validBots;
+                if (ShouldStop)
+                    break;
 
                 Parallel.ForEach(validBots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
                 {
@@ -31,6 +34,9 @@ namespace DiscordHaxx
                     {
                         try
                         {
+                            if (ShouldStop)
+                                return;
+
                             bot.SendMessage(_request.ChannelId, _request.Message);
 
                             break;
@@ -68,6 +74,8 @@ namespace DiscordHaxx
 
                 validBots = nextBots;
             }
+
+            Server.OngoingAttacks.Remove(Attack);
         }
     }
 }

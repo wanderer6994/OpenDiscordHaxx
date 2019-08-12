@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Leaver(LeaveRequest request)
         {
-            Attack = new Attack() { Type = RaidOpcode.Leave, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = RaidOpcode.Leave, Bots = Server.Bots.Count };
 
 
             _guildId = request.GuildId;
@@ -27,6 +27,9 @@ namespace DiscordHaxx
                 {
                     try
                     {
+                        if (ShouldStop)
+                            return;
+
                         bot.LeaveGuild(_guildId);
 
                         break;
