@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
+using System.Text;
 
 namespace DiscordHaxx
 {
@@ -18,9 +19,8 @@ namespace DiscordHaxx
             {
                 _serverStatus = value;
 
-                var req = new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate);
-                req.Data.Status = _serverStatus;
-                SocketServer.Broadcast(req);
+                StatusUpdate update = new StatusUpdate() { Status = _serverStatus };
+                SocketServer.Broadcast(DashboardOpcode.StatusUpdate, update);
             }
         }
 
@@ -34,7 +34,9 @@ namespace DiscordHaxx
 
             StartAccountBroadcaster();
 
-            foreach (var token in File.ReadAllLines("Tokens.txt"))
+            string[] tokens = File.ReadAllLines("Tokens.txt");
+
+            foreach (var token in tokens)
             {
                 try
                 {
@@ -45,6 +47,15 @@ namespace DiscordHaxx
                 {
                     Console.WriteLine($"Unknown error when loading account:\n{e}");
                 }
+            }
+
+            if (Bots.Count < tokens.Length)
+            {
+                StringBuilder builder = new StringBuilder();
+                foreach (var bot in Bots)
+                    builder.AppendLine(bot.Token);
+
+                File.WriteAllText("Tokens-valid.txt", builder.ToString());
             }
         }
 
@@ -61,12 +72,14 @@ namespace DiscordHaxx
                     {
                         previousAmount = Bots.Count;
 
-                        var req = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
-                        req.Data.Accounts = Bots.Count;
-                        req.Data.Attacks = OngoingAttacks.Count;
-                        SocketServer.Broadcast(req);
+                        OverlookUpdate update = new OverlookUpdate()
+                        {
+                            Accounts = Bots.Count,
+                            Attacks = OngoingAttacks.Count
+                        };
+                        SocketServer.Broadcast(DashboardOpcode.OverlookUpdate, update);
 
-                        Thread.Sleep(1000);
+                        Thread.Sleep(1100);
                     }
                 }
             });

@@ -9,8 +9,6 @@ const DashboardOpcode = {
 
 
 window.onload = function() {
-    console.log('window loaded');
-
     OpenSocket();
 }
 

@@ -18,12 +18,15 @@ namespace DiscordHaxx
             _server.Start();
         }
 
-        public static void Broadcast<T>(DashboardRequest<T> request) where T : new()
+        public static void Broadcast<T>(DashboardOpcode op, T requestData) where T : new()
         {
+            DashboardRequest<T> req = new DashboardRequest<T>(op);
+            req.Data = requestData;
+
             if (_server.IsListening)
             {
                 _server.WebSocketServices["/dashboard"].Sessions
-                                .Broadcast(JsonConvert.SerializeObject(request));
+                                .Broadcast(JsonConvert.SerializeObject(req));
             }
         }
     }

@@ -30,45 +30,40 @@ namespace DiscordHaxx
 
                 Parallel.ForEach(validBots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
                 {
-                    while (true)
+                    try
                     {
-                        try
-                        {
-                            if (ShouldStop)
-                                return;
+                        if (ShouldStop)
+                            return;
 
-                            bot.SendMessage(_request.ChannelId, _request.Message);
-
-                            break;
-                        }
-                        catch (DiscordHttpException e)
+                        bot.SendMessage(_request.ChannelId, _request.Message);
+                    }
+                    catch (DiscordHttpException e)
+                    {
+                        switch (e.Code)
                         {
-                            switch (e.Code)
-                            {
-                                case DiscordError.AccountUnverified:
-                                    Console.WriteLine($"[ERROR] {bot.User} is unverified");
-                                    break;
-                                case DiscordError.ChannelVerificationTooHigh:
-                                    Console.WriteLine("[ERROR] channel verification too high");
-                                    break;
-                                case DiscordError.CannotSendEmptyMessage:
-                                    Console.WriteLine("[ERROR] cannot send empty messages");
-                                    break;
-                                case DiscordError.UnknownChannel:
-                                    Console.WriteLine("[ERROR] unknown channel");
-                                    break;
-                                default:
-                                    Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                                    break;
-                            }
+                            case DiscordError.AccountUnverified:
+                                Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                                break;
+                            case DiscordError.ChannelVerificationTooHigh:
+                                Console.WriteLine("[ERROR] channel verification too high");
+                                break;
+                            case DiscordError.CannotSendEmptyMessage:
+                                Console.WriteLine("[ERROR] cannot send empty messages");
+                                break;
+                            case DiscordError.UnknownChannel:
+                                Console.WriteLine("[ERROR] unknown channel");
+                                break;
+                            default:
+                                Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                                break;
+                        }
 
-                            nextBots.Remove(bot);
-                            break;
-                        }
-                        catch (RateLimitException e)
-                        {
-                            Thread.Sleep((int)e.RetryAfter);
-                        }
+                        nextBots.Remove(bot);
+                    }
+                    catch (RateLimitException) { }
+                    catch
+                    {
+
                     }
                 });
 

@@ -23,41 +23,34 @@ namespace DiscordHaxx
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
-                while (true)
+                try
                 {
-                    try
-                    {
-                        if (ShouldStop)
-                            return;
+                    if (ShouldStop)
+                        return;
 
-                        bot.LeaveGuild(_guildId);
-
-                        break;
-                    }
-                    catch (DiscordHttpException e)
+                    bot.LeaveGuild(_guildId);
+                }
+                catch (DiscordHttpException e)
+                {
+                    switch (e.Code)
                     {
-                        switch (e.Code)
-                        {
-                            case DiscordError.AccountUnverified:
-                                Console.WriteLine($"[ERROR] {bot.User} is unverified");
-                                break;
-                            case DiscordError.UnknownGuild:
-                                Console.WriteLine("[ERROR] invalid guild");
-                                break;
-                            default:
-                                Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                                break;
-                        }
-
-                        break;
-                    }
-                    catch (RateLimitException e)
-                    {
-                        Thread.Sleep((int)e.RetryAfter);
+                        case DiscordError.AccountUnverified:
+                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            break;
+                        case DiscordError.UnknownGuild:
+                            Console.WriteLine("[ERROR] invalid guild");
+                            break;
+                        default:
+                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                            break;
                     }
                 }
-            });
+                catch (RateLimitException) { }
+                catch
+                {
 
+                }
+            });
 
             Server.OngoingAttacks.Remove(Attack);
         }

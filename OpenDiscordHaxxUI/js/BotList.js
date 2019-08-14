@@ -55,7 +55,7 @@ function OnList(botList) {
     let html = '';
 
     for (let i = 0; i < botList.length; i++) {
-        let row = '<tr id="row-' + i + '">\n';
+        let row = '<tr id="row-' + i + '" style="">\n';
         row += '<td>' + botList[i].at + '</td>\n';
         row += '<td>' + botList[i].id + '</td>\n';
         row += '<td>' + botList[i].hypesquad + '</td>\n';

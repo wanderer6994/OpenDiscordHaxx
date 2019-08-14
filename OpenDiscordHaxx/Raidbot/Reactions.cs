@@ -50,6 +50,11 @@ namespace DiscordHaxx
                             break;
                     }
                 }
+                catch (RateLimitException) { }
+                catch
+                {
+
+                }
             });
 
             Server.OngoingAttacks.Remove(Attack);

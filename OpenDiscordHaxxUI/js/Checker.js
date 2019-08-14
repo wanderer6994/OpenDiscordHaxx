@@ -3,7 +3,8 @@ let socket;
 const CheckerOpcode = {
     Started: 0,
     BotChecked: 1,
-    Done: 2
+    RateLimited: 2,
+    Done: 3
 }
 
 
@@ -24,9 +25,10 @@ window.onload = function() {
                 break;
             case CheckerOpcode.BotChecked:
                 UpdateProgress(payload.progress);
-                const results = document.getElementById('checker-results');
-
-                results.value = results.value + payload.bot.at + ' is ' + (payload.valid ? 'valid!' : 'invalid :/') + '\n';
+                AppendText(payload.bot.at + ' is ' + (payload.valid ? 'valid!' : 'invalid :/'));
+                break;
+            case CheckerOpcode.RateLimited:
+                AppendText('Server is rate limited. Checked tokens will still be saved');
                 break;
             case CheckerOpcode.Done:
                 ShowToast(ToastType.Success, 'Checker has finished');
@@ -34,6 +36,13 @@ window.onload = function() {
         }
     }
     socket.onerror = function() { ServerUnreachable() };
+}
+
+
+function AppendText(text) {
+    const results = document.getElementById('checker-results');
+
+    results.value = results.value + text + '\n';
 }
 
 

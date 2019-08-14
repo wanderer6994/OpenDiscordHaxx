@@ -1,7 +1,6 @@
 ﻿using System.Threading;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace DiscordHaxx
 {
@@ -19,8 +18,7 @@ namespace DiscordHaxx
 
         private static void OngoingAttacks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SocketServer.Broadcast(new DashboardRequest<List<Attack>>(DashboardOpcode.AttacksUpdate)
-                                                { Data = Server.OngoingAttacks.ToList() });
+            SocketServer.Broadcast(DashboardOpcode.AttacksUpdate, Server.OngoingAttacks.ToList());
         }
     }
 }

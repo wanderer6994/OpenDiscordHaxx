@@ -45,41 +45,35 @@ namespace DiscordHaxx
         {
             Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
             {
-                while (true)
+                try
                 {
-                    try
-                    {
-                        if (ShouldStop)
-                            return;
+                    if (ShouldStop)
+                        return;
 
-                        bot.JoinGuild(_invite.Code);
-
-                        break;
-                    }
-                    catch (DiscordHttpException e)
+                    bot.JoinGuild(_invite.Code);
+                }
+                catch (DiscordHttpException e)
+                {
+                    switch (e.Code)
                     {
-                        switch (e.Code)
-                        {
-                            case DiscordError.UnknownInvite:
-                                Console.WriteLine($"[ERROR] unknown invite");
-                                break;
-                            case DiscordError.InvalidInvite:
-                                Console.WriteLine($"[ERROR] invalid invite");
-                                break;
-                            case DiscordError.AccountUnverified:
-                                Console.WriteLine($"[ERROR] {bot.User} is unverified");
-                                break;
-                            default:
-                                Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                                break;
-                        }
+                        case DiscordError.UnknownInvite:
+                            Console.WriteLine($"[ERROR] unknown invite");
+                            break;
+                        case DiscordError.InvalidInvite:
+                            Console.WriteLine($"[ERROR] invalid invite");
+                            break;
+                        case DiscordError.AccountUnverified:
+                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            break;
+                        default:
+                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                            break;
+                    }
+                }
+                catch (RateLimitException) { }
+                catch
+                {
 
-                        break;
-                    }
-                    catch (RateLimitException e)
-                    {
-                        Thread.Sleep((int)e.RetryAfter);
-                    }
                 }
             });
 
