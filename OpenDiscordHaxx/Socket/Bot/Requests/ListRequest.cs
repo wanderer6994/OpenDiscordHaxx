@@ -5,11 +5,13 @@ namespace DiscordHaxx
 {
     public class ListRequest : BotRequest
     {
-        public ListRequest(BotOpcode op) : base(op)
-        { }
+        public ListRequest(List<BotInfo> bots) : base(BotOpcode.List)
+        {
+            List = bots;
+        }
 
 
         [JsonProperty("list")]
-        public List<BotInfo> List { get; set; }
+        public List<BotInfo> List { get; private set; }
     }
 }

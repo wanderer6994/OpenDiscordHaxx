@@ -4,7 +4,7 @@ namespace DiscordHaxx
 {
     public class CheckerStartedRequest : CheckerRequest
     {
-        public CheckerStartedRequest(CheckerOpcode op) : base(op)
+        public CheckerStartedRequest() : base(CheckerOpcode.Started)
         {
             _progress = new CheckerProgress() { Total = Server.Bots.Count };
         }

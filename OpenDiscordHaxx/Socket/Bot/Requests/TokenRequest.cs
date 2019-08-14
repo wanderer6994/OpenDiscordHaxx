@@ -4,7 +4,7 @@ namespace DiscordHaxx
 {
     class TokenRequest : BotRequest
     {
-        public TokenRequest(BotOpcode op) : base(op)
+        public TokenRequest() : base(BotOpcode.Token)
         { }
 
 

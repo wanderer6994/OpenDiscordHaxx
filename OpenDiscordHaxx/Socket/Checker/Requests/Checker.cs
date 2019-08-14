@@ -11,6 +11,6 @@ namespace DiscordHaxx
 
 
         [JsonProperty("op")]
-        public CheckerOpcode Opcode { get; set; }
+        public CheckerOpcode Opcode { get; private set; }
     }
 }

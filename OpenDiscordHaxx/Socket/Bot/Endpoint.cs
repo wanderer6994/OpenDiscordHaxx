@@ -43,7 +43,7 @@ namespace DiscordHaxx
             foreach (var client in Server.Bots)
                 bots.Add(BotInfo.FromClient(client));
 
-            Send(JsonConvert.SerializeObject(new ListRequest(BotOpcode.List) { List = bots }));
+            Send(JsonConvert.SerializeObject(new ListRequest(bots)));
         }
     }
 }

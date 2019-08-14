@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 
 
+<style>
+  /* Brief information */
+  [id$=amount] {
+    color: rgb(160,162,165); 
+    font-size: 21px; 
+    font-family: 'Roboto';
+  }
+</style>
+
+
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
     <!-- Other shit -->
@@ -55,8 +66,7 @@
 </nav> 
 
 <body class="dark-body">
-  <center>
-    <div style="display: flex; align-items: center; width: 646px">
+    <div style="display: flex; align-items: center; width: 646px; margin:0 auto">
         <!-- Server status -->
         <form class="form-control dark-container dashboard-container" style="width: 294px; height: 140px;">
             <p class="dark-title dashboard-title">Server status</p>
@@ -66,8 +76,8 @@
         <!-- Brief information -->
         <form class="form-control dark-container dashboard-container" style="width: 294px; height: 140px;">
             <p class="dark-title dashboard-title" style="padding-bottom: 7px">Overlook</p>
-            <p id="account-amount" style="color: rgb(160,162,165); font-size: 21px; font-family: Roboto;">Loaded accounts: <span style="color: rgb(230,252,255)">0</span></p>
-            <p id="attack-amount" style="color: rgb(160,162,165); font-size: 21px; font-family: Roboto;">Ongoing attacks: <span style="color: rgb(230,252,255)">0</span></p>
+            <p id="account-amount">Loaded accounts: <span style="color: rgb(230,252,255)">0</span></p>
+            <p id="attack-amount">Ongoing attacks: <span style="color: rgb(230,252,255)">0</span></p>
         </form>
     </div>
 
@@ -77,11 +87,11 @@
       <li><a href="#" class="dark-dropdown">Kill</a></li>
     </ul>
 
-    <form class="form-control dark-container dashboard-container" style="width: 608px; height: 49.6vh">
-        <p class="dark-title dashboard-title">Ongoing attacks</p> 
+    <div class="form-control dark-container dashboard-container" style="width: 608px; height: 410px; margin:0 auto;">
+        <p class="dark-title dashboard-title">Ongoing attacks</p>
 
-        <div style="background-color: rgb(64,68,75); height: 400px">
-            <div style="max-height: 400px; margin-top: 24px; overflow: auto">
+        <div style="background-color: rgb(64,68,75); height: 340px;">
+            <div style="max-height: 340px; margin-top: 16px; overflow: auto">
                 <table class="table table-hover">
                     <thead>
                         <th>Type</th>
@@ -92,8 +102,7 @@
                 </table>
             </div>
         </div>
-    </form>
+    </div>
     <!-- End of ongoing attacks -->
-  </center>
 </body>
 </html>

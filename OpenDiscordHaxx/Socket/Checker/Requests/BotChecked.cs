@@ -4,7 +4,7 @@ namespace DiscordHaxx
 {
     public class BotCheckedRequest : CheckerRequest
     {
-        public BotCheckedRequest(CheckerOpcode op) : base(op)
+        public BotCheckedRequest() : base(CheckerOpcode.BotChecked)
         {
             Progress = new CheckerProgress();
         }

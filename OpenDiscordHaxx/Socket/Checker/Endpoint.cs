@@ -5,8 +5,6 @@ using Discord;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
-using System.Linq;
-using System.Threading;
 
 namespace DiscordHaxx
 {
@@ -16,15 +14,15 @@ namespace DiscordHaxx
         {
             Task.Run(() =>
             {
-                Send(JsonConvert.SerializeObject(new CheckerStartedRequest(CheckerOpcode.Started)));
+                Send(JsonConvert.SerializeObject(new CheckerStartedRequest()));
 
                 int valid = 0;
                 int invalid = 0;
                 int total = Server.Bots.Count;
                 foreach (var client in new List<DiscordClient>(Server.Bots))
                 {
-                    BotCheckedRequest req = new BotCheckedRequest(CheckerOpcode.BotChecked)
-                                                        { Bot = BotInfo.FromClient(client) };
+                    BotCheckedRequest req = new BotCheckedRequest()
+                                                 { Bot = BotInfo.FromClient(client) };
                     req.Progress.Total = total;
 
                     try
