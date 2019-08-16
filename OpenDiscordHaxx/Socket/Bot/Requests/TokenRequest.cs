@@ -22,5 +22,9 @@ namespace DiscordHaxx
 
         [JsonProperty("token")]
         public string Token { get; set; }
+
+
+        [JsonProperty("at")]
+        public string At { get; set; }
     }
 }

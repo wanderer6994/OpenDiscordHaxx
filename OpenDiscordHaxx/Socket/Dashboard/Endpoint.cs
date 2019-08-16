@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -15,8 +14,8 @@ namespace DiscordHaxx
                                      { Data = new StatusUpdate() { Status = Server.ServerStatus } });
             Send(new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate)
                                      { Data = new OverlookUpdate() { Accounts = Server.Bots.Count, Attacks = Server.OngoingAttacks.Count } });
-            Send(new DashboardRequest<List<Attack>>(DashboardOpcode.AttacksUpdate)
-                                     { Data = Server.OngoingAttacks.ToList() });
+            Send(new DashboardRequest<ObservableCollection<Attack>>(DashboardOpcode.AttacksUpdate)
+                                     { Data = Server.OngoingAttacks });
         }
 
 
@@ -30,7 +29,10 @@ namespace DiscordHaxx
                     foreach (var attack in Server.OngoingAttacks)
                     {
                         if (attack.Id == req.Id)
+                        {
                             attack.Bot.ShouldStop = true;
+                            break;
+                        }
                     }
                     break;
             }

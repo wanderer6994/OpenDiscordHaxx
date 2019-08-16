@@ -9,14 +9,6 @@ const DashboardOpcode = {
 
 
 window.onload = function() {
-    OpenSocket();
-}
-
-
-function OpenSocket() {
-
-    console.log('attempting to open websocket')
-
     socket = new WebSocket("ws://localhost/dashboard");
     socket.onmessage = function(args) {
         

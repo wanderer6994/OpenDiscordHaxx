@@ -21,7 +21,7 @@ namespace DiscordHaxx
         public override void Start()
         {
             List<DiscordClient> validBots = Server.Bots;
-            List<DiscordClient> nextBots = validBots;
+            List<DiscordClient> nextBots = new List<DiscordClient>(validBots);
 
             while (true)
             {
@@ -61,13 +61,13 @@ namespace DiscordHaxx
                         nextBots.Remove(bot);
                     }
                     catch (RateLimitException) { }
-                    catch
-                    {
-
-                    }
                 });
 
+
                 validBots = nextBots;
+
+                if (validBots.Count == 0)
+                    break;
             }
 
             Server.OngoingAttacks.Remove(Attack);

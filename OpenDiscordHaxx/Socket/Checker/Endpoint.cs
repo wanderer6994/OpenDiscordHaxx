@@ -14,7 +14,7 @@ namespace DiscordHaxx
         {
             Task.Run(() =>
             {
-                Send(JsonConvert.SerializeObject(new CheckerStartedRequest()));
+                Send(new CheckerStartedRequest());
 
                 int valid = 0;
                 int invalid = 0;
@@ -35,7 +35,7 @@ namespace DiscordHaxx
                     }
                     catch (JsonReaderException)
                     {
-                        Send(JsonConvert.SerializeObject(new CheckerRequest(CheckerOpcode.RateLimited)));
+                        Send(new CheckerRequest(CheckerOpcode.RateLimited));
 
                         break;
                     }
@@ -53,7 +53,7 @@ namespace DiscordHaxx
                     req.Progress.Invalid = invalid;
 
 
-                    Send(JsonConvert.SerializeObject(req));
+                    Send(req);
                 }
 
                 if (total > Server.Bots.Count)
@@ -65,7 +65,7 @@ namespace DiscordHaxx
                     File.WriteAllText("Tokens-checked.txt", tokensToAdd.ToString());
                 }
 
-                Send(JsonConvert.SerializeObject(new CheckerRequest(CheckerOpcode.Done)));
+                Send(new CheckerRequest(CheckerOpcode.Done));
             });
         }
     }

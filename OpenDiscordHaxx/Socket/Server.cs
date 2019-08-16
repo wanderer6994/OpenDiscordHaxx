@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Threading;
 using WebSocketSharp.Server;
 
 namespace DiscordHaxx
@@ -20,13 +19,10 @@ namespace DiscordHaxx
 
         public static void Broadcast<T>(DashboardOpcode op, T requestData) where T : new()
         {
-            DashboardRequest<T> req = new DashboardRequest<T>(op);
-            req.Data = requestData;
-
             if (_server.IsListening)
             {
                 _server.WebSocketServices["/dashboard"].Sessions
-                                .Broadcast(JsonConvert.SerializeObject(req));
+                                .Broadcast(new DashboardRequest<T>(op) { Data = requestData });
             }
         }
     }

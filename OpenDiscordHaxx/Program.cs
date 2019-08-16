@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using System.Collections.Specialized;
 using System.Linq;
+using System;
 
 namespace DiscordHaxx
 {
@@ -8,6 +9,8 @@ namespace DiscordHaxx
     {
         static void Main()
         {
+            Console.Title = "OpenDiscordHaxx [BETA]";
+
             Server.OngoingAttacks.CollectionChanged += OngoingAttacks_CollectionChanged;
             SocketServer.Start();
             Server.LoadAccounts();
@@ -18,7 +21,7 @@ namespace DiscordHaxx
 
         private static void OngoingAttacks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SocketServer.Broadcast(DashboardOpcode.AttacksUpdate, Server.OngoingAttacks.ToList());
+            SocketServer.Broadcast(DashboardOpcode.AttacksUpdate, Server.OngoingAttacks);
         }
     }
 }

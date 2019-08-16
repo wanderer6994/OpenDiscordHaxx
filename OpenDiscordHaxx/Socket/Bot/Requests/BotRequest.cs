@@ -12,5 +12,11 @@ namespace DiscordHaxx
 
         [JsonProperty("op")]
         public BotOpcode Opcode { get; set; }
+
+
+        public static implicit operator string(BotRequest instance)
+        {
+            return JsonConvert.SerializeObject(instance);
+        }
     }
 }

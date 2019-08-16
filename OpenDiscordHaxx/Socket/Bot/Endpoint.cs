@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WebSocketSharp.Server;
 using Discord;
+using System;
 
 namespace DiscordHaxx
 {
@@ -17,19 +18,27 @@ namespace DiscordHaxx
                     break;
                 case BotOpcode.Token:
                     TokenRequest tokenReq = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
-                    tokenReq.Token = Server.Bots.First(c => c.User.Id == tokenReq.Id).Token;
+                    DiscordClient client = Server.Bots.First(c => c.User.Id == tokenReq.Id);
+                    tokenReq.Token = client.Token;
+                    tokenReq.At = client.User.ToString();
 
-                    Send(JsonConvert.SerializeObject(tokenReq));
+                    Send(tokenReq);
                     break;
                 case BotOpcode.BotModification:
                     ModRequest modReq = JsonConvert.DeserializeObject<ModRequest>(e.Data);
-
                     DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
 
-                    if (modClient.User.Hypesquad != modReq.Hypesquad)
-                        modClient.User.SetHypesquad(modReq.Hypesquad);
+                    try
+                    {
+                        if (modClient.User.Hypesquad != modReq.Hypesquad)
+                            modClient.User.SetHypesquad(modReq.Hypesquad);
 
-                    modClient.User.Update();
+                        modClient.User.Update();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error on modifying account:\n{ex}");
+                    }
 
                     SendList();
                     break;
@@ -43,7 +52,7 @@ namespace DiscordHaxx
             foreach (var client in Server.Bots)
                 bots.Add(BotInfo.FromClient(client));
 
-            Send(JsonConvert.SerializeObject(new ListRequest(bots)));
+            Send(new ListRequest(bots));
         }
     }
 }

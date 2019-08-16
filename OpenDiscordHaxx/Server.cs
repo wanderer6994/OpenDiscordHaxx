@@ -19,8 +19,8 @@ namespace DiscordHaxx
             {
                 _serverStatus = value;
 
-                StatusUpdate update = new StatusUpdate() { Status = _serverStatus };
-                SocketServer.Broadcast(DashboardOpcode.StatusUpdate, update);
+                SocketServer.Broadcast(DashboardOpcode.StatusUpdate, 
+                                        new StatusUpdate() { Status = _serverStatus });
             }
         }
 
@@ -72,13 +72,13 @@ namespace DiscordHaxx
                     {
                         previousAmount = Bots.Count;
 
-                        OverlookUpdate update = new OverlookUpdate()
-                        {
-                            Accounts = Bots.Count,
-                            Attacks = OngoingAttacks.Count
-                        };
-                        SocketServer.Broadcast(DashboardOpcode.OverlookUpdate, update);
-
+                        SocketServer.Broadcast(DashboardOpcode.OverlookUpdate, 
+                                                new OverlookUpdate()
+                                                {
+                                                    Accounts = Bots.Count,
+                                                    Attacks = OngoingAttacks.Count
+                                                });
+                        
                         Thread.Sleep(1100);
                     }
                 }

@@ -28,7 +28,7 @@ window.onload = function() {
                 AppendText(payload.bot.at + ' is ' + (payload.valid ? 'valid!' : 'invalid :/'));
                 break;
             case CheckerOpcode.RateLimited:
-                AppendText('Server is rate limited. Checked tokens will still be saved');
+                FatalError('Server is rate limited.\nInvalid tokens will still be removed');
                 break;
             case CheckerOpcode.Done:
                 ShowToast(ToastType.Success, 'Checker has finished');

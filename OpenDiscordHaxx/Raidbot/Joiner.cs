@@ -71,10 +71,6 @@ namespace DiscordHaxx
                     }
                 }
                 catch (RateLimitException) { }
-                catch
-                {
-
-                }
             });
 
             Server.OngoingAttacks.Remove(Attack);

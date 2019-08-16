@@ -36,16 +36,15 @@ namespace DiscordHaxx
                         case DiscordError.InvalidRecipient:
                             Console.WriteLine($"[ERROR] invalid recipient");
                             break;
+                        case DiscordError.AccountUnverified:
+                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            break;
                         default:
                             Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
                             break;
                     }
                 }
                 catch (RateLimitException) { }
-                catch
-                {
-
-                }
             });
 
             Server.OngoingAttacks.Remove(Attack);

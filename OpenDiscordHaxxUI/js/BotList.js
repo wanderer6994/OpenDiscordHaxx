@@ -25,17 +25,7 @@ window.onload = function() {
             case ListOpcode.Token:
                 $('#bot-token-modal').modal({ show: true });
 
-                let at = '';
-
-                document.getElementById('bot-list').childNodes.forEach(row => {
-                    const info = GetRowInformation(row);
-
-                    if (info.id == payload.id)
-                        at = info.at;
-                });
-
-
-                document.getElementById('bot-token-title').innerText = 'Token for ' + at;
+                document.getElementById('bot-token-title').innerText = 'Token for ' + payload.at;
                 document.getElementById('bot-token').innerHTML = payload.token;
                 break;
         }
@@ -50,6 +40,7 @@ function SendJson(jsonData) {
 
 
 function OnList(botList) {
+
     const table = document.getElementById('bot-list');
 
     let html = '';
@@ -95,8 +86,8 @@ function OnModify(info) {
 
     document.getElementById('modify-title').innerText = 'Modify ' + info.at;
     document.getElementById('modify-id').innerText = info.id;
+
     const hype = document.getElementById('modify-hype');
-    
     for (i = 0; i < hype.options.length; i++) {
         if (hype.options[i].innerText == info.hypesquad)
         {

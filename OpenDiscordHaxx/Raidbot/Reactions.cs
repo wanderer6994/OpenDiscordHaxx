@@ -36,6 +36,9 @@ namespace DiscordHaxx
                 {
                     switch (e.Code)
                     {
+                        case DiscordError.AccountUnverified:
+                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            break;
                         case DiscordError.UnknownChannel:
                             Console.WriteLine($"[ERROR] Unknown channel");
                             break;
@@ -51,10 +54,6 @@ namespace DiscordHaxx
                     }
                 }
                 catch (RateLimitException) { }
-                catch
-                {
-
-                }
             });
 
             Server.OngoingAttacks.Remove(Attack);
