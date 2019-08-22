@@ -4,7 +4,7 @@ namespace DiscordHaxx
 {
     public class StartReconRequest : ReconRequest
     {
-        public StartReconRequest() : base(ReconOpcode.StartRecon)
+        public StartReconRequest() : base(0, ReconOpcode.StartRecon)
         { }
 
 

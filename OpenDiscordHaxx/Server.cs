@@ -34,7 +34,13 @@ namespace DiscordHaxx
 
             StartAccountBroadcasterAsync();
 
-            string[] tokens = File.ReadAllLines("Tokens.txt");
+            string[] tokens;
+
+            if (File.Exists("Tokens.txt"))
+                tokens = File.ReadAllLines("Tokens.txt");
+            else
+                tokens = new string[] { };
+
 
             foreach (var token in tokens)
             {

@@ -1,9 +1,10 @@
 let socket;
 
 const ReconOpcode = {
-    StartRecon: 0,
-    ReconCompleted: 1,
-    ServerNotFound: 2
+    Id: 0,
+    StartRecon: 1,
+    ReconCompleted: 2,
+    ServerNotFound: 3
 }
 
 
@@ -12,6 +13,16 @@ window.onload = function() {
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);
+
+        if (payload.op == ReconOpcode.Id)
+            document.getElementById('recon-id').innerText = payload.id;
+        if (payload.id != document.getElementById('recon-id').innerText) {
+            
+            console.log('ono');
+            
+            return;
+        }
+
 
         switch (payload.op) {
             case ReconOpcode.ReconCompleted:
@@ -34,7 +45,15 @@ window.onload = function() {
 }
 
 
+function StartRecon() {
+    socket.send(JSON.stringify({ op: ReconOpcode.StartRecon, guild_id: document.getElementById('guild-id').value }));
+}
+
+
 function UpdateRecon(data) {
+
+    console.log(data);
+
     const name = document.getElementById('server-name');
     const description = document.getElementById('server-desc');
     const region = document.getElementById('server-region');
@@ -43,12 +62,12 @@ function UpdateRecon(data) {
     const roleList = document.getElementById('role-list');
     const botsInGuild = document.getElementById('bots-in-server');
 
-    name.value = data.name;
-    description.value = data.description;
-    region.value = "Server region: " + data.region;
-    verification.value = "Verification level " + data.verification;
-    vanityInv.value = "Custom invite: " + data.vanity_invite;
-    botsInGuild.vlaue = data.bots_in_guild + ' bots are in this server';
+    name.innerText = data.name;
+    description.innerText = data.description;
+    region.innerText = "Server region: " + data.region;
+    verification.innerText = "Verification level: " + data.verification;
+    vanityInv.innerText = "Custom invite: " + data.vanity_invite;
+    botsInGuild.innerText = data.bots_in_guild + ' bots are in this server';
 
     let html = '';
 

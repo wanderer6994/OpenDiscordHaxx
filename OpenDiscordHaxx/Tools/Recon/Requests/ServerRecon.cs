@@ -5,7 +5,7 @@ namespace DiscordHaxx
 {
     public class ServerRecon : ReconRequest
     {
-        public ServerRecon() : base(ReconOpcode.ReconCompleted)
+        public ServerRecon(int id) : base(id, ReconOpcode.ReconCompleted)
         {
             Roles = new List<RoleInfo>();
         }

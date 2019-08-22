@@ -70,6 +70,7 @@
     <Compile Include="Socket\Bot\Requests\ListRequest.cs" />
     <Compile Include="Socket\Bot\Requests\ModRequest.cs" />
     <Compile Include="Socket\Bot\Requests\ModResponse.cs" />
+    <Compile Include="Tools\Checker\Checker.cs" />
     <Compile Include="Tools\Checker\Requests\BotChecked.cs" />
     <Compile Include="Tools\Checker\Endpoint.cs" />
     <Compile Include="Tools\Checker\Requests\CheckerErrorRequest.cs" />
@@ -103,11 +104,11 @@
     <Compile Include="Tools\Cleaner\Requests\CleanerRequest.cs" />
     <Compile Include="Tools\Cleaner\Requests\CleanOptions.cs" />
     <Compile Include="Tools\Recon\Endpoint.cs" />
-    <Compile Include="Tools\Recon\ReconOpcode.cs" />
-    <Compile Include="Tools\Recon\ReconRequest.cs" />
-    <Compile Include="Tools\Recon\RoleInfo.cs" />
-    <Compile Include="Tools\Recon\ServerRecon.cs" />
-    <Compile Include="Tools\Recon\StartReconRequest.cs" />
+    <Compile Include="Tools\Recon\Requests\ReconOpcode.cs" />
+    <Compile Include="Tools\Recon\Requests\ReconRequest.cs" />
+    <Compile Include="Tools\Recon\Requests\RoleInfo.cs" />
+    <Compile Include="Tools\Recon\Requests\ServerRecon.cs" />
+    <Compile Include="Tools\Recon\Requests\StartRecon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
