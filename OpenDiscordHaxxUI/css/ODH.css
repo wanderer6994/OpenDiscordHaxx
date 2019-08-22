@@ -51,3 +51,11 @@
     color: rgb(230,252,255) !important;
     font-family: 'Roboto';
 }
+
+
+#thread-amount {
+    width: 140px; 
+    position: absolute; 
+    bottom: 10px;
+    right: 10px;
+}

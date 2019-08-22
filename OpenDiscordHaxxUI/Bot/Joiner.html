@@ -1,6 +1,7 @@
 <script>
     function Submit() {
-        StartBot({ "op": "join", "invite": document.getElementById("invite").value });
+        StartBot({ 'op': 'join', 'invite': document.getElementById('invite').value,
+                                 'threads': document.getElementById('thread-amount').value });
     }
 </script>
 
@@ -18,6 +19,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="../css/ODH.css">
+    <link rel="stylesheet" href="../css/Input-fix.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
@@ -53,7 +55,13 @@
                 <li><a href="Reactions.html" class="dark-dropdown">Reactions</a></li>
             </ul>
         </li>
-        <li><a href="Checker.html">Checker</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
+            <ul class="dropdown-menu dark-dropdown-menu">
+              <li><a href="../Tools/Checker.html" class="dark-dropdown">Checker</a></li>
+              <li><a href="../Tools/Cleaner.html" class="dark-dropdown">Cleaner</a></li>
+            </ul>
+          </li>
     </ul>
   </div>
   </nav>
@@ -67,5 +75,7 @@
       <br><br>
 
       <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
+
+      <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </body>
 </html>

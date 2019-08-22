@@ -19,8 +19,8 @@ namespace DiscordHaxx
             {
                 _serverStatus = value;
 
-                SocketServer.Broadcast(DashboardOpcode.StatusUpdate, 
-                                        new StatusUpdate() { Status = _serverStatus });
+                SocketServer.Broadcast("/dashboard", 
+                                        new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate) { Data = new StatusUpdate() { Status = _serverStatus } });
             }
         }
 
@@ -32,7 +32,7 @@ namespace DiscordHaxx
         {
             ServerStatus = "Loading bots";
 
-            StartAccountBroadcaster();
+            StartAccountBroadcasterAsync();
 
             string[] tokens = File.ReadAllLines("Tokens.txt");
 
@@ -60,7 +60,7 @@ namespace DiscordHaxx
         }
 
 
-        private static async void StartAccountBroadcaster()
+        private static async void StartAccountBroadcasterAsync()
         {
             await Task.Run(() =>
             {
@@ -72,15 +72,14 @@ namespace DiscordHaxx
                     {
                         previousAmount = Bots.Count;
 
-                        SocketServer.Broadcast(DashboardOpcode.OverlookUpdate, 
-                                                new OverlookUpdate()
-                                                {
-                                                    Accounts = Bots.Count,
-                                                    Attacks = OngoingAttacks.Count
-                                                });
-                        
-                        Thread.Sleep(1100);
+                        var update = new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate);
+                        update.Data.Accounts = Bots.Count;
+                        update.Data.Attacks = OngoingAttacks.Count;
+
+                        SocketServer.Broadcast("/dashboard", update);
                     }
+
+                    Thread.Sleep(1100);
                 }
             });
         }

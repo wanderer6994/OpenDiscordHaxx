@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using WebSocketSharp.Server;
 using Discord;
-using System;
 
 namespace DiscordHaxx
 {
@@ -24,9 +23,11 @@ namespace DiscordHaxx
 
                     Send(tokenReq);
                     break;
-                case BotOpcode.BotModification:
+                case BotOpcode.BotModify:
                     ModRequest modReq = JsonConvert.DeserializeObject<ModRequest>(e.Data);
                     DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
+
+                    ModResponse resp = new ModResponse { At = modClient.User.ToString() };
 
                     try
                     {
@@ -34,17 +35,17 @@ namespace DiscordHaxx
                             modClient.User.SetHypesquad(modReq.Hypesquad);
 
                         modClient.User.Update();
+
+                        resp.Success = true;
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error on modifying account:\n{ex}");
-                    }
+                    catch { }
+
+                    Send(resp);
 
                     SendList();
                     break;
             }
         }
-
 
         private void SendList()
         {
@@ -52,7 +53,7 @@ namespace DiscordHaxx
             foreach (var client in Server.Bots)
                 bots.Add(BotInfo.FromClient(client));
 
-            Send(new ListRequest(bots));
+            SocketServer.Broadcast("/bot", new ListRequest(bots));
         }
     }
 }

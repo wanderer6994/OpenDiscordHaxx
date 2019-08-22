@@ -4,7 +4,7 @@
     {
         Started,
         BotChecked,
-        RateLimited,
+        Error,
         Done
     }
 }

@@ -4,6 +4,6 @@
     {
         List,
         Token,
-        BotModification
+        BotModify,
     }
 }

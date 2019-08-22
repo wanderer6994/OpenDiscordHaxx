@@ -9,6 +9,11 @@
     font-family: 'Roboto';
     text-align: center;
   }
+
+  .attacks-tr {
+    letter-spacing: 0.7px; 
+    font-size: 17.5px;
+  }
 </style>
 
 
@@ -61,7 +66,13 @@
                     <li><a href="Bot/Reactions.html" class="dark-dropdown">Reactions</a></li>
                 </ul>
             </li>
-            <li><a href="Bot/Checker.html">Checker</a></li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
+                <ul class="dropdown-menu dark-dropdown-menu">
+                  <li><a href="Tools/Checker.html" class="dark-dropdown">Checker</a></li>
+                  <li><a href="Tools/Cleaner.html" class="dark-dropdown">Cleaner</a></li>
+                </ul>
+              </li>
         </ul>
     </div>
 </nav> 
@@ -88,7 +99,7 @@
       <li><a href="#" class="dark-dropdown">Kill</a></li>
     </ul>
 
-    <div class="form-control dark-container dashboard-container" style="width: 608px; height: 410px; margin:0 auto;">
+    <div class="form-control dark-container dashboard-container" style="width: 608px; height: 410px; margin:0 auto; margin-top: 19px">
         <p class="dark-title dashboard-title">Ongoing attacks</p>
 
         <div style="background-color: rgb(64,68,75); height: 340px;">
@@ -97,6 +108,7 @@
                     <thead>
                         <th>Type</th>
                         <th>Bots</th>
+                        <th>Threads</th>
                     </thead>
                     <tbody id="attack-list">
                     </tbody>

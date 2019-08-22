@@ -7,27 +7,33 @@ namespace DiscordHaxx
 {
     public class Friender : Bot
     {
-        private readonly FriendRequest _recipient;
+        private readonly FriendRequest _request;
 
 
         public Friender(FriendRequest request)
         {
             Attack = new Attack(this) { Type = RaidOpcode.Friend, Bots = Server.Bots.Count };
 
-            _recipient = request;
+            Threads = request.Threads;
+            _request = request;
+
+            if (string.IsNullOrWhiteSpace(_request.Username))
+                throw new CheckException("Please enter a username");
+            if (_request.Discriminator <= 1)
+                throw new CheckException("Invalid discriminator");
         }
 
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
             {
                 if (ShouldStop)
                     return;
 
                 try
                 {
-                    bot.SendFriendRequest(_recipient.Username, _recipient.Discriminator);
+                    bot.SendFriendRequest(_request.Username, _request.Discriminator);
                 }
                 catch (DiscordHttpException e)
                 {

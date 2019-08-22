@@ -14,6 +14,13 @@ namespace DiscordHaxx
         {
             Task.Run(() =>
             {
+                if (Server.Bots.Count == 0)
+                {
+                    Send(new CheckerErrorRequest("notokens"));
+
+                    return;
+                }
+
                 Send(new CheckerStartedRequest());
 
                 int valid = 0;
@@ -35,7 +42,7 @@ namespace DiscordHaxx
                     }
                     catch (JsonReaderException)
                     {
-                        Send(new CheckerRequest(CheckerOpcode.RateLimited));
+                        Send(new CheckerErrorRequest("ratelimit"));
 
                         break;
                     }

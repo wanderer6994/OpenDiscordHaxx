@@ -8,7 +8,6 @@ C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\Newtonso
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\websocket-sharp-with-proxy-support.dll
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\Newtonsoft.Json.Schema.dll
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\Anarchy.pdb
-C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\Newtonsoft.Json.xml
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\bin\Release\Newtonsoft.Json.Schema.xml
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\obj\Release\OpenDiscordHaxx.csproj.CopyComplete
 C:\Users\ilink\source\repos\OpenDiscordHaxx\OpenDiscordHaxx\obj\Release\OpenDiscordHaxx.exe

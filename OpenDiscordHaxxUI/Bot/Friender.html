@@ -1,7 +1,8 @@
 <script>
     function Submit() {
         StartBot({ 'op': 'friend', 'username': document.getElementById('username').value, 
-                                   'discriminator': document.getElementById('discriminator').value });
+                                   'discriminator': document.getElementById('discriminator').value,
+                                   'threads': document.getElementById('thread-amount').value });
     }
 </script>
 
@@ -55,7 +56,13 @@
                 <li><a href="Reactions.html" class="dark-dropdown">Reactions</a></li>
             </ul>
         </li>
-        <li><a href="Checker.html">Checker</a></li>
+        <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
+            <ul class="dropdown-menu dark-dropdown-menu">
+              <li><a href="../Tools/Checker.html" class="dark-dropdown">Checker</a></li>
+              <li><a href="../Tools/Cleaner.html" class="dark-dropdown">Cleaner</a></li>
+            </ul>
+          </li>
     </ul>
   </div>
   </nav>
@@ -71,5 +78,7 @@
         <br><br><br><br>
 
         <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
+
+        <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </body>
 </html>

@@ -1,7 +1,8 @@
 ﻿using System.Threading;
 using System.Collections.Specialized;
-using System.Linq;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace DiscordHaxx
 {
@@ -21,7 +22,8 @@ namespace DiscordHaxx
 
         private static void OngoingAttacks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SocketServer.Broadcast(DashboardOpcode.AttacksUpdate, Server.OngoingAttacks);
+            SocketServer.Broadcast("/dashboard", new DashboardRequest<ObservableCollection<Attack>>(DashboardOpcode.AttacksUpdate)
+                                                 { Data = Server.OngoingAttacks });
         }
     }
 }

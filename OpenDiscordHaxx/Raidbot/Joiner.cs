@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 
@@ -18,7 +17,7 @@ namespace DiscordHaxx
         {
             Attack = new Attack(this) { Type = RaidOpcode.Join, Bots = Server.Bots.Count };
 
-
+            Threads = request.Threads;
             try
             {
                 _invite = new DiscordClient().GetGuildInvite(request.Invite.Split('/').Last());
@@ -43,13 +42,13 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
+                if (ShouldStop)
+                    return;
+
                 try
                 {
-                    if (ShouldStop)
-                        return;
-
                     bot.JoinGuild(_invite.Code);
                 }
                 catch (DiscordHttpException e)

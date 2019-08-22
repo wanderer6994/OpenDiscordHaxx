@@ -33,6 +33,13 @@ namespace DiscordHaxx
         public int Bots { get; set; }
 
 
+        [JsonProperty("threads")]
+        public int Threads
+        {
+            get { return Bot.Threads; }
+        }
+
+
         [JsonProperty("id")]
         public int Id { get; private set; }
     }

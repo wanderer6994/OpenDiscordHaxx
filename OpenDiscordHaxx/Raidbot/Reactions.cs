@@ -10,17 +10,25 @@ namespace DiscordHaxx
         private readonly ReactionsRequest _request;
 
 
-        public Reactions(ReactionsRequest req)
+        public Reactions(ReactionsRequest request)
         {
             Attack = new Attack(this) { Type = RaidOpcode.React, Bots = Server.Bots.Count };
 
-            _request = req;
+            Threads = request.Threads;
+            _request = request;
+
+            if (_request.ChannelId <= 0)
+                throw new CheckException("Invalid channel ID");
+            if (_request.MessageId <= 0)
+                throw new CheckException("Invalid message ID");
+            if (string.IsNullOrWhiteSpace(_request.Reaction))
+                throw new CheckException("Invalid reaction");
         }
 
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
                 if (ShouldStop)
                     return;

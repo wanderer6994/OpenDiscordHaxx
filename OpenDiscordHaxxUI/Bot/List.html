@@ -10,10 +10,10 @@
 
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../css/ODH.css">
-    <link rel="stylesheet" href="../css/Dark-table.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/ODH.css">
+    <link rel="stylesheet" href="../css/Dark-table.css">
 
 
     <!-- JS -->
@@ -25,10 +25,9 @@
     <script src="../js/BotList.js"></script>
 </head>
 
-
 <script>
     function Modify() {
-      SendJson({ op: ListOpcode.BotModification, 
+      SendJson({ op: ListOpcode.BotModify, 
                  id: document.getElementById('modify-id').innerText, 
                  hypesquad: document.getElementById('modify-hype').value });
     }
@@ -58,7 +57,13 @@
               <li><a href="Reactions.html" class="dark-dropdown">Reactions</a></li>
           </ul>
       </li>
-      <li><a href="Checker.html">Checker</a></li>
+      <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
+          <ul class="dropdown-menu dark-dropdown-menu">
+            <li><a href="../Tools/Checker.html" class="dark-dropdown">Checker</a></li>
+            <li><a href="../Tools/Cleaner.html" class="dark-dropdown">Cleaner</a></li>
+          </ul>
+        </li>
   </ul>
 </div>
 </nav> 
@@ -84,10 +89,10 @@
                   <h3>Hypesquad</h3>
                   
                   <select id="modify-hype" class="form-control dark-input" style="width: 300px">
-                    <option style="font-family: Roboto; font-weight: 100">None</option>
-                    <option style="font-family: Roboto; font-weight: 100">Bravery</option>
-                    <option style="font-family: Roboto; font-weight: 100">Brilliance</option>
-                    <option style="font-family: Roboto; font-weight: 100">Balance</option>
+                    <option style="font-family: Roboto; font-weight: 100;">None</option>
+                    <option style="font-family: Roboto; font-weight: 100;">Bravery</option>
+                    <option style="font-family: Roboto; font-weight: 100;">Brilliance</option>
+                    <option style="font-family: Roboto; font-weight: 100;">Balance</option>
                   </select>
 
 

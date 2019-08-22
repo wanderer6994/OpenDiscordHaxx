@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 
@@ -14,7 +13,14 @@ namespace DiscordHaxx
         {
             Attack = new Attack(this) { Type = RaidOpcode.Flood, Bots = Server.Bots.Count };
 
+            Threads = request.Threads;
             _request = request;
+
+            if (string.IsNullOrWhiteSpace(_request.Message))
+                throw new CheckException("Cannot send empty messages");
+
+            if (_request.ChannelId <= 0)
+                throw new CheckException("Invalid channel ID");
         }
 
 
@@ -28,7 +34,7 @@ namespace DiscordHaxx
                 if (ShouldStop)
                     break;
 
-                Parallel.ForEach(validBots, new ParallelOptions() { MaxDegreeOfParallelism = 2 }, bot =>
+                Parallel.ForEach(validBots, new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
                 {
                     try
                     {
@@ -48,6 +54,7 @@ namespace DiscordHaxx
                                 Console.WriteLine("[ERROR] channel verification too high");
                                 break;
                             case DiscordError.CannotSendEmptyMessage:
+                                ShouldStop = true;
                                 Console.WriteLine("[ERROR] cannot send empty messages");
                                 break;
                             case DiscordError.UnknownChannel:

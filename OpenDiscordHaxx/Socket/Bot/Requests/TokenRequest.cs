@@ -11,7 +11,7 @@ namespace DiscordHaxx
 
         [JsonProperty("id")]
 #pragma warning disable CS0649
-        private string _id;
+        private readonly string _id;
 #pragma warning restore CS0649
 
         public ulong Id

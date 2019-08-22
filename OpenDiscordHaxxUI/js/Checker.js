@@ -3,7 +3,7 @@ let socket;
 const CheckerOpcode = {
     Started: 0,
     BotChecked: 1,
-    RateLimited: 2,
+    Error: 2,
     Done: 3
 }
 
@@ -27,8 +27,15 @@ window.onload = function() {
                 UpdateProgress(payload.progress);
                 AppendText(payload.bot.at + ' is ' + (payload.valid ? 'valid!' : 'invalid :/'));
                 break;
-            case CheckerOpcode.RateLimited:
-                FatalError('Server is rate limited.\nInvalid tokens will still be removed');
+            case CheckerOpcode.Error:
+                switch (payload.error) {
+                    case 'ratelimit':
+                        FatalError('Server is rate limited.\nInvalid tokens will still be removed');
+                        break;
+                    case 'notokens':
+                        FatalError('No tokens are loaded.')
+                        break;
+                }
                 break;
             case CheckerOpcode.Done:
                 ShowToast(ToastType.Success, 'Checker has finished');

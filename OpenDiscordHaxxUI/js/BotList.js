@@ -3,7 +3,7 @@ let socket;
 const ListOpcode = {
     List: 0,
     Token: 1,
-    BotModification: 2
+    BotModify: 2
 }
 
 
@@ -11,7 +11,7 @@ window.onload = function() {
     socket = new WebSocket("ws://localhost/bot");
 
     socket.onopen = function() {
-        SendJson({ op: 0 });
+        SendJson({ op: ListOpcode.List });
     }
 
     socket.onmessage = function(args) {
@@ -20,13 +20,19 @@ window.onload = function() {
 
         switch (payload.op) {
             case ListOpcode.List:
-                OnList(payload.list);
+                OnList(payload.bots);
                 break;
             case ListOpcode.Token:
                 $('#bot-token-modal').modal({ show: true });
 
                 document.getElementById('bot-token-title').innerText = 'Token for ' + payload.at;
                 document.getElementById('bot-token').innerHTML = payload.token;
+                break;
+            case ListOpcode.BotModify:
+                if (payload.success)
+                    ShowToast(ToastType.Success, '<strong>Success!</strong> ' + payload.at + ' has been modified!');
+                else
+                    ShowToast(ToastType.Error, 'Failed to modify ' + payload.at);
                 break;
         }
     }
@@ -41,19 +47,25 @@ function SendJson(jsonData) {
 
 function OnList(botList) {
 
+    if (botList.length == 0) {
+        FatalError('No tokens are loaded');
+
+        return;
+    }
+
     const table = document.getElementById('bot-list');
 
     let html = '';
 
     for (let i = 0; i < botList.length; i++) {
-        let row = '<tr id="row-' + i + '" style="">\n';
-        row += '<td>' + botList[i].at + '</td>\n';
-        row += '<td>' + botList[i].id + '</td>\n';
-        row += '<td>' + botList[i].hypesquad + '</td>\n';
-        row += '<td>' + botList[i].verification + '</td>\n';
-        row += '</tr>';
+        const bot = botList[i];
 
-        html += row;
+        html += '<tr id="row-' + i + '">\n'
+                + '<td>' + bot.at + '</td>\n'
+                + '<td>' + bot.id + '</td>\n'
+                + '<td>' + bot.hypesquad + '</td>\n'
+                + '<td>' + bot.verification + '</td>\n'
+                + '</tr>';
     }
 
     table.innerHTML = html;

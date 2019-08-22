@@ -4,15 +4,11 @@ using Newtonsoft.Json;
 
 namespace DiscordHaxx
 {
-    public class ModRequest : BotRequest
+    public class ModRequest
     {
-        public ModRequest(BotOpcode op) : base(op)
-        { }
-
-
         [JsonProperty("id")]
 #pragma warning disable CS0649
-        private string _id;
+        private readonly string _id;
 #pragma warning restore CS0649
 
         public ulong Id
@@ -23,7 +19,7 @@ namespace DiscordHaxx
 
         [JsonProperty("hypesquad")]
 #pragma warning disable CS0649
-        private string _hypesquad;
+        private readonly string _hypesquad;
 #pragma warning restore CS0649
 
         public Hypesquad Hypesquad

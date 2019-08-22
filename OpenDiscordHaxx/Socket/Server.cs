@@ -14,15 +14,17 @@ namespace DiscordHaxx
             _server.AddWebSocketService<BotEndpoint>("/bot");
             _server.AddWebSocketService<RaidBotEndpoint>("/bot/raid");
             _server.AddWebSocketService<CheckerEndpoint>("/bot/checker");
+            _server.AddWebSocketService<CleanerEndpoint>("/bot/cleaner");
             _server.Start();
         }
 
-        public static void Broadcast<T>(DashboardOpcode op, T requestData) where T : new()
+
+        public static void Broadcast<T>(string endpoint, T request)
         {
             if (_server.IsListening)
             {
-                _server.WebSocketServices["/dashboard"].Sessions
-                                .Broadcast(new DashboardRequest<T>(op) { Data = requestData });
+                _server.WebSocketServices[endpoint].Sessions
+                                .Broadcast(JsonConvert.SerializeObject(request));
             }
         }
     }

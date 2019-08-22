@@ -73,13 +73,14 @@ function OnAttacksUpdate(attackList) {
     let html = '';
 
     for (let i = 0; i < attackList.length; i++) {
-        let row = '<tr id="row-' + i + '" style="letter-spacing: 0.7px; font-size: 17.5px">\n';
-        row += '<td>' + attackList[i].type + '</td>\n';
-        row += '<td>' + attackList[i].bots + '</td>\n';
-        row += '<td style="display: none">' + attackList[i].id + '</td>\n';
-        row += '</tr>';
+        const attack = attackList[i];
 
-        html += row;
+        html += '<tr id="row-' + i + '" style="letter-spacing: 0.7px; font-size: 17.5px;">\n'
+              + '<td style="font-family: Roboto; font-weight: 100; letter-spacing: 0px">' + attack.type + '</td>\n'
+              + '<td>' + attack.bots + '</td>\n'
+              + '<td>' + attack.threads + '</td>\n'
+              + '<td style="display: none">' + attack.id + '</td>\n'
+              + '</tr>';
     }
 
     list.innerHTML = html;
@@ -115,5 +116,6 @@ function GetRowInformation(invokedOn) {
 
     return { type: row.childNodes[1].innerText, 
              bots: row.childNodes[3].innerText,
-             id: row.childNodes[5].innerText };
+             threads: row.childNodes[5].innerText,
+             id: row.childNodes[7].innerText };
 }

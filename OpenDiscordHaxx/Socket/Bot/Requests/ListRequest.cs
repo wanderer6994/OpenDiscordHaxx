@@ -7,11 +7,13 @@ namespace DiscordHaxx
     {
         public ListRequest(List<BotInfo> bots) : base(BotOpcode.List)
         {
-            List = bots;
+            _bots = bots;
         }
 
 
-        [JsonProperty("list")]
-        public List<BotInfo> List { get; private set; }
+        [JsonProperty("bots")]
+#pragma warning disable IDE0052
+        private readonly List<BotInfo> _bots;
+#pragma warning restore IDE0052
     }
 }

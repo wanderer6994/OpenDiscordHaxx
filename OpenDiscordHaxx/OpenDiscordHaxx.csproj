@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -68,12 +69,14 @@
     <Compile Include="Socket\Bot\Requests\BotRequest.cs" />
     <Compile Include="Socket\Bot\Requests\ListRequest.cs" />
     <Compile Include="Socket\Bot\Requests\ModRequest.cs" />
-    <Compile Include="Socket\Checker\Requests\BotChecked.cs" />
-    <Compile Include="Socket\Checker\Endpoint.cs" />
-    <Compile Include="Socket\Checker\Requests\Opcode.cs" />
-    <Compile Include="Socket\Checker\Requests\Checker.cs" />
-    <Compile Include="Socket\Checker\Requests\CheckerProgress.cs" />
-    <Compile Include="Socket\Checker\Requests\CheckerStarted.cs" />
+    <Compile Include="Socket\Bot\Requests\ModResponse.cs" />
+    <Compile Include="Tools\Checker\Requests\BotChecked.cs" />
+    <Compile Include="Tools\Checker\Endpoint.cs" />
+    <Compile Include="Tools\Checker\Requests\CheckerErrorRequest.cs" />
+    <Compile Include="Tools\Checker\Requests\Opcode.cs" />
+    <Compile Include="Tools\Checker\Requests\Checker.cs" />
+    <Compile Include="Tools\Checker\Requests\CheckerProgress.cs" />
+    <Compile Include="Tools\Checker\Requests\CheckerStarted.cs" />
     <Compile Include="Socket\Dashboard\Requests\Attack.cs" />
     <Compile Include="Socket\Dashboard\Requests\AttackKillRequest.cs" />
     <Compile Include="Socket\Raid\Requests\Flood.cs" />
@@ -93,6 +96,15 @@
     <Compile Include="Socket\Dashboard\Requests\Request.cs" />
     <Compile Include="Socket\Raid\Requests\Reactions.cs" />
     <Compile Include="Socket\Server.cs" />
+    <Compile Include="Tools\Cleaner\Requests\AccountCleaned.cs" />
+    <Compile Include="Tools\Cleaner\Cleaner.cs" />
+    <Compile Include="Tools\Cleaner\Endpoint.cs" />
+    <Compile Include="Tools\Cleaner\Requests\CleanerOpcode.cs" />
+    <Compile Include="Tools\Cleaner\Requests\CleanerRequest.cs" />
+    <Compile Include="Tools\Cleaner\Requests\CleanOptions.cs" />
+    <Compile Include="Tools\Recon\Endpoint.cs" />
+    <Compile Include="Tools\Recon\ReconOpcode.cs" />
+    <Compile Include="Tools\Recon\ReconRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -105,5 +117,6 @@
       <Name>Anarchy</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
