@@ -105,6 +105,9 @@
     <Compile Include="Tools\Recon\Endpoint.cs" />
     <Compile Include="Tools\Recon\ReconOpcode.cs" />
     <Compile Include="Tools\Recon\ReconRequest.cs" />
+    <Compile Include="Tools\Recon\RoleInfo.cs" />
+    <Compile Include="Tools\Recon\ServerRecon.cs" />
+    <Compile Include="Tools\Recon\StartReconRequest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

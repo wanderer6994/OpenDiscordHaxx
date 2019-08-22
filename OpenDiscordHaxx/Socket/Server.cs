@@ -15,6 +15,7 @@ namespace DiscordHaxx
             _server.AddWebSocketService<RaidBotEndpoint>("/bot/raid");
             _server.AddWebSocketService<CheckerEndpoint>("/bot/checker");
             _server.AddWebSocketService<CleanerEndpoint>("/bot/cleaner");
+            _server.AddWebSocketService<ReconEndpoint>("/bot/recon");
             _server.Start();
         }
 
