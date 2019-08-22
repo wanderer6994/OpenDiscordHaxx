@@ -12,7 +12,7 @@ window.onload = function() {
 
     document.getElementById('checker-results').value = '';
 
-    socket = new WebSocket("ws://localhost/bot/checker");
+    socket = new WebSocket("ws://localhost/checker");
     socket.onmessage = function(args) {
 
         const payload = JSON.parse(args.data);

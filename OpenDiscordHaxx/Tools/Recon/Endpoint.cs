@@ -12,7 +12,6 @@ namespace DiscordHaxx
 
 
 
-
         private int _id;
 
 

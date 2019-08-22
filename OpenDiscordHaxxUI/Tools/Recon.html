@@ -66,11 +66,12 @@
 <body class="dark-body">
     <h1 class="dark-title" style="margin-top: 40px; text-align: center">Server recon</h1>
 
-    <div class="form-control dark-container center-block" style="width: 70%; min-width: 483px; height:77%; min-height: 635px; margin-top: 30px">
+    <fieldset id="recon-container">
+      <div class="form-control dark-container center-block" style="width: 70%; min-width: 483px; height:77%; min-height: 635px; margin-top: 30px">
         <div style="margin: 15px;">
             <div style="display: flex;">
                 <input type="number" min="1" class="form-control dark-input" style="width: 70%" placeholder="Server ID" id="guild-id">
-                <button class="btn dark-btn" style="width: 30%; margin-left: 3%" onclick="StartRecon()">Start</button>
+                <button class="btn dark-btn" style="width: 27%; margin-left: 3%" onclick="StartRecon()">Start</button>
             </div>
 
             <br>
@@ -101,6 +102,7 @@
             <p id="bots-in-server" style="margin-top: 15px">No bots are in this server</p>
         </div>
       </div>
+    </fieldset>
 
-      <p id="recon-id" style="display: none"></p>
+    <p id="recon-id" style="display: none"></p>
 </html>

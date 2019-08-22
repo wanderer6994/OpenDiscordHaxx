@@ -9,19 +9,15 @@ const ReconOpcode = {
 
 
 window.onload = function() {
-    socket = new WebSocket("ws://localhost/bot/recon");
+    socket = new WebSocket("ws://localhost/recon");
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);
 
         if (payload.op == ReconOpcode.Id)
             document.getElementById('recon-id').innerText = payload.id;
-        if (payload.id != document.getElementById('recon-id').innerText) {
-            
-            console.log('ono');
-            
+        if (payload.id != document.getElementById('recon-id').innerText)
             return;
-        }
 
 
         switch (payload.op) {
@@ -35,9 +31,11 @@ window.onload = function() {
                     region: 'Unknown',
                     verification: 'Unknown',
                     vanity_invite: 'None',
-                    roles: {},
+                    roles: [],
                     bots_in_guild: 'No'
                 });
+
+                ShowToast(ToastType.Error, 'Server was not found');
                 break;
         }
     }
@@ -47,27 +45,23 @@ window.onload = function() {
 
 function StartRecon() {
     socket.send(JSON.stringify({ op: ReconOpcode.StartRecon, guild_id: document.getElementById('guild-id').value }));
+
+    document.getElementById('recon-container').disabled = true;
 }
 
 
 function UpdateRecon(data) {
+    document.getElementById('recon-container').disabled = false;
 
-    console.log(data);
 
-    const name = document.getElementById('server-name');
-    const description = document.getElementById('server-desc');
-    const region = document.getElementById('server-region');
-    const verification = document.getElementById('verification-level');
-    const vanityInv = document.getElementById('vanity-invite');
+    document.getElementById('server-name').innerText = data.name;
+    document.getElementById('server-desc').innerText = data.description;
+    document.getElementById('server-region').innerText = "Server region: " + data.region;
+    document.getElementById('verification-level').innerText = "Verification level: " + data.verification;
+    document.getElementById('vanity-invite').innerText = "Custom invite: " + data.vanity_invite;
+    document.getElementById('bots-in-server').innerText = data.bots_in_guild + ' bots are in this server';
+
     const roleList = document.getElementById('role-list');
-    const botsInGuild = document.getElementById('bots-in-server');
-
-    name.innerText = data.name;
-    description.innerText = data.description;
-    region.innerText = "Server region: " + data.region;
-    verification.innerText = "Verification level: " + data.verification;
-    vanityInv.innerText = "Custom invite: " + data.vanity_invite;
-    botsInGuild.innerText = data.bots_in_guild + ' bots are in this server';
 
     let html = '';
 

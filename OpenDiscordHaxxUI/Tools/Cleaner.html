@@ -25,6 +25,13 @@
     <script src="../js/Cleaner.js"></script>
 </head>
 
+<style>
+  .form-check-label {
+    font-weight:300; 
+    font-size: 15px;
+  }
+</style>
+
 <nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -53,6 +60,7 @@
             <ul class="dropdown-menu dark-dropdown-menu">
               <li><a href="Checker.html" class="dark-dropdown">Checker</a></li>
               <li><a href="Cleaner.html" class="dark-dropdown">Cleaner</a></li>
+              <li><a href="Recon.html" class="dark-dropdown">Server recon</a></li>
             </ul>
         </li>
     </ul>
@@ -63,23 +71,23 @@
     <h1 class="dark-title" style="margin-top: 40px; text-align: center">Bot cleaner</h1>
 
     <fieldset id="clean-options">
-        <form class="form-control dark-container center-block" style="width: 40%; min-width: 210px; height: 42%; min-height: 200px; position: relative; margin-top: 30px">
+        <form class="form-control dark-container center-block" style="width: 50%; min-width: 210px; height: 300px; position: relative; margin-top: 30px">
 
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="remove-guilds" checked>
-              <label class="form-check-label" style="font-family: Roboto; font-weight:300; font-size: 15px" for="remove-guilds">Remove guilds</label>
+              <label class="form-check-label" for="remove-guilds">Remove guilds</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="remove-relationships" checked>
-              <label class="form-check-label" style="font-family: Roboto; font-weight:300; font-size: 15px" for="remove-relationships">Remove relationships</label>
+              <label class="form-check-label" for="remove-relationships">Remove relationships</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="remove-privates" checked>
-              <label class="form-check-label" style="font-family: Roboto; font-weight:300; font-size: 15px" for="remove-privates">Remove DMs</label>
+              <label class="form-check-label" for="remove-privates">Remove DMs</label>
             </div>
             <div class="form-check">
               <input class="form-check-input" type="checkbox" id="reset-profile">
-              <label class="form-check-label" style="font-family: Roboto; font-weight:300; font-size: 15px" for="reset-profile">Reset profile</label>
+              <label class="form-check-label" for="reset-profile">Reset profile</label>
             </div>
       
             <button class="btn dark-btn" data-dismiss="modal" style="width: 180px; position: absolute; bottom: 13px; right: 13px" onclick="StartCleaner()">Start</button>
@@ -87,9 +95,9 @@
     </fieldset>
 
 
-    <div class="center-block" style="width: 40%; min-width: 210px; margin-top: 55px">
+    <div class="center-block" style="width: 50%; min-width: 210px; margin-top: 55px">
       <h3 class="dark-title" style="text-align: left">Logs</h3>
 
-      <textarea id="cleaner-logs" class="form-control dark-container" rows="10" style="width: 100%; margin-top: 10px; resize: none" readonly></textarea>
+      <textarea id="cleaner-logs" class="form-control dark-container" rows="14" style="width: 100%; margin-top: 10px; resize: none" readonly></textarea>
     </div>
 </html>
