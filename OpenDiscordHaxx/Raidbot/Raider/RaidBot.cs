@@ -1,6 +1,6 @@
 ﻿namespace DiscordHaxx
 {
-    public abstract class Bot
+    public abstract class RaidBot
     {
         public int Threads { get; protected set; }
         public bool ShouldStop { get; set; }

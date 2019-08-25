@@ -5,6 +5,7 @@
         Started,
         BotChecked,
         Error,
-        Done
+        Done,
+        Resume
     }
 }

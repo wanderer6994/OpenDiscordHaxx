@@ -1,11 +1,13 @@
-﻿using Newtonsoft.Json;
+﻿using Discord;
+using Newtonsoft.Json;
 
 namespace DiscordHaxx
 {
     public class BotCheckedRequest : CheckerRequest
     {
-        public BotCheckedRequest() : base(CheckerOpcode.BotChecked)
+        public BotCheckedRequest(DiscordClient client) : base(CheckerOpcode.BotChecked)
         {
+            Bot = BotInfo.FromClient(client);
             Progress = new CheckerProgress();
         }
 

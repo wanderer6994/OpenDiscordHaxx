@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
-    public class Reactions : Bot
+    public class Reactions : RaidBot
     {
         private readonly ReactionsRequest _request;
 

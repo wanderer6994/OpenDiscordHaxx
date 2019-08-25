@@ -5,7 +5,7 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Friender : Bot
+    public class Friender : RaidBot
     {
         private readonly FriendRequest _request;
 

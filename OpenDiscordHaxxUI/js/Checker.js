@@ -4,7 +4,8 @@ const CheckerOpcode = {
     Started: 0,
     BotChecked: 1,
     Error: 2,
-    Done: 3
+    Done: 3,
+    Resume: 4
 }
 
 
@@ -39,6 +40,9 @@ window.onload = function() {
                 break;
             case CheckerOpcode.Done:
                 ShowToast(ToastType.Success, 'Checker has finished');
+                break;
+            case CheckerOpcode.Resume:
+                UpdateProgress(payload.progress);
                 break;
         }
     }

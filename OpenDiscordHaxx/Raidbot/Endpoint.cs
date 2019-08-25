@@ -26,7 +26,7 @@ namespace DiscordHaxx
             {
                 try
                 {
-                    Bot bot = null;
+                    RaidBot bot = null;
 
                     switch (JsonConvert.DeserializeObject<RaidRequest>(e.Data).Opcode)
                     {

@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System.Threading.Tasks;
 using WebSocketSharp.Server;
-using Discord;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
 
 namespace DiscordHaxx
 {
@@ -21,9 +16,8 @@ namespace DiscordHaxx
                 _checker.StartAsync();
             }
             else
-                Send(JsonConvert.SerializeObject(new CheckerProgress() { Total = _checker.Total,
-                                                                         Valid = _checker.Valid,
-                                                                         Invalid = _checker.Invalid }));
+                Send(JsonConvert.SerializeObject(new CheckerResumeRequest()
+                                                    { Progress = _checker.Progress }));
         }
     }
 }

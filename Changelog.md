@@ -4,6 +4,8 @@
 - Added cleaner and recon tools.
 - Made only 1 checker able to run at a time, making it harder to 
 overload the tokens.
+- Made server automatically start reloading bots when Tokens.txt is changed.
+- Improved botlist to not send as much data as well as be more responsive.
 - Added Threads to the dashboard's 'Ongoing attacks' bot list.
 - Added more input handling.
 - Fixed a CPU usage issue.

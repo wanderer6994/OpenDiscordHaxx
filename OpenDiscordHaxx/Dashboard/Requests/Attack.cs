@@ -8,9 +8,9 @@ namespace DiscordHaxx
         private static int _currentAttackId = 0;
 
         [JsonIgnore]
-        public Bot Bot { get; private set; }
+        public RaidBot Bot { get; private set; }
 
-        public Attack(Bot bot)
+        public Attack(RaidBot bot)
         {
             Id = _currentAttackId;
             _currentAttackId++;

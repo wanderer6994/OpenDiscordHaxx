@@ -2,7 +2,6 @@
 using System.Collections.Specialized;
 using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 
 namespace DiscordHaxx
 {
@@ -14,8 +13,8 @@ namespace DiscordHaxx
 
             Server.OngoingAttacks.CollectionChanged += OngoingAttacks_CollectionChanged;
             SocketServer.Start();
-            Server.LoadAccounts();
-            Server.ServerStatus = "Ready";
+            Server.StartAccountBroadcasterAsync();
+            Server.AccountList.LoadAsync();
 
             Thread.Sleep(-1);
         }

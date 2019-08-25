@@ -91,11 +91,11 @@ namespace DiscordHaxx
                         catch { }
                     }
 
-                    SocketServer.Broadcast("/bot/cleaner", new AccountCleanedRequest(bot));
+                    SocketServer.Broadcast("/cleaner", new AccountCleanedRequest(bot));
                 }
 
                 Finished = true;
-                SocketServer.Broadcast("/bot/cleaner", new CleanerRequest(CleanerOpcode.CleanerFinished));
+                SocketServer.Broadcast("/cleaner", new CleanerRequest(CleanerOpcode.CleanerFinished));
             });
         }
     }

@@ -4,14 +4,14 @@ namespace DiscordHaxx
 {
     public class BotRequest
     {
-        public BotRequest(BotOpcode op)
+        public BotRequest(ListOpcode op)
         {
             Opcode = op;
         }
 
 
         [JsonProperty("op")]
-        public BotOpcode Opcode { get; set; }
+        public ListOpcode Opcode { get; set; }
 
 
         public static implicit operator string(BotRequest instance)

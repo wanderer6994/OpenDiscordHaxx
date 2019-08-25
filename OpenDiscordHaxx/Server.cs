@@ -1,11 +1,8 @@
-﻿using System;
-using Discord;
+﻿using Discord;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.ObjectModel;
-using System.Text;
 
 namespace DiscordHaxx
 {
@@ -19,54 +16,19 @@ namespace DiscordHaxx
             {
                 _serverStatus = value;
 
-                SocketServer.Broadcast("/dashboard", 
+                SocketServer.Broadcast("/dashboard",
                                         new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate) { Data = new StatusUpdate() { Status = _serverStatus } });
             }
         }
 
 
-        #region accounts
-        public static List<DiscordClient> Bots = new List<DiscordClient>();
-
-        public static void LoadAccounts()
+        public static AccountList AccountList = new AccountList();
+        public static List<DiscordClient> Bots
         {
-            ServerStatus = "Loading bots";
-
-            StartAccountBroadcasterAsync();
-
-            string[] tokens;
-
-            if (File.Exists("Tokens.txt"))
-                tokens = File.ReadAllLines("Tokens.txt");
-            else
-                tokens = new string[] { };
-
-
-            foreach (var token in tokens)
-            {
-                try
-                {
-                    Bots.Add(new DiscordClient(token));
-                }
-                catch (DiscordHttpException) { }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Unknown error when loading account:\n{e}");
-                }
-            }
-
-            if (Bots.Count < tokens.Length)
-            {
-                StringBuilder builder = new StringBuilder();
-                foreach (var bot in Bots)
-                    builder.AppendLine(bot.Token);
-
-                File.WriteAllText("Tokens-valid.txt", builder.ToString());
-            }
+            get { return AccountList; }
         }
 
-
-        private static async void StartAccountBroadcasterAsync()
+        public static async void StartAccountBroadcasterAsync()
         {
             await Task.Run(() =>
             {
@@ -89,7 +51,6 @@ namespace DiscordHaxx
                 }
             });
         }
-        #endregion
 
 
         public static ObservableCollection<Attack> OngoingAttacks = new ObservableCollection<Attack>();

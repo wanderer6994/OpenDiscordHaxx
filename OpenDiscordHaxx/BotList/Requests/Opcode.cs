@@ -1,9 +1,9 @@
 ﻿namespace DiscordHaxx
 {
-    public enum BotOpcode
+    public enum ListOpcode
     {
         List,
         Token,
-        BotModify,
+        BotModify
     }
 }

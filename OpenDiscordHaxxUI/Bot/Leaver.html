@@ -1,12 +1,23 @@
 <script>
     function Submit() {
-        StartBot({ 'op': 'leave', 'guild_id': document.getElementById('guild_id').value ,
-                                  'threads': document.getElementById('thread-amount').value });
+        StartBot({ op: 'leave', guild_id: document.getElementById('guild-id').value,
+                                group: document.getElementById('group').checked == true,
+                                threads: document.getElementById('thread-amount').value });
     }
+
+  function CheckGroup() {
+  const guildBox = document.getElementById('guild-id');
+
+  if (!document.getElementById('group').checked)
+      guildBox.placeholder = 'Server ID';
+    else 
+      guildBox.placeholder = 'Group ID';
+  }
 </script>
 
 
 <!DOCTYPE html>
+
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
@@ -71,10 +82,13 @@
       <h1 class="dark-title" style="margin-top: 40px;">Leaver</h1>
       <br>
 
-      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild_id">
-      <br><br>
+      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild-id">
+      <div class="center-block" style="width: 62px; margin-top: 12px" onclick="CheckGroup()">
+        <input type="checkbox" id="group">
+        <label for="group" style="color: rgb(210,212,215); font-size: 16px; font-weight: 300">Group</label>
+      </div>
 
-      <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
+      <button class="btn dark-btn center-block" style="width: 240px; margin-top: 30px" onclick="Submit()">Start</button>
 
       <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </body>

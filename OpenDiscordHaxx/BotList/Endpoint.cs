@@ -1,21 +1,23 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
 using System.Linq;
 using WebSocketSharp.Server;
 using Discord;
 
 namespace DiscordHaxx
 {
-    public class BotEndpoint : WebSocketBehavior
+    public class BotListEndpoint : WebSocketBehavior
     {
+        protected override void OnOpen()
+        {
+            Send(new ListRequest(ListAction.Add, Server.Bots));
+        }
+
+
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
             switch (JsonConvert.DeserializeObject<BotRequest>(e.Data).Opcode)
             {
-                case BotOpcode.List:
-                    SendList();
-                    break;
-                case BotOpcode.Token:
+                case ListOpcode.Token:
                     TokenRequest tokenReq = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
                     DiscordClient client = Server.Bots.First(c => c.User.Id == tokenReq.Id);
                     tokenReq.Token = client.Token;
@@ -23,7 +25,7 @@ namespace DiscordHaxx
 
                     Send(tokenReq);
                     break;
-                case BotOpcode.BotModify:
+                case ListOpcode.BotModify:
                     ModRequest modReq = JsonConvert.DeserializeObject<ModRequest>(e.Data);
                     DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
 
@@ -42,18 +44,9 @@ namespace DiscordHaxx
 
                     Send(resp);
 
-                    SendList();
+                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, modClient));
                     break;
             }
-        }
-
-        private void SendList()
-        {
-            List<BotInfo> bots = new List<BotInfo>();
-            foreach (var client in Server.Bots)
-                bots.Add(BotInfo.FromClient(client));
-
-            SocketServer.Broadcast("/bot", new ListRequest(bots));
         }
     }
 }

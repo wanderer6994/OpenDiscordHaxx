@@ -1,9 +1,7 @@
 ﻿using Discord;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,11 +9,16 @@ namespace DiscordHaxx
 {
     public class Checker
     {
-        public int Total { get; private set; }
-        public int Valid { get; private set; }
-        public int Invalid { get; private set; }
+        public CheckerProgress Progress { get; private set; }
 
         public bool Finished { get; private set; }
+
+
+        public Checker()
+        {
+            Progress = new CheckerProgress();
+            Progress.Total = Server.Bots.Count;
+        }
 
 
         public async void StartAsync()
@@ -24,19 +27,16 @@ namespace DiscordHaxx
             {
                 if (Server.Bots.Count == 0)
                 {
-                    SocketServer.Broadcast("/bot/checker", new CheckerErrorRequest("notokens"));
+                    SocketServer.Broadcast("/checker", new CheckerErrorRequest("notokens"));
                     Finished = true;
                     return;
                 }
 
-                SocketServer.Broadcast("/bot/checker", new CheckerStartedRequest());
+                SocketServer.Broadcast("/checker", new CheckerStartedRequest());
 
-                Total = Server.Bots.Count;
                 foreach (var client in new List<DiscordClient>(Server.Bots))
                 {
-                    BotCheckedRequest req = new BotCheckedRequest()
-                    { Bot = BotInfo.FromClient(client) };
-                    req.Progress.Total = Total;
+                    BotCheckedRequest req = new BotCheckedRequest(client);
 
                     try
                     {
@@ -48,28 +48,27 @@ namespace DiscordHaxx
                     }
                     catch (JsonReaderException)
                     {
-                        SocketServer.Broadcast("/bot/checker", new CheckerErrorRequest("ratelimit"));
+                        SocketServer.Broadcast("/checker", new CheckerErrorRequest("ratelimit"));
                         Finished = true;
                         break;
                     }
 
 
                     if (req.Valid)
-                        Valid++;
+                        Progress.Valid++;
                     else
                     {
                         Server.Bots.Remove(client);
-                        Invalid++;
+                        SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, client));
+                        Progress.Invalid++;
                     }
 
-                    req.Progress.Valid = Valid;
-                    req.Progress.Invalid = Invalid;
+                    req.Progress = Progress;
 
-
-                    SocketServer.Broadcast("/bot/checker", req);
+                    SocketServer.Broadcast("/checker", req);
                 }
 
-                if (Total > Server.Bots.Count)
+                if (Progress.Total > Server.Bots.Count)
                 {
                     StringBuilder tokensToAdd = new StringBuilder();
                     foreach (var bot in Server.Bots)
@@ -78,7 +77,7 @@ namespace DiscordHaxx
                     File.WriteAllText("Tokens-checked.txt", tokensToAdd.ToString());
                 }
 
-                SocketServer.Broadcast("/bot/checker", new CheckerRequest(CheckerOpcode.Done));
+                SocketServer.Broadcast("/checker", new CheckerRequest(CheckerOpcode.Done));
 
                 Finished = true;
             });

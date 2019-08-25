@@ -4,7 +4,7 @@ namespace DiscordHaxx
 {
     class ModResponse : BotRequest
     {
-        public ModResponse() : base(BotOpcode.BotModify)
+        public ModResponse() : base(ListOpcode.BotModify)
         { }
 
 

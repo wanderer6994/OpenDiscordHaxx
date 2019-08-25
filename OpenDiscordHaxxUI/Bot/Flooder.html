@@ -2,14 +2,40 @@
 
 <script>
     function Submit() {
-        StartBot({ 'op': 'flood', 'channel_id': document.getElementById('channel_id').value, 
-                                  'message': document.getElementById('message').value,
-                                  'threads': document.getElementById('thread-amount').value });
+        StartBot({ op: 'flood', channel_id: document.getElementById('channel-id').value, 
+                                message: document.getElementById('message').value,
+                                dm: document.getElementById('dm-channel').checked == true,
+                                use_embed: document.getElementById('use-embed').checked == true,
+                                embed: {
+                                  title: document.getElementById('embed-title').value,
+                                  description: document.getElementById('embed-desc').value,
+                                  url: document.getElementById('embed-url').value,
+                                  color: parseInt(document.getElementById('embed-color').value.substr(1), 16)
+                                },
+                                threads: document.getElementById('thread-amount').value });
+    }
+
+    function CheckDM() {
+      const channelBox = document.getElementById('channel-id');
+
+      if (document.getElementById('dm-channel').checked)
+        channelBox.placeholder = 'User ID';
+      else 
+        channelBox.placeholder = 'Channel ID';
+    }
+
+
+    function CheckEmbed() {
+
+      const container = document.getElementById('embed-container');
+
+      container.style.display = document.getElementById('use-embed').checked ? 'block' : 'none';
     }
 </script>
 
 
 <!DOCTYPE html>
+
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" style="height: 100%">
 <head>
@@ -34,6 +60,16 @@
     <script src="../js/Error.js"></script>
     <script src="../js/RaidBot.js"></script>
 </head>
+
+
+<style>
+  label {
+    color: rgb(210,212,215); 
+    font-size: 16px; 
+    font-weight: 300;
+  }
+</style>
+
 
 <nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
     <div class="container-fluid">
@@ -74,12 +110,38 @@
       <h1 class="dark-title" style="margin-top: 40px;">Flooder</h1>
       <br>
 
-      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Channel ID" id="channel_id">
+      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Channel ID" id="channel-id">
       <br>
-      <input class="form-control dark-input center-block" style="width: 340px" placeholder="Message" id="message">
-      <br><br>
 
-      <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
+      <input class="form-control dark-input center-block" style="width: 340px" placeholder="Message" id="message">
+      
+      <!-- Check options (dm channel, add embed) -->
+      <div class="center-block" style="width: 250px; margin-top: 16px">
+
+        <div style="display: inline" onclick="CheckDM()">
+          <input type="checkbox" id="dm-channel">
+          <label for="dm-channel">DM channel</label>
+        </div>
+
+        <div style="display: inline-block; margin-left: 20px" onclick="CheckEmbed()">
+          <input type="checkbox" id="use-embed">
+          <label for="use-embed">Add an embed</label>
+        </div>
+        
+      </div>
+
+      <div id="embed-container" class="form-control dark-container center-block" style="width: 340px; height: 252px; margin-top: 12px; display: none">
+        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 7px" placeholder="Title" id="embed-title">
+        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Description" id="embed-desc">
+        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Title URL" id="embed-url">
+        
+        <h3 class="dark-title" style="text-align: left">Color</h3>
+        <form class="form-control" style="background-color: rgb(47,49,54); border-color: rgb(40,44,47)">
+          <input id="embed-color" type="color" style="width: 309px; height: 7px; margin-left: -10px; margin-top: -7px; background-color: inherit; border: none; outline: none;">
+        </form>
+      </div>
+
+      <button class="btn dark-btn center-block" style="width: 240px; margin-top: 36px" onclick="Submit()">Start</button>
 
       <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </html>

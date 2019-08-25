@@ -50,7 +50,7 @@ namespace DiscordHaxx
 
                         if (guild == null)
                         {
-                            SocketServer.Broadcast("/bot/recon", new ReconRequest(_id, ReconOpcode.ReconFailed));
+                            SocketServer.Broadcast("/recon", new ReconRequest(_id, ReconOpcode.ReconFailed));
 
                             return;
                         }
@@ -68,7 +68,7 @@ namespace DiscordHaxx
                         foreach (var role in guild.Roles.Where(r => r.Mentionable))
                             recon.Roles.Add(new RoleInfo(role));
 
-                        SocketServer.Broadcast("/bot/recon", recon);
+                        SocketServer.Broadcast("/recon", recon);
                     });
                     break;
             }

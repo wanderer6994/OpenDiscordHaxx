@@ -6,7 +6,7 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Joiner : Bot
+    public class Joiner : RaidBot
     {
 #pragma warning disable IDE1006
         private Invite _invite { get; set; }
@@ -20,7 +20,7 @@ namespace DiscordHaxx
             Threads = request.Threads;
             try
             {
-                _invite = new DiscordClient().GetGuildInvite(request.Invite.Split('/').Last());
+                _invite = new DiscordClient().GetInvite(request.Invite.Split('/').Last());
             }
             catch (DiscordHttpException e)
             {
@@ -46,10 +46,12 @@ namespace DiscordHaxx
             {
                 if (ShouldStop)
                     return;
-
                 try
                 {
-                    bot.JoinGuild(_invite.Code);
+                    if (_invite.Type == InviteType.Guild)
+                        bot.JoinGuild(_invite.Code);
+                    else
+                        bot.JoinGroup(_invite.Code);
                 }
                 catch (DiscordHttpException e)
                 {
@@ -57,6 +59,9 @@ namespace DiscordHaxx
                     {
                         case DiscordError.UnknownInvite:
                             Console.WriteLine($"[ERROR] unknown invite");
+
+                            if (_invite.Type == InviteType.Group)
+                                ShouldStop = true;
                             break;
                         case DiscordError.InvalidInvite:
                             Console.WriteLine($"[ERROR] invalid invite");

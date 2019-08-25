@@ -5,9 +5,10 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    public class Leaver : Bot
+    public class Leaver : RaidBot
     {
         private readonly ulong _guildId;
+        private readonly bool _group;
 
         public Leaver(LeaveRequest request)
         {
@@ -15,6 +16,7 @@ namespace DiscordHaxx
 
             Threads = request.Threads;
             _guildId = request.GuildId;
+            _group = request.Group;
 
             if (_guildId <= 0)
                 throw new CheckException("Invalid guild ID");
@@ -30,7 +32,10 @@ namespace DiscordHaxx
                     if (ShouldStop)
                         return;
 
-                    bot.LeaveGuild(_guildId);
+                    if (_group)
+                        bot.LeaveGroup(_guildId);
+                    else
+                        bot.LeaveGuild(_guildId);
                 }
                 catch (DiscordHttpException e)
                 {
