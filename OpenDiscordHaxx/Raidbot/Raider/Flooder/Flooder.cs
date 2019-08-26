@@ -9,7 +9,7 @@ namespace DiscordHaxx
     public class Flooder : RaidBot
     {
         private readonly FloodRequest _request;
-        private List<FloodClient> _clients;
+        private readonly List<FloodClient> _clients;
         private bool _ready;
 
         public Flooder(FloodRequest request)
@@ -55,8 +55,6 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            List<FloodClient> nextClients = new List<FloodClient>(_clients);
-
             while (!_ready) { Thread.Sleep(200); }
 
             while (true)
@@ -64,17 +62,15 @@ namespace DiscordHaxx
                 if (ShouldStop)
                     break;
 
-                Parallel.ForEach(_clients, new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
+                Parallel.ForEach(new List<FloodClient>(_clients), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
                 {
                     if (ShouldStop)
                         return;
 
                     if (!bot.TrySendMessage(_request.Message, _request.UseEmbed ? _request.Embed : null))
-                        nextClients.Remove(bot);
+                        _clients.Remove(bot);
                 });
 
-
-                _clients = nextClients;
 
                 if (_clients.Count == 0)
                     break;

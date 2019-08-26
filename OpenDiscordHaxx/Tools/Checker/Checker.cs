@@ -16,8 +16,8 @@ namespace DiscordHaxx
 
         public Checker()
         {
-            Progress = new CheckerProgress();
-            Progress.Total = Server.Bots.Count;
+            Progress = new CheckerProgress
+            {   Total = Server.Bots.Count   };
         }
 
 
@@ -44,7 +44,7 @@ namespace DiscordHaxx
                     }
                     catch (DiscordHttpException e)
                     {
-                        req.Valid = e.Code == DiscordError.UnknownInvite;
+                        req.Valid = e.Code == DiscordError.UnknownInvite || e.Code == DiscordError.MaximumGuilds;
                     }
                     catch (JsonReaderException)
                     {

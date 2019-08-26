@@ -28,11 +28,12 @@
 
 
     <!-- CSS -->
-    <link rel="stylesheet" href="css/ODH.css">
-    <link rel="stylesheet" href="css/Dark-table.css">
-    <link href="css/Dashboard.css" type="text/css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/ODH.css">
+    <link rel="stylesheet" href="css/Table.css">
+    <link rel="stylesheet" href="css/ContextMenu.css">
+    <link rel="stylesheet" href="css/Dashboard.css">
 
 
     <!-- JS -->
@@ -97,14 +98,14 @@
 
     <!-- Ongoing attacks -->
     <ul id="attack-list-context-menu" class="dropdown-menu dark-dropdown-menu" role="menu" style="display:none">
-      <li><a href="#" class="dark-dropdown">Kill</a></li>
+      <li><a class="dark-dropdown">Kill</a></li>
     </ul>
 
-    <div class="form-control dark-container dashboard-container" style="width: 608px; height: 410px; margin:0 auto; margin-top: 19px">
+    <div class="form-control dark-container dashboard-container" style="width: 608px; height: 400px; margin:0 auto; margin-top: 19px">
         <p class="dark-title dashboard-title">Ongoing attacks</p>
 
-        <div style="background-color: rgb(64,68,75); height: 340px;">
-            <div style="max-height: 340px; margin-top: 16px; overflow: auto">
+        <div class="form-control" style="background-color: rgb(64,68,75); border-color: rgb(57,59,64); height: 340px;">
+            <div style="max-height: 340px; overflow: auto">
                 <table class="table table-hover">
                     <thead>
                         <th>Type</th>

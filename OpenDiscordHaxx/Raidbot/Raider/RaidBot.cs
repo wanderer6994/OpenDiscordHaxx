@@ -1,4 +1,6 @@
-﻿namespace DiscordHaxx
+﻿using System;
+
+namespace DiscordHaxx
 {
     public abstract class RaidBot
     {

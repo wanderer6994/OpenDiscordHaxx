@@ -5,8 +5,8 @@ namespace DiscordHaxx
 {
     public class FloodClient
     {
-        private DiscordClient _client;
-        private ulong _channelId;
+        private readonly DiscordClient _client;
+        private readonly ulong _channelId;
 
 
         public FloodClient(DiscordClient client, ulong id, bool dm)
@@ -31,9 +31,6 @@ namespace DiscordHaxx
                         break;
                     case DiscordError.ChannelVerificationTooHigh:
                         Console.WriteLine("[ERROR] channel verification too high");
-                        break;
-                    case DiscordError.CannotSendEmptyMessage:
-                        Console.WriteLine("[ERROR] cannot send empty messages");
                         break;
                     case DiscordError.UnknownChannel:
                         Console.WriteLine("[ERROR] unknown channel");

@@ -33,16 +33,15 @@ window.onload = function() {
 
                 switch (payload.action) {
                     case ListAction.Add:
-                        for (let i = 0; i < payload.bots.length; i++) {
-                            const bot = payload.bots[i];
-
+                        let currentId = botList.rows.length;
+                        payload.bots.forEach(bot => {
                             let row = botList.insertRow(botList.rows.length);
-                            row.id = 'row-' + i;
+                            row.id = 'row-' + currentId++;
                             row.innerHTML = '<td>' + bot.at + '</td>\n'
                                             + '<td>' + bot.id + '</td>\n'
                                             + '<td>' + bot.hypesquad + '</td>\n'
                                             + '<td>' + bot.verification + '</td>\n';
-                        }
+                        });
 
                         botList.childNodes.forEach(row => {
                             $('#' + row.id).contextMenu({
