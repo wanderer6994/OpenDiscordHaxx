@@ -101,7 +101,10 @@ namespace DiscordHaxx
             {
                 _reloaderRunning = true;
 
-                string currentContent = File.ReadAllText("Tokens.txt");
+                string currentContent = null;
+
+                if (File.Exists("Tokens.txt"))
+                     currentContent = File.ReadAllText("Tokens.txt");
 
                 while (true)
                 {

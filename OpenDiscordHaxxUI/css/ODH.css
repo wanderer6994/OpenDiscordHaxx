@@ -6,18 +6,18 @@
 }
 
 
-.dark-dropdown-menu {
+div ul li ul {
     background-color: rgb(34,34,34) !important;
 }
 
 
-.dark-dropdown {
+div ul li ul li a  {
     color: rgb(190,192,195) !important;
     font-family: 'Roboto';
 }
 
 
-.dark-dropdown:hover {
+div ul li ul li a:hover  {
     background-color: rgb(38,38,38) !important;
 }
 

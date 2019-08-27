@@ -29,7 +29,7 @@
 
       const container = document.getElementById('embed-container');
 
-      container.style.display = document.getElementById('use-embed').checked ? 'block' : 'none';
+      container.style.display = document.getElementById('use-embed').checked ? 'inline-block' : 'none';
     }
 </script>
 
@@ -79,27 +79,27 @@
       <ul class="nav navbar-nav">
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Management<span class="caret"></span></a>
-          <ul class="dropdown-menu dark-dropdown-menu">
-            <li><a href="../Dashboard.html" class="dark-dropdown">Dashboard</a></li>
-            <li><a href="List.html" class="dark-dropdown">Bots</a></li>
+          <ul class="dropdown-menu">
+            <li><a href="../Dashboard.html">Dashboard</a></li>
+            <li><a href="List.html">Bots</a></li>
           </ul>
         </li>
         <li class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Start attack<span class="caret"></span></a>
-            <ul class="dropdown-menu dark-dropdown-menu">
-                <li><a href="Joiner.html" class="dark-dropdown">Joiner</a></li>
-                <li><a href="Leaver.html" class="dark-dropdown">Leaver</a></li>
-                <li><a href="Flooder.html" class="dark-dropdown">Flooder</a></li>
-                <li><a href="Friender.html" class="dark-dropdown">Friender</a></li>
-                <li><a href="Reactions.html" class="dark-dropdown">Reactions</a></li>
+            <ul class="dropdown-menu">
+                <li><a href="Joiner.html">Joiner</a></li>
+                <li><a href="Leaver.html">Leaver</a></li>
+                <li><a href="Flooder.html">Flooder</a></li>
+                <li><a href="Friender.html">Friender</a></li>
+                <li><a href="Reactions.html">Reactions</a></li>
             </ul>
         </li>
         <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
-          <ul class="dropdown-menu dark-dropdown-menu">
-            <li><a href="../Tools/Checker.html" class="dark-dropdown">Checker</a></li>
-            <li><a href="../Tools/Cleaner.html" class="dark-dropdown">Cleaner</a></li>
-            <li><a href="../Tools/Recon.html" class="dark-dropdown">Server recon</a></li>
+          <ul class="dropdown-menu">
+            <li><a href="../Tools/Checker.html">Checker</a></li>
+            <li><a href="../Tools/Cleaner.html">Cleaner</a></li>
+            <li><a href="../Tools/Recon.html">Server recon</a></li>
           </ul>
         </li>
     </ul>
@@ -110,35 +110,48 @@
       <h1 class="dark-title" style="margin-top: 40px;">Flooder</h1>
       <br>
 
-      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Channel ID" id="channel-id">
-      <br>
+        <div class="center-block" style="width: 723px;">
 
-      <input class="form-control dark-input center-block" style="width: 340px" placeholder="Message" id="message">
-      
-      <!-- Check options (dm channel, add embed) -->
-      <div class="center-block" style="width: 226px; margin-top: 16px">
+          <div style="width: 723px; display: inline-flex">
 
-        <div style="display: inline" onclick="CheckDM()">
-          <input type="checkbox" id="dm-channel">
-          <label for="dm-channel">DM channel</label>
-        </div>
-
-        <div style="display: inline-block; margin-left: 20px" onclick="CheckEmbed()">
-          <input type="checkbox" id="use-embed">
-          <label for="use-embed">Add embed</label>
-        </div>
-      </div>
-
-      <div id="embed-container" class="form-control dark-container center-block" style="width: 340px; height: 252px; margin-top: 12px; display: none">
-        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 7px" placeholder="Title" id="embed-title">
-        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Description" id="embed-desc">
-        <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Title URL" id="embed-url">
+            <div class="form-control dark-container center-block" style="width: 360px; height: 252px; padding: 0; display: inline-block;">
+            
+              <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 10px" placeholder="Channel ID" id="channel-id">
+              <br>
         
-        <h3 class="dark-title" style="margin-top: 16px; text-align: left">Color</h3>
-        <form class="form-control" style="background-color: rgb(47,49,54); border-color: rgb(40,44,47)">
-          <input id="embed-color" type="color" style="width: 308px; height: 7px; margin-left: -10px; margin-top: -7px; background-color: inherit; border: none; outline: none;">
-        </form>
-      </div>
+              <textarea class="form-control dark-input center-block" rows="5" style="width: 340px; resize: none" placeholder="Message" id="message"></textarea>
+              
+              <!-- Check options (dm channel, add embed) -->
+              <div class="center-block" style="width: 226px; margin-top: 16px">
+        
+                <div style="display: inline" onclick="CheckDM()">
+                  <input type="checkbox" id="dm-channel">
+                  <label for="dm-channel">DM channel</label>
+                </div>
+        
+                <div style="display: inline-block; margin-left: 20px" onclick="CheckEmbed()">
+                  <input type="checkbox" id="use-embed">
+                  <label for="use-embed">Add embed</label>
+                </div>
+              </div>
+      
+            </div>
+      
+            <div id="embed-container" class="form-control dark-container" style="width: 340px; height: 252px; margin-left: 20px; display: none">
+              
+              <input class="form-control dark-input center-block" style="width: 312px; margin-top: 7px" placeholder="Title" id="embed-title">
+              <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Description" id="embed-desc">
+              <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Title URL" id="embed-url">
+              
+              <h3 class="dark-title" style="margin-top: 16px; text-align: left">Color</h3>
+              <form class="form-control" style="background-color: rgb(47,49,54); border-color: rgb(40,44,47)">
+                <input id="embed-color" type="color" style="width: 308px; height: 7px; margin-left: -10px; margin-top: -7px; background-color: inherit; border: none; outline: none;">
+              </form>
+      
+            </div>
+    
+          </div>
+        </div>
 
       <button class="btn dark-btn center-block" style="width: 240px; margin-top: 36px" onclick="Submit()">Start</button>
 

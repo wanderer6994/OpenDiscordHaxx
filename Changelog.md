@@ -1,14 +1,17 @@
-# 0.0.2.1
+# 0.1.0.0
 
+### Additions
 - Added support for setting custom thread amounts on attacks.
-- Added cleaner and recon tools.
-- Made only 1 checker able to run at a time, making it harder to 
-overload the tokens.
+- Added Threads to the dashboard's 'Ongoing attacks' bot list.
+- Added cleaner and recon to Tools.
+- Added more input handling.
+
+### Improvements
+- Made only 1 checker able to run at a time, making it harder to overload the tokens.
 - Made server automatically start reloading bots when Tokens.txt is changed.
 - Improved botlist to not send as much data as well as be more responsive.
-- Added Threads to the dashboard's 'Ongoing attacks' bot list.
-- Added more input handling.
 - Fixed a CPU usage issue.
+- Improved a bunch of the web UI.
 
 
 
