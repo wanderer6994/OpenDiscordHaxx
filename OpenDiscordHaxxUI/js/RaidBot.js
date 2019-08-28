@@ -8,7 +8,7 @@ window.onload = function() {
         const payload = JSON.parse(args.data);
 
         if (payload.succeeded)
-            payload.message = '<strong>Success!<strong> ' + payload.message;
+            payload.message = '<strong>Success!</strong> ' + payload.message;
 
         ShowToast(payload.succeeded ? ToastType.Success : ToastType.Error, payload.message);
     }

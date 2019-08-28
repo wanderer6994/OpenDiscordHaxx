@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Reactions(ReactionsRequest request)
         {
-            Attack = new Attack(this) { Type = RaidOpcode.React, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Reactions", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             _request = request;

@@ -20,13 +20,7 @@ namespace DiscordHaxx
 
 
         [JsonProperty("type")]
-        private string _type;
-
-        public RaidOpcode Type
-        {
-            get { return (RaidOpcode)Enum.Parse(typeof(RaidOpcode), _type, true); }
-            set { _type = value.ToString(); }
-        }
+        public string Type { get; set; }
 
 
         [JsonProperty("bots")]

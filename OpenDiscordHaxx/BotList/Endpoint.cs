@@ -2,6 +2,7 @@
 using System.Linq;
 using WebSocketSharp.Server;
 using Discord;
+using Newtonsoft.Json.Linq;
 
 namespace DiscordHaxx
 {
@@ -15,10 +16,12 @@ namespace DiscordHaxx
 
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
-            switch (JsonConvert.DeserializeObject<BotRequest>(e.Data).Opcode)
+            JObject obj = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+            switch (obj.GetValue("op").ToObject<ListOpcode>())
             {
                 case ListOpcode.Token:
-                    TokenRequest tokenReq = JsonConvert.DeserializeObject<TokenRequest>(e.Data);
+                    TokenRequest tokenReq = obj.ToObject<TokenRequest>();
                     DiscordClient client = Server.Bots.First(c => c.User.Id == tokenReq.Id);
                     tokenReq.Token = client.Token;
                     tokenReq.At = client.User.ToString();
@@ -26,7 +29,7 @@ namespace DiscordHaxx
                     Send(tokenReq);
                     break;
                 case ListOpcode.BotModify:
-                    ModRequest modReq = JsonConvert.DeserializeObject<ModRequest>(e.Data);
+                    ModRequest modReq = obj.ToObject<ModRequest>();
                     DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
 
                     ModResponse resp = new ModResponse { At = modClient.User.ToString() };

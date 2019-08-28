@@ -21,8 +21,7 @@ namespace DiscordHaxx
 
         private static void OngoingAttacks_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            SocketServer.Broadcast("/dashboard", new DashboardRequest<ObservableCollection<Attack>>(DashboardOpcode.AttacksUpdate)
-                                                 { Data = Server.OngoingAttacks });
+            SocketServer.Broadcast("/dashboard", new DashboardRequest<AttacksUpdate>());
         }
     }
 }

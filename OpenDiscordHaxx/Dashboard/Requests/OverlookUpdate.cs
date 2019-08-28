@@ -2,13 +2,22 @@
 
 namespace DiscordHaxx
 {
-    public class OverlookUpdate
+    public class OverlookUpdate : DashboardInnerRequest
     {
+        public OverlookUpdate() : base(DashboardOpcode.OverlookUpdate)
+        {
+            _accounts = Server.Bots.Count;
+            _attacks = Server.OngoingAttacks.Count;
+        }
+
+
+#pragma warning disable IDE0052
         [JsonProperty("accounts")]
-        public int Accounts { get; set; }
+        private readonly int _accounts;
 
 
         [JsonProperty("attacks")]
-        public int Attacks { get; set; }
+        private readonly int _attacks;
+#pragma warning restore IDE0052
     }
 }

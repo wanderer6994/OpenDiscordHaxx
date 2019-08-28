@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.ObjectModel;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
@@ -10,25 +9,22 @@ namespace DiscordHaxx
     {
         protected override void OnOpen()
         {
-            Send(new DashboardRequest<StatusUpdate>(DashboardOpcode.StatusUpdate)
-                                     { Data = new StatusUpdate() { Status = Server.ServerStatus } });
-            Send(new DashboardRequest<OverlookUpdate>(DashboardOpcode.OverlookUpdate)
-                                     { Data = new OverlookUpdate() { Accounts = Server.Bots.Count, Attacks = Server.OngoingAttacks.Count } });
-            Send(new DashboardRequest<ObservableCollection<Attack>>(DashboardOpcode.AttacksUpdate)
-                                     { Data = Server.OngoingAttacks });
+            Send(new DashboardRequest<StatusUpdate>());
+            Send(new DashboardRequest<OverlookUpdate>());
+            Send(new DashboardRequest<AttacksUpdate>());
         }
 
 
         protected override void OnMessage(MessageEventArgs e)
         {
-            switch (JsonConvert.DeserializeObject<JObject>(e.Data).GetValue("op").ToObject<DashboardOpcode>())
+            JObject obj = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+            switch (obj.GetValue("op").ToObject<DashboardOpcode>())
             {
                 case DashboardOpcode.KillAttack:
-                    AttackKillRequest req = JsonConvert.DeserializeObject<AttackKillRequest>(e.Data);
-
                     foreach (var attack in Server.OngoingAttacks)
                     {
-                        if (attack.Id == req.Id)
+                        if (attack.Id == obj.ToObject<AttackKillRequest>().Id)
                         {
                             attack.Bot.ShouldStop = true;
                             break;

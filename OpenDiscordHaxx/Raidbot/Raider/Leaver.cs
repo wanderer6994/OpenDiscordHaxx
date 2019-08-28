@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Leaver(LeaveRequest request)
         {
-            Attack = new Attack(this) { Type = RaidOpcode.Leave, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Leaver", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             _guildId = request.GuildId;

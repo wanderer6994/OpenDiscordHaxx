@@ -2,19 +2,21 @@
 
 namespace DiscordHaxx
 {
-    public class DashboardRequest<T> where T : new()
+    public class DashboardRequest<T> where T : DashboardInnerRequest, new()
     {
-        [JsonProperty("opcode")]
-        public DashboardOpcode Opcode { get; private set; }
-
-
         [JsonProperty("data")]
         public T Data { get; set; }
 
 
-        public DashboardRequest(DashboardOpcode op)
+        [JsonProperty("op")]
+        public DashboardOpcode Opcode
         {
-            Opcode = op;
+            get { return Data.Opcode; }
+        }
+
+
+        public DashboardRequest()
+        {
             Data = new T();
         }
 

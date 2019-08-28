@@ -7,17 +7,19 @@ namespace DiscordHaxx
     {
         public RoleInfo(Role role)
         {
-            Name = role.Name;
-            Id = role.Id;
+            _name = role.Name;
+            _id = role.Id.ToString();
         }
 
 
 
+#pragma warning disable IDE0052
         [JsonProperty("name")]
-        public string Name { get; private set; }
+        private readonly string _name;
 
 
         [JsonProperty("id")]
-        public ulong Id { get; private set; }
+        private readonly string _id;
+#pragma warning restore IDE0052
     }
 }

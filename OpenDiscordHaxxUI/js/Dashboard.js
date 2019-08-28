@@ -14,7 +14,7 @@ window.onload = function() {
         
         const payload = JSON.parse(args.data);
 
-        switch (payload.opcode) {
+        switch (payload.op) {
             case DashboardOpcode.StatusUpdate: //this does not account for the server dying
                 OnStatusUpdate(payload.data);
                 break;
@@ -22,7 +22,7 @@ window.onload = function() {
                 OnOverlookUpdate(payload.data);
                 break;
             case DashboardOpcode.AttacksUpdate:
-                OnAttacksUpdate(payload.data);
+                OnAttacksUpdate(payload.data.attacks);
                 break;
         }
     }

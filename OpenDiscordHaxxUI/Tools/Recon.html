@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/ODH.css">
     <link rel="stylesheet" href="../css/Input-fix.css">
-    <link rel="stylesheet" href="../css/Dark-table.css">
+    <link rel="stylesheet" href="../css/Table.css">
     <link rel="stylesheet" href="../css/ContextMenu.css">
 
 
@@ -45,7 +45,7 @@
         </li>
         <li class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown">Start attack<span class="caret"></span></a>
-            <ul class="dropdown-menu dark-dropdown-menu">
+            <ul class="dropdown-menu">
                 <li><a href="../Bot/Joiner.html">Joiner</a></li>
                 <li><a href="../Bot/Leaver.html">Leaver</a></li>
                 <li><a href="../Bot/Flooder.html">Flooder</a></li>
@@ -55,7 +55,7 @@
         </li>
         <li class="dropdown active">
             <a class="dropdown-toggle" data-toggle="dropdown">Tools<span class="caret"></span></a>
-            <ul class="dropdown-menu dark-dropdown-menu">
+            <ul class="dropdown-menu">
               <li><a href="Checker.html">Checker</a></li>
               <li><a href="Cleaner.html">Cleaner</a></li>
               <li><a href="Recon.html">Server recon</a></li>
@@ -66,21 +66,32 @@
   </nav> 
 
 <body class="dark-body">
-    <ul id="roles-dropdown-menu" class="dropdown-menu dark-dropdown-menu" role="menu" style="display:none;">
-        <li><a>Copy as messagable</a></li> <!-- <:yeahboi:615125362552209419> -->
-        <li><a>Copy as reactable</a></li>  <!-- yeahboi:615125362552209419 -->
+    <ul id="roles-context-menu" class="dropdown-menu" role="menu" style="display:none;">
+        <li><a>Get messagable</a></li>
     </ul>
 
+    <div id="role-modal" class="modal fade" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content dark-container">
+              <div class="modal-body">
+                <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <h3 id="role-modal-title" class="modal-title">Role as messagable</h3>
+                
+                <p id="role-messagable" style="margin-top: 12px"></p>
+              </div>
+          </div>
+      </div>
+    </div>
 
 
     <h1 class="dark-title" style="margin-top: 40px; text-align: center">Server recon</h1>
 
     <fieldset id="recon-container">
-      <div class="form-control dark-container center-block" style="width: 70%; min-width: 483px; height:77%; min-height: 635px; margin-top: 30px">
+      <div class="form-control dark-container center-block" style="width: 70%; min-width: 483px; height: 77%; min-height: 635px; margin-top: 30px;">
         <div style="margin: 15px;">
-            <div style="display: flex;">
-                <input type="number" min="1" class="form-control dark-input" style="width: 70%" placeholder="Server ID" id="guild-id">
-                <button class="btn dark-btn" style="width: 27%; margin-left: 3%" onclick="StartRecon()">Start</button>
+            <div style="display: flex; margin-top: 21px;">
+                <input type="number" min="1" class="form-control dark-input" style="width: 85%; margin-right: 20px" placeholder="Server ID" id="guild-id">
+                <button class="btn dark-btn" style="width: 170px; align-self: flex-end" onclick="StartRecon()">Start</button>
             </div>
 
             <br>

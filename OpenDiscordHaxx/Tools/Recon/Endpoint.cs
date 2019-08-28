@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Linq;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
@@ -9,9 +10,6 @@ namespace DiscordHaxx
     public class ReconEndpoint : WebSocketBehavior
     {
         private static int _nextId;
-
-
-
         private int _id;
 
 
@@ -26,16 +24,17 @@ namespace DiscordHaxx
 
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
-            switch (JsonConvert.DeserializeObject<ReconRequest>(e.Data).Opcode)
+            JObject obj = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+            switch (obj.GetValue("op").ToObject<ReconOpcode>())
             {
                 case ReconOpcode.StartRecon:
                     Task.Run(() =>
                     {
-                        var req = JsonConvert.DeserializeObject<StartReconRequest>(e.Data);
+                        var req = obj.ToObject<StartReconRequest>();
 
                         int bots = 0;
                         Guild guild = null;
-
 
                         foreach (var bot in Server.Bots)
                         {
@@ -48,12 +47,14 @@ namespace DiscordHaxx
                             catch { }
                         }
 
+
                         if (guild == null)
                         {
                             SocketServer.Broadcast("/recon", new ReconRequest(_id, ReconOpcode.ReconFailed));
 
                             return;
                         }
+
 
                         ServerRecon recon = new ServerRecon(_id)
                         {

@@ -49,8 +49,10 @@ window.onload = function() {
                                 menuSelected: OnContextMenuUsed
                             });
                         });
+
                         break;
                     case ListAction.Remove:
+
                         payload.bots.forEach(bot => {
                             botList.childNodes.forEach(row => {
 
@@ -60,8 +62,10 @@ window.onload = function() {
                                 }
                             });
                         });
+
                         break;
                     case ListAction.Update:
+
                         payload.bots.forEach(bot => {
                             
                             for (let i = 0; i < botList.childNodes.length; i++) {
@@ -80,6 +84,7 @@ window.onload = function() {
                                 }
                             }
                         });
+                        
                         break;
                 }
 

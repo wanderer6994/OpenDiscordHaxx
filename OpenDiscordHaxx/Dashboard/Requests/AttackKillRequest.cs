@@ -2,10 +2,10 @@
 
 namespace DiscordHaxx
 {
-    public class AttackKillRequest
+    public class AttackKillRequest : DashboardInnerRequest
     {
-        [JsonProperty("opcode")]
-        public DashboardOpcode Opcode { get; private set; }
+        public AttackKillRequest() : base(DashboardOpcode.KillAttack)
+        { }
 
 
         [JsonProperty("id")]

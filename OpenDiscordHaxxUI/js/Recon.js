@@ -65,12 +65,39 @@ function UpdateRecon(data) {
 
     let html = '';
 
-    data.roles.forEach(role => {
+    for (let i = 0; i < data.roles.length; i++) {
         html += '<tr id="row-' + i + '">\n'
-                + '<td>' + role.name + '</td>\n'
-                + '<td>' + role.id + '</td>\n'
+                + '<td>' + data.roles[i].name + '</td>\n'
+                + '<td>' + data.roles[i].id + '</td>\n'
                 + '</tr>';
-    });
+    }
 
     roleList.innerHTML = html;
+
+    roleList.childNodes.forEach(row => {
+        $('#' + row.id).contextMenu({
+            menuSelector: "#roles-context-menu",
+            menuSelected: OnContextMenuUsed
+        });
+    });
+}
+
+
+function OnContextMenuUsed(invokedOn, selectedMenu) {
+    const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
+
+    switch (selectedMenu.text()) {
+        case "Get messagable":
+            $('#role-modal').modal({ show: true });
+
+            document.getElementById('role-modal-title').innerText = info.name + ' as messagable';
+            document.getElementById('role-messagable').innerText = '<@&' + info.id + '>';
+            break;
+    }
+}
+
+
+function GetRowInformation(row) {
+    return { name: row.childNodes[1].innerText, 
+             id: row.childNodes[3].innerText };
 }

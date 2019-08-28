@@ -12,7 +12,7 @@ namespace DiscordHaxx
 
         public Friender(FriendRequest request)
         {
-            Attack = new Attack(this) { Type = RaidOpcode.Friend, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Friender", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             _request = request;

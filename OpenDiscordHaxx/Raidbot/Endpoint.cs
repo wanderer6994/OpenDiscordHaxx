@@ -2,6 +2,7 @@
 using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace DiscordHaxx
 {
@@ -28,22 +29,24 @@ namespace DiscordHaxx
                 {
                     RaidBot bot = null;
 
-                    switch (JsonConvert.DeserializeObject<RaidRequest>(e.Data).Opcode)
+                    JObject obj = JsonConvert.DeserializeObject<JObject>(e.Data);
+
+                    switch (obj.GetValue("op").ToString())
                     {
-                        case RaidOpcode.Join:
-                            bot = new Joiner(JsonConvert.DeserializeObject<JoinRequest>(e.Data));
+                        case "join":
+                            bot = new Joiner(obj.ToObject<JoinRequest>());
                             break;
-                        case RaidOpcode.Leave:
-                            bot = new Leaver(JsonConvert.DeserializeObject<LeaveRequest>(e.Data));
+                        case "leave":
+                            bot = new Leaver(obj.ToObject<LeaveRequest>());
                             break;
-                        case RaidOpcode.Flood:
-                            bot = new Flooder(JsonConvert.DeserializeObject<FloodRequest>(e.Data));
+                        case "flood":
+                            bot = new Flooder(obj.ToObject<FloodRequest>());
                             break;
-                        case RaidOpcode.Friend:
-                            bot = new Friender(JsonConvert.DeserializeObject<FriendRequest>(e.Data));
+                        case "friend":
+                            bot = new Friender(obj.ToObject<FriendRequest>());
                             break;
-                        case RaidOpcode.React:
-                            bot = new Reactions(JsonConvert.DeserializeObject<ReactionsRequest>(e.Data));
+                        case "react":
+                            bot = new Reactions(obj.ToObject<ReactionsRequest>());
                             break;
                     }
 

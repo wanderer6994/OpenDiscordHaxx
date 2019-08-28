@@ -2,9 +2,15 @@
 
 namespace DiscordHaxx
 {
-    public class StatusUpdate
+    public class StatusUpdate : DashboardInnerRequest
     {
+        public StatusUpdate() : base(DashboardOpcode.StatusUpdate)
+        { }
+
+
         [JsonProperty("status")]
-        public string Status { get; set; }
+#pragma warning disable IDE0052
+        private readonly string _status = Server.ServerStatus;
+#pragma warning restore IDE0052
     }
 }

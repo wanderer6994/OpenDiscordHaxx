@@ -14,7 +14,7 @@ namespace DiscordHaxx
 
         public Flooder(FloodRequest request)
         {
-            Attack = new Attack(this) { Type = RaidOpcode.Flood, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Flooder", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             _request = request;

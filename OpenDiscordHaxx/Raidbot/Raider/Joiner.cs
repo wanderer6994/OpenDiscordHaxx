@@ -15,7 +15,7 @@ namespace DiscordHaxx
 
         public Joiner(JoinRequest request)
         {
-            Attack = new Attack(this) { Type = RaidOpcode.Join, Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Joiner", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             try
