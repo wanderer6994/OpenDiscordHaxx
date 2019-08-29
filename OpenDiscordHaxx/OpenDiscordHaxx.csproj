@@ -111,7 +111,7 @@
     <Compile Include="Tools\Recon\Endpoint.cs" />
     <Compile Include="Tools\Recon\Requests\Opcode.cs" />
     <Compile Include="Tools\Recon\Requests\Request.cs" />
-    <Compile Include="Tools\Recon\Requests\RoleInfo.cs" />
+    <Compile Include="Tools\Recon\Requests\NameId.cs" />
     <Compile Include="Tools\Recon\Requests\ServerRecon.cs" />
     <Compile Include="Tools\Recon\Requests\StartRecon.cs" />
   </ItemGroup>

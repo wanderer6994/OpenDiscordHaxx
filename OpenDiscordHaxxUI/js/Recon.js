@@ -63,38 +63,64 @@ function UpdateRecon(data) {
 
 
     const roleList = document.getElementById('role-list');
-
     for (let i = 0; i < data.roles.length; i++) {
         let row = roleList.insertRow(roleList.rows.length);
         row.id = 'role-row-' + i;
         row.innerHTML = '<td>' + data.roles[i].name + '</td>\n'
                         + '<td>' + data.roles[i].id + '</td>\n';
-    }
 
-    roleList.childNodes.forEach(row => {
         $('#' + row.id).contextMenu({
-            menuSelector: "#roles-context-menu",
-            menuSelected: (invoekdOn, selectedMenu) => {
+            menuSelector: '#roles-context-menu',
+            menuSelected: (invokedOn, selectedMenu) => {
                 const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
 
                 switch (selectedMenu.text()) {
                     case "Get messagable":
                         $('#role-modal').modal({ show: true });
-            
+                            
                         document.getElementById('role-modal-title').innerText = info.name + ' as messagable';
                         document.getElementById('role-messagable').innerText = '<@&' + info.id + '>';
                         break;
                 }
             }
         });
-    });
+    }
 
 
+    const emojiList = document.getElementById('emoji-list');
+    for (let i = 0; i < data.emojis.length; i++) {
+        let row = emojiList.insertRow(emojiList.rows.length);
+        row.id = 'emoji-row-' + i;
+        row.innerHTML = '<td>' + data.emojis[i].name + '</td>\n'
+                        + '<td>' + data.emojis[i].id + '</td>\n';
 
+        $('#' + row.id).contextMenu({
+            menuSelector: '#emojis-context-menu',
+            menuSelected: (invokedOn, selectedMenu) => {
+                const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
+
+                $('#emoji-modal').modal({ show: true });
+
+                const title = document.getElementById('emoji-modal-title');
+                const transformed = document.getElementById('emoji-transformed');
+
+                switch (selectedMenu.text()) {
+                    case 'Get messagable':
+                        title.innerText = info.name + ' as messagable';
+                        transformed.innerText = '<' + info.name + ':' + info.id + '>';
+                        break;
+                    case 'Get reactable':
+                        title.innerText = info.name + ' as reactable';
+                        transformed.innerText = info.name + ':' + info.id;
+                        break;
+                }
+            }
+        })
+    }
 }
 
 
 function GetRowInformation(row) {
-    return { name: row.childNodes[1].innerText, 
-             id: row.childNodes[3].innerText };
+    return { name: row.childNodes[0].innerText, 
+             id: row.childNodes[2].innerText };
 }

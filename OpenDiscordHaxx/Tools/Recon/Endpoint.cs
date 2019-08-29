@@ -67,7 +67,10 @@ namespace DiscordHaxx
                         };
 
                         foreach (var role in guild.Roles.Where(r => r.Mentionable))
-                            recon.Roles.Add(new RoleInfo(role));
+                            recon.Roles.Add(new NameId(role.Name, role.Id));
+
+                        foreach (var emoji in guild.Emojis.Distinct())
+                            recon.Emojis.Add(new NameId(emoji.Name, emoji.Id.Value));
 
                         SocketServer.Broadcast("/recon", recon);
                     });

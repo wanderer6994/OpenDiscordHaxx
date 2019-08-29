@@ -84,10 +84,29 @@
     </div>
 
 
+    <ul id="emojis-context-menu" class="dropdown-menu" role="menu" style="display: none">
+      <li><a>Get messagable</a></li>
+      <li><a>Get reactable</a></li>
+    </ul>
+
+    <div id="emoji-modal" class="modal fade" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content dark-container">
+              <div class="modal-body">
+                <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <h3 id="emoji-modal-title" class="modal-title">Emoji as bruh</h3>
+                
+                <p id="emoji-transformed" style="margin-top: 12px"></p>
+              </div>
+          </div>
+      </div>
+    </div>
+
+
     <h1 class="dark-title" style="margin-top: 40px; text-align: center">Server recon</h1>
 
     <fieldset id="recon-container">
-      <div class="form-control dark-container center-block" style="width: 70%; min-width: 483px; height: 77%; min-height: 635px; margin-top: 30px;">
+      <div class="form-control dark-container center-block" style="width: 70%; min-width: 652px; height: 77%; min-height: 635px; margin-top: 30px;">
         <div style="margin: 15px;">
             <div style="display: flex; margin-top: 21px;">
                 <input type="number" min="1" class="form-control dark-input" style="width: 85%; margin-right: 20px" placeholder="Server ID" id="guild-id">

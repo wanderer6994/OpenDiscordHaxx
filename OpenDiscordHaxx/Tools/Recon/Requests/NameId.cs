@@ -1,14 +1,13 @@
-﻿using Discord;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace DiscordHaxx
 {
-    public class RoleInfo
+    public class NameId
     {
-        public RoleInfo(Role role)
+        public NameId(string name, ulong id)
         {
-            _name = role.Name;
-            _id = role.Id.ToString();
+            _name = name;
+            _id = id.ToString();
         }
 
 

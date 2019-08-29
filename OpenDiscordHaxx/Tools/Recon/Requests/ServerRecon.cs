@@ -7,7 +7,8 @@ namespace DiscordHaxx
     {
         public ServerRecon(int id) : base(id, ReconOpcode.ReconCompleted)
         {
-            Roles = new List<RoleInfo>();
+            Roles = new List<NameId>();
+            Emojis = new List<NameId>();
         }
 
 
@@ -31,11 +32,15 @@ namespace DiscordHaxx
         public string VanityInvite { get; set; }
 
 
+        [JsonProperty("roles")]
+        public List<NameId> Roles { get; private set; }
+
+
+        [JsonProperty("emojis")]
+        public List<NameId> Emojis { get; private set; }
+
+
         [JsonProperty("bots_in_guild")]
         public string BotsInGuild { get; set; }
-
-
-        [JsonProperty("roles")]
-        public List<RoleInfo> Roles { get; set; }
     }
 }
