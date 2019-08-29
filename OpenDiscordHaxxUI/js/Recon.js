@@ -76,10 +76,10 @@ function UpdateRecon(data) {
 
                 switch (selectedMenu.text()) {
                     case "Get messagable":
-                        $('#role-modal').modal({ show: true });
+                        $('#transformed-modal').modal({ show: true });
                             
-                        document.getElementById('role-modal-title').innerText = info.name + ' as messagable';
-                        document.getElementById('role-messagable').innerText = '<@&' + info.id + '>';
+                        document.getElementById('transformed-modal-title').innerText = info.name + ' as messagable';
+                        document.getElementById('transformed').innerText = '<@&' + info.id + '>';
                         break;
                 }
             }
@@ -99,10 +99,10 @@ function UpdateRecon(data) {
             menuSelected: (invokedOn, selectedMenu) => {
                 const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
 
-                $('#emoji-modal').modal({ show: true });
+                $('#transformed-modal').modal({ show: true });
 
-                const title = document.getElementById('emoji-modal-title');
-                const transformed = document.getElementById('emoji-transformed');
+                const title = document.getElementById('transformed-modal-title');
+                const transformed = document.getElementById('transformed');
 
                 switch (selectedMenu.text()) {
                     case 'Get messagable':
