@@ -15,7 +15,7 @@ const ListAction = {
 
 
 window.onload = function() {
-    socket = new WebSocket("ws://localhost/list");
+    socket = new WebSocket("ws://localhost:420/list");
 
     socket.onopen = function() {
         SendJson({ op: ListOpcode.List });

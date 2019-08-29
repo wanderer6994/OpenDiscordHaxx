@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Net;
 using WebSocketSharp.Server;
 
 namespace DiscordHaxx
@@ -9,7 +10,7 @@ namespace DiscordHaxx
 
         public static void Start()
         {
-            _server = new WebSocketServer("ws://localhost");
+            _server = new WebSocketServer(IPAddress.Parse("127.0.0.1"), 420);
             _server.AddWebSocketService<DashboardEndpoint>("/dashboard");
             _server.AddWebSocketService<BotListEndpoint>("/list");
             _server.AddWebSocketService<RaidBotEndpoint>("/raid");

@@ -2,7 +2,7 @@ let socket;
 
 
 window.onload = function() {
-    socket = new WebSocket("ws://localhost/raid");
+    socket = new WebSocket("ws://localhost:420/raid");
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);

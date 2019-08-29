@@ -13,7 +13,7 @@ window.onload = function() {
 
     document.getElementById('checker-results').value = '';
 
-    socket = new WebSocket("ws://localhost/checker");
+    socket = new WebSocket("ws://localhost:420/checker");
     socket.onmessage = function(args) {
 
         const payload = JSON.parse(args.data);

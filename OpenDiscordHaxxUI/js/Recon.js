@@ -9,7 +9,7 @@ const ReconOpcode = {
 
 
 window.onload = function() {
-    socket = new WebSocket("ws://localhost/recon");
+    socket = new WebSocket("ws://localhost:420/recon");
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);
@@ -61,39 +61,36 @@ function UpdateRecon(data) {
     document.getElementById('vanity-invite').innerText = "Custom invite: " + data.vanity_invite;
     document.getElementById('bots-in-server').innerText = data.bots_in_guild + ' bots are in this server';
 
+
     const roleList = document.getElementById('role-list');
 
-    let html = '';
-
     for (let i = 0; i < data.roles.length; i++) {
-        html += '<tr id="row-' + i + '">\n'
-                + '<td>' + data.roles[i].name + '</td>\n'
-                + '<td>' + data.roles[i].id + '</td>\n'
-                + '</tr>';
+        let row = roleList.insertRow(roleList.rows.length);
+        row.id = 'role-row-' + i;
+        row.innerHTML = '<td>' + data.roles[i].name + '</td>\n'
+                        + '<td>' + data.roles[i].id + '</td>\n';
     }
-
-    roleList.innerHTML = html;
 
     roleList.childNodes.forEach(row => {
         $('#' + row.id).contextMenu({
             menuSelector: "#roles-context-menu",
-            menuSelected: OnContextMenuUsed
+            menuSelected: (invoekdOn, selectedMenu) => {
+                const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
+
+                switch (selectedMenu.text()) {
+                    case "Get messagable":
+                        $('#role-modal').modal({ show: true });
+            
+                        document.getElementById('role-modal-title').innerText = info.name + ' as messagable';
+                        document.getElementById('role-messagable').innerText = '<@&' + info.id + '>';
+                        break;
+                }
+            }
         });
     });
-}
 
 
-function OnContextMenuUsed(invokedOn, selectedMenu) {
-    const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
 
-    switch (selectedMenu.text()) {
-        case "Get messagable":
-            $('#role-modal').modal({ show: true });
-
-            document.getElementById('role-modal-title').innerText = info.name + ' as messagable';
-            document.getElementById('role-messagable').innerText = '<@&' + info.id + '>';
-            break;
-    }
 }
 
 

@@ -97,6 +97,7 @@
             <br>
             <hr>
 
+            <!-- Server info -->
             <div class="form-control dark-container" style="background-color: rgb(56,60,67) !important; width: 100%; height: 186px; margin-top: 42px">
                 <h3 id="server-name" style="font-family: Roboto; margin-top: 5px">Please enter a server ID</h3>
                 <p id="server-desc" style="color: rgb(210,212,215)">No description</p>
@@ -105,19 +106,40 @@
                 <p id="vanity-invite" style="font-size: 17px">Custom invite: None</p>
             </div>
 
-            <h2 class="dark-title">Pingable roles</h2>
-            <div class="form-control dark-container" style="background-color: rgb(56,60,67) !important; width: 100%; height: 210px; margin-top: 15px">
-              <div style="max-height: 200px; overflow: auto">
-                <table class="table table-hover">
-                  <thead>
-                      <th>Name</th>
-                      <th>ID</th>
-                  </thead>
-                  <tbody id="role-list">
-                  </tbody>
-                </table>
+            <!-- Pingable roles, Emojis -->
+            <div style="display: flex; margin-top: 15px">
+              <div style="width: 49%">
+                <h2 class="dark-title">Pingable roles</h2>
+                <div class="form-control dark-container" style="background-color: rgb(56,60,67) !important; width: 100%; height: 210px">
+                  <div style="max-height: 200px; overflow: auto">
+                    <table class="table table-hover">
+                      <thead>
+                          <th>Name</th>
+                          <th>ID</th>
+                      </thead>
+                      <tbody id="role-list">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
               </div>
-            </div>
+              
+              <div style="width: 49%; margin-left: 40px">
+                <h2 class="dark-title">Emojis</h2>
+                <div class="form-control dark-container" style="background-color: rgb(56,60,67) !important; width: 100%; height: 210px">
+                  <div style="max-height: 200px; overflow: auto">
+                    <table class="table table-hover">
+                      <thead>
+                          <th>Name</th>
+                          <th>ID</th>
+                      </thead>
+                      <tbody id="emoji-list">
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>            
 
             <p id="bots-in-server" style="margin-top: 15px">No bots are in this server</p>
         </div>

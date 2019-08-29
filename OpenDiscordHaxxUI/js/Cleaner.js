@@ -14,7 +14,7 @@ window.onload = function() {
     const logs = document.getElementById('cleaner-logs');
     logs.value = '';
 
-    socket = new WebSocket("ws://localhost/cleaner");
+    socket = new WebSocket("ws://localhost:420/cleaner");
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);

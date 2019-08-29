@@ -9,7 +9,7 @@ const DashboardOpcode = {
 
 
 window.onload = function() {
-    socket = new WebSocket("ws://localhost/dashboard");
+    socket = new WebSocket("ws://localhost:420/dashboard");
     socket.onmessage = function(args) {
         
         const payload = JSON.parse(args.data);

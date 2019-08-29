@@ -33,5 +33,11 @@ namespace DiscordHaxx
                     break;
             }
         }
+
+
+        public static void Broadcast<T>() where T : DashboardInnerRequest, new()
+        {
+            SocketServer.Broadcast("/dashboard", new DashboardRequest<T>());
+        }
     }
 }
