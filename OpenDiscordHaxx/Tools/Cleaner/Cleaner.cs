@@ -24,7 +24,7 @@ namespace DiscordHaxx
                 {
                     if (_options.RemoveGuilds)
                     {
-                        foreach (var guild in bot.GetGuilds())
+                        foreach (var guild in bot.Client.GetGuilds())
                         {
                             try
                             {
@@ -43,7 +43,7 @@ namespace DiscordHaxx
                     {
                         try
                         {
-                            foreach (var relationship in bot.GetRelationships())
+                            foreach (var relationship in bot.Client.GetRelationships())
                             {
                                 relationship.Remove();
 
@@ -57,7 +57,7 @@ namespace DiscordHaxx
                     {
                         try
                         {
-                            foreach (var dm in bot.GetPrivateChannels())
+                            foreach (var dm in bot.Client.GetPrivateChannels())
                             {
                                 dm.Leave();
 
@@ -71,17 +71,17 @@ namespace DiscordHaxx
                     {
                         try
                         {
-                            if (bot.User.EmailVerified)
-                                bot.User.SetHypesquad(Hypesquad.None);
+                            if (bot.Client.User.EmailVerified)
+                                bot.Client.User.SetHypesquad(Hypesquad.None);
 
-                            if (bot.User.AvatarId != null)
-                                bot.User.Modify(new UserSettings() { Avatar = null });
+                            if (bot.Client.User.AvatarId != null)
+                                bot.Client.User.Modify(new UserSettings() { Avatar = null });
                         }
                         catch { }
 
                         try
                         {
-                            foreach (var connection in bot.GetProfile(bot.User.Id).ConnectedAccounts)
+                            foreach (var connection in bot.Client.GetProfile(bot.Client.User.Id).ConnectedAccounts)
                             {
                                 connection.Remove();
 

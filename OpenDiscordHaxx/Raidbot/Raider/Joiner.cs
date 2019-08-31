@@ -42,16 +42,16 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
                 if (ShouldStop)
                     return;
                 try
                 {
                     if (_invite.Type == InviteType.Guild)
-                        bot.JoinGuild(_invite.Code);
+                        bot.Client.JoinGuild(_invite.Code);
                     else
-                        bot.JoinGroup(_invite.Code);
+                        bot.Client.JoinGroup(_invite.Code);
                 }
                 catch (DiscordHttpException e)
                 {
@@ -67,7 +67,7 @@ namespace DiscordHaxx
                             Console.WriteLine($"[ERROR] invalid invite");
                             break;
                         case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
                             break;
                         default:
                             Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");

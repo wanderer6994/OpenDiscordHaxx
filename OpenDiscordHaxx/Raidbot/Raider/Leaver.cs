@@ -25,7 +25,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
                 try
                 {
@@ -33,16 +33,16 @@ namespace DiscordHaxx
                         return;
 
                     if (_group)
-                        bot.LeaveGroup(_guildId);
+                        bot.Client.LeaveGroup(_guildId);
                     else
-                        bot.LeaveGuild(_guildId);
+                        bot.Client.LeaveGuild(_guildId);
                 }
                 catch (DiscordHttpException e)
                 {
                     switch (e.Code)
                     {
                         case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
                             break;
                         case DiscordError.UnknownGuild:
                             Console.WriteLine("[ERROR] invalid guild");

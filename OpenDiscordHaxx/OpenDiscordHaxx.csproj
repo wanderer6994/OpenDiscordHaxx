@@ -60,6 +60,7 @@
     <Compile Include="Dashboard\Requests\InnerRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RaidBotClient.cs" />
     <Compile Include="Raidbot\Raider\RaidBot.cs" />
     <Compile Include="Raidbot\Requests\CheckException.cs" />
     <Compile Include="Raidbot\Raider\Flooder\FloodClient.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Tools\Recon\Requests\NameId.cs" />
     <Compile Include="Tools\Recon\Requests\ServerRecon.cs" />
     <Compile Include="Tools\Recon\Requests\StartRecon.cs" />
+    <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1,4 +1,5 @@
 ﻿using Discord;
+using Discord.Gateway;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,13 +12,13 @@ namespace DiscordHaxx
 {
     public class AccountList
     {
-        private List<DiscordClient> _accounts;
+        public List<RaidBotClient> Accounts { get; private set; }
         private bool _reloaderRunning;
         private bool _tokensLoading;
 
         public AccountList()
         {
-            _accounts = new List<DiscordClient>();
+            Accounts = new List<RaidBotClient>();
         }
 
 
@@ -25,8 +26,8 @@ namespace DiscordHaxx
         {
             await Task.Run(() =>
             {
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, _accounts));
-                _accounts.Clear();
+                SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, Accounts.ToClients()));
+                Accounts.Clear();
                 Server.ServerStatus = "Loading bots";
                 _tokensLoading = true;
 
@@ -39,8 +40,22 @@ namespace DiscordHaxx
                 {
                     try
                     {
-                        DiscordClient client = new DiscordClient(token);
-                        _accounts.Add(client);
+                        DiscordClient client = null;
+
+                        if (Accounts.Count < 50)
+                        {
+                            DiscordSocketClient sClient = new DiscordSocketClient();
+                            sClient.OnLoggedIn += Client_OnLoggedIn;
+                            sClient.Login(token);
+                            Accounts.Add(new RaidBotClient(sClient));
+                            client = sClient;
+                        }
+                        else
+                        {
+                            client = new DiscordClient(token);
+                            Accounts.Add(new RaidBotClient(client));
+                        }
+
                         SocketServer.Broadcast("/list", new ListRequest(ListAction.Add, client));
                     }
                     catch (DiscordHttpException) { }
@@ -51,36 +66,36 @@ namespace DiscordHaxx
                 }
 
 
-                var bruh = _accounts.GroupBy(bot => bot.User.Id);
-                List<DiscordClient> removedAccounts = new List<DiscordClient>();
+                var bruh = Accounts.GroupBy(bot => bot.Client.User.Id);
+                List<RaidBotClient> removedAccounts = new List<RaidBotClient>();
                 foreach (var ok in bruh)
                 {
-                    List<DiscordClient> clients = ok.ToList();
+                    List<RaidBotClient> clients = ok.ToList();
                     clients.RemoveAt(0);
 
                     removedAccounts.AddRange(clients);
                 }
 
-                _accounts = bruh.Select(group => group.First()).ToList();
+                Accounts = bruh.Select(group => group.First()).ToList();
 
 
                 if (removedAccounts.Count > 0)
                 {
-                    foreach (var bot in new List<DiscordClient>(removedAccounts))
+                    foreach (var bot in new List<RaidBotClient>(removedAccounts))
                     {
-                        if (_accounts.Contains(bot))
+                        if (Accounts.Contains(bot))
                             removedAccounts.RemoveAt(removedAccounts.IndexOf(bot));
                     }
 
-                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, removedAccounts));
+                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, removedAccounts.ToClients()));
                 }
 
 
-                if (_accounts.Count < tokens.Length)
+                if (Accounts.Count < tokens.Length)
                 {
                     StringBuilder builder = new StringBuilder();
-                    foreach (var bot in _accounts)
-                        builder.AppendLine(bot.Token);
+                    foreach (var bot in Accounts)
+                        builder.AppendLine(bot.Client.Token);
 
                     File.WriteAllText("Tokens-valid.txt", builder.ToString());
                 }
@@ -94,6 +109,10 @@ namespace DiscordHaxx
             });
         }
 
+        private void Client_OnLoggedIn(DiscordSocketClient client, LoginEventArgs args)
+        {
+            Accounts.First(acc => acc.Client.User.Id == client.User.Id).Guilds = args.Guilds.Cast<Guild>().ToList();
+        }
 
         private async void StartAutoReloaderAsync()
         {
@@ -123,12 +142,6 @@ namespace DiscordHaxx
                     }
                 }
             });
-        }
-
-
-        public static implicit operator List<DiscordClient>(AccountList instance)
-        {
-            return instance._accounts;
         }
     }
 }

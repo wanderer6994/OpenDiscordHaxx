@@ -22,9 +22,9 @@ namespace DiscordHaxx
 
 
         public static AccountList AccountList = new AccountList();
-        public static List<DiscordClient> Bots
+        public static List<RaidBotClient> Bots
         {
-            get { return AccountList; }
+            get { return AccountList.Accounts; }
         }
 
         public static async void StartAccountBroadcasterAsync()

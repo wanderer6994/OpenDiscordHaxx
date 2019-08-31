@@ -28,7 +28,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot => 
             {
                 if (ShouldStop)
                     return;
@@ -36,16 +36,16 @@ namespace DiscordHaxx
                 try
                 {
                     if (_request.Add)
-                        bot.AddMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
+                        bot.Client.AddMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
                     else
-                        bot.RemoveMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
+                        bot.Client.RemoveMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
                 }
                 catch (DiscordHttpException e)
                 {
                     switch (e.Code)
                     {
                         case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
                             break;
                         case DiscordError.UnknownChannel:
                             Console.WriteLine($"[ERROR] Unknown channel");

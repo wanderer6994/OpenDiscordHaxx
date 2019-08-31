@@ -40,9 +40,22 @@ namespace DiscordHaxx
                         {
                             try
                             {
-                                guild = bot.GetGuild(req.GuildId);
+                                if (bot.SocketClient)
+                                {
+                                    if (guild == null)
+                                        guild = bot.Client.GetGuild(req.GuildId);
+                                    else
+                                    {
+                                        if (bot.Guilds.Where(g => g.Id == req.GuildId).Count() > 0)
+                                            bots++;
+                                    }
+                                }
+                                else
+                                {
+                                    guild = bot.Client.GetGuild(req.GuildId);
 
-                                bots++;
+                                    bots++;
+                                }
                             }
                             catch { }
                         }

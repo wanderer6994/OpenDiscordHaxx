@@ -10,7 +10,7 @@ namespace DiscordHaxx
     {
         protected override void OnOpen()
         {
-            Send(new ListRequest(ListAction.Add, Server.Bots));
+            Send(new ListRequest(ListAction.Add, Server.Bots.ToClients()));
         }
 
 
@@ -22,7 +22,7 @@ namespace DiscordHaxx
             {
                 case ListOpcode.Token:
                     TokenRequest tokenReq = obj.ToObject<TokenRequest>();
-                    DiscordClient client = Server.Bots.First(c => c.User.Id == tokenReq.Id);
+                    DiscordClient client = Server.Bots.First(c => c.Client.User.Id == tokenReq.Id);
                     tokenReq.Token = client.Token;
                     tokenReq.At = client.User.ToString();
 
@@ -30,16 +30,17 @@ namespace DiscordHaxx
                     break;
                 case ListOpcode.BotModify:
                     ModRequest modReq = obj.ToObject<ModRequest>();
-                    DiscordClient modClient = Server.Bots.First(c => c.User.Id == modReq.Id);
+                    RaidBotClient modClient = Server.Bots.First(c => c.Client.User.Id == modReq.Id);
 
-                    ModResponse resp = new ModResponse { At = modClient.User.ToString() };
+                    ModResponse resp = new ModResponse { At = modClient.Client.User.ToString() };
 
                     try
                     {
-                        if (modClient.User.Hypesquad != modReq.Hypesquad)
-                            modClient.User.SetHypesquad(modReq.Hypesquad);
+                        if (modClient.Client.User.Hypesquad != modReq.Hypesquad)
+                            modClient.Client.User.SetHypesquad(modReq.Hypesquad);
 
-                        modClient.User.Update();
+                        if (!modClient.SocketClient)
+                            modClient.Client.User.Update();
 
                         resp.Success = true;
                     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 
@@ -26,14 +27,14 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<DiscordClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
             {
                 if (ShouldStop)
                     return;
 
                 try
                 {
-                    bot.SendFriendRequest(_request.Username, _request.Discriminator);
+                    bot.Client.SendFriendRequest(_request.Username, _request.Discriminator);
                 }
                 catch (DiscordHttpException e)
                 {
@@ -43,7 +44,7 @@ namespace DiscordHaxx
                             Console.WriteLine($"[ERROR] invalid recipient");
                             break;
                         case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.User} is unverified");
+                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
                             break;
                         default:
                             Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");

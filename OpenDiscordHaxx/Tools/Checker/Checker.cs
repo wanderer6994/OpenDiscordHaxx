@@ -10,7 +10,6 @@ namespace DiscordHaxx
     public class Checker
     {
         public CheckerProgress Progress { get; private set; }
-
         public bool Finished { get; private set; }
 
 
@@ -34,17 +33,17 @@ namespace DiscordHaxx
 
                 SocketServer.Broadcast("/checker", new CheckerStartedRequest());
 
-                foreach (var client in new List<DiscordClient>(Server.Bots))
+                foreach (var client in new List<RaidBotClient>(Server.Bots))
                 {
                     BotCheckedRequest req = new BotCheckedRequest(client);
 
                     try
                     {
-                        client.JoinGuild("a");
+                        client.Client.JoinGuild("a");
                     }
                     catch (DiscordHttpException e)
                     {
-                        req.Valid = e.Code == DiscordError.UnknownInvite || e.Code == DiscordError.MaximumGuilds;
+                        req.Valid = e.Code == (DiscordError.UnknownInvite & DiscordError.MaximumGuilds);
                     }
                     catch (JsonReaderException)
                     {
@@ -72,7 +71,7 @@ namespace DiscordHaxx
                 {
                     StringBuilder tokensToAdd = new StringBuilder();
                     foreach (var bot in Server.Bots)
-                        tokensToAdd.AppendLine(bot.Token);
+                        tokensToAdd.AppendLine(bot.Client.Token);
 
                     File.WriteAllText("Tokens-checked.txt", tokensToAdd.ToString());
                 }

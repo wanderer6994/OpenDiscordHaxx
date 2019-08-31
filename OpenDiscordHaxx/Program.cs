@@ -1,6 +1,8 @@
 ﻿using System.Threading;
 using System.Collections.Specialized;
 using System;
+using System.Linq;
+using Discord;
 
 namespace DiscordHaxx
 {
