@@ -111,7 +111,9 @@ namespace DiscordHaxx
 
         private void Client_OnLoggedIn(DiscordSocketClient client, LoginEventArgs args)
         {
-            Accounts.First(acc => acc.Client.User.Id == client.User.Id).Guilds = args.Guilds.Cast<Guild>().ToList();
+            int index = Accounts.IndexOf(Accounts.First(acc => acc.Client.User.Id == client.User.Id));
+            Accounts[index].Guilds = args.Guilds.Cast<Guild>().ToList();
+            Accounts[index].Relationships = args.Relationships.ToList();
         }
 
         private async void StartAutoReloaderAsync()

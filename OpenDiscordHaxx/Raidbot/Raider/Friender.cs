@@ -34,6 +34,19 @@ namespace DiscordHaxx
 
                 try
                 {
+                    if (bot.SocketClient)
+                    {
+                        var results = bot.Relationships.Where(b => b.User.Username == _request.Username && b.User.Discriminator == _request.Discriminator).ToList();
+
+                        if (results.Count > 0)
+                        {
+                            if (results[0].Type == (RelationshipType.Friends & RelationshipType.OutgoingRequest))
+                                return;
+                            else if (results[0].Type == (RelationshipType.Blocked & RelationshipType.IncomingRequest))
+                                results[0].Remove();
+                        }
+                    }
+
                     bot.Client.SendFriendRequest(_request.Username, _request.Discriminator);
                 }
                 catch (DiscordHttpException e)

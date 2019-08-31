@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Discord;
 using Discord.Gateway;
 
@@ -8,6 +7,7 @@ namespace DiscordHaxx
     public class RaidBotClient
     {
         public List<Guild> Guilds { get; set; }
+        public List<Relationship> Relationships { get; set; }
         public DiscordClient Client { get; private set; }
         public bool SocketClient { get; private set; }
 
@@ -24,13 +24,10 @@ namespace DiscordHaxx
             client.OnJoinedGuild += Client_OnJoinedGuild;
             client.OnLeftGuild += Client_OnLeftGuild;
             client.OnUserUpdated += Client_OnUserUpdated;
+            client.OnRelationshipAdded += Client_OnRelationshipAdded;
+            client.OnRelationshipRemoved += Client_OnRelationshipRemoved;
         }
 
-        private void Client_OnUserUpdated(DiscordSocketClient client, UserEventArgs args)
-        {
-            if (args.User.Id == client.User.Id)
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, client));
-        }
 
         private void Client_OnJoinedGuild(DiscordSocketClient client, GuildEventArgs args)
         {
@@ -43,9 +40,33 @@ namespace DiscordHaxx
         }
 
 
+        private void Client_OnUserUpdated(DiscordSocketClient client, UserEventArgs args)
+        {
+            if (args.User.Id == client.User.Id)
+                SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, client));
+        }
+
+
+        private void Client_OnRelationshipAdded(DiscordSocketClient client, RelationshipEventArgs args)
+        {
+            Relationships.Add(args.Relationship);
+        }
+
+        private void Client_OnRelationshipRemoved(object sender, RelationshipEventArgs args)
+        {
+            Relationships.Remove(args.Relationship);
+        }
+
+
         public static implicit operator DiscordClient(RaidBotClient instance)
         {
             return instance.Client;
+        }
+
+
+        public override string ToString()
+        {
+            return Client.User.ToString();
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DiscordHaxx
 {
-    public static class Utils
+    public static class ClientUtils
     {
         public static DiscordClient ToClient(this RaidBotClient client)
         {
