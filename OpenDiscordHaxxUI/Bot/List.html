@@ -72,8 +72,9 @@
 
 <body class="dark-body">
     <!-- Bot list context menu -->
-    <ul id="bot-list-context-menu" class="dropdown-menu dark-dropdown-menu" role="menu" style="display:none;">
-        <li><a class="dark-dropdown">Modify</a></li>
+    <ul id="bot-list-context-menu" class="dropdown-menu dark-dropdown-menu" style="width: 175px" role="menu" style="display:none;">
+        <li><a class="dark-dropdown">Modify user</a></li>
+        <li><a class="dark-dropdown">Get information</a></li>
         <li><a class="dark-dropdown">Get token</a></li>
     </ul>
 
@@ -99,6 +100,41 @@
 
 
                   <button class="btn dark-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 292px; right: 15px;" onclick="Modify()">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Bot info popup -->
+    <div id="bot-info-modal" class="modal fade" role="dialog" aria-hidden="true">
+
+        <div class="modal-dialog">
+            <div class="modal-content dark-container" style="height: 400px">
+                <div class="modal-header">
+                <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
+                <h4 id="bot-info-title" class="modal-title">Information for account</h4>
+                </div>
+                <div class="modal-body">
+
+                  <!-- Profile -->
+                  <div style="display: flex; margin-bottom: 10px">
+                      <img src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px">
+
+                      <div>
+                        <!-- Name/Discriminator -->
+                        <p id="bot-at" style="font-size: 20px; margin-top: 7px;">Hackerman<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#1337</span></p>
+
+                        <div id="badges" style="display: flex; margin-top: -2px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                        </div>
+                      </div>
+                  </div>
                 </div>
             </div>
         </div>

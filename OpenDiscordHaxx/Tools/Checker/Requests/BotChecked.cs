@@ -7,7 +7,7 @@ namespace DiscordHaxx
     {
         public BotCheckedRequest(DiscordClient client) : base(CheckerOpcode.BotChecked)
         {
-            Bot = BotInfo.FromClient(client);
+            Bot = BasicBotInfo.FromClient(client);
             Progress = new CheckerProgress();
         }
 
@@ -17,7 +17,7 @@ namespace DiscordHaxx
 
 
         [JsonProperty("bot")]
-        public BotInfo Bot { get; set; }
+        public BasicBotInfo Bot { get; set; }
 
 
         [JsonProperty("progress")]

@@ -55,6 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotList\Requests\BasicBotInfo.cs" />
+    <Compile Include="BotList\Requests\BotInfo.cs" />
     <Compile Include="BotList\Requests\List\ListAction.cs" />
     <Compile Include="Dashboard\Requests\AttacksUpdate.cs" />
     <Compile Include="Dashboard\Requests\InnerRequest.cs" />
@@ -91,7 +93,6 @@
     <Compile Include="Raidbot\Requests\Friend.cs" />
     <Compile Include="Raidbot\Requests\Join.cs" />
     <Compile Include="Raidbot\Requests\Leave.cs" />
-    <Compile Include="BotList\Requests\BotInfo.cs" />
     <Compile Include="Server.cs" />
     <Compile Include="Raidbot\Endpoint.cs" />
     <Compile Include="Raidbot\Requests\Raid.cs" />

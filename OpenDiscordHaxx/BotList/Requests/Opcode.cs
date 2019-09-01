@@ -4,6 +4,7 @@
     {
         List,
         Token,
-        BotModify
+        BotModify,
+        BotInfo
     }
 }

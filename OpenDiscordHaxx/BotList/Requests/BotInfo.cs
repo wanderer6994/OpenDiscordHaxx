@@ -1,20 +1,30 @@
 ﻿using Discord;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 
 namespace DiscordHaxx
 {
-    public class BotInfo
+    public class BotInfo : BotRequest
     {
+        public BotInfo() : base(ListOpcode.BotInfo)
+        {
+            Badges = new List<string>();
+        }
+
         [JsonProperty("at")]
-        public string At { get; set; }
+        public string At { get; private set; }
+
+
+        [JsonProperty("avatar_id")]
+        public string AvatarId { get; private set; }
 
 
         [JsonProperty("id")]
         public string Id { get; set; }
 
-
-        [JsonProperty("hypesquad")]
-        public string Hypesquad { get; set; }
+        [JsonProperty("badges")]
+        public List<string> Badges { get; private set; }
 
 
         [JsonProperty("verification")]
@@ -23,22 +33,33 @@ namespace DiscordHaxx
 
         public static BotInfo FromClient(DiscordClient client)
         {
-            BotInfo bot = new BotInfo()
+            BotInfo info = new BotInfo
             {
                 At = client.User.ToString(),
                 Id = client.User.Id.ToString(),
-                Hypesquad = client.User.Hypesquad.ToString()
+                AvatarId = client.User.AvatarId
             };
 
             if (client.User.TwoFactorAuth)
-                bot.Verification = "Phone verified";
+                info.Verification = "Phone verified";
             else if (client.User.EmailVerified)
-                bot.Verification = "Email verified";
+                info.Verification = "Email verified";
             else
-                bot.Verification = "None or locked";
+                info.Verification = "None or locked";
 
+            foreach (Enum value in Enum.GetValues(typeof(Badge)))
+            {
+                if (value.ToString() == "LocalUser" || value.ToString() == "None")
+                    continue;
 
-            return bot;
+                if (client.User.Badges.HasFlag(value))
+                    info.Badges.Add(value.ToString());
+            }
+
+            if (client.User.Nitro > NitroType.None)
+                info.Badges.Add("Nitro");
+
+            return info;
         }
     }
 }

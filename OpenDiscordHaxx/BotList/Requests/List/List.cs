@@ -8,9 +8,9 @@ namespace DiscordHaxx
     {
         public ListRequest(ListAction action, List<DiscordClient> bots) : base(ListOpcode.List)
         {
-            List<BotInfo> info = new List<BotInfo>();
+            List<BasicBotInfo> info = new List<BasicBotInfo>();
             foreach (var client in bots)
-                info.Add(BotInfo.FromClient(client));
+                info.Add(BasicBotInfo.FromClient(client));
             _bots = info;
 
             _action = action;
@@ -23,7 +23,7 @@ namespace DiscordHaxx
 
         [JsonProperty("bots")]
 #pragma warning disable IDE0052
-        private readonly List<BotInfo> _bots;
+        private readonly List<BasicBotInfo> _bots;
 
 
         [JsonProperty("action")]

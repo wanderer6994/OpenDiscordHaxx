@@ -3,7 +3,8 @@ let socket;
 const ListOpcode = {
     List: 0,
     Token: 1,
-    BotModify: 2
+    BotModify: 2,
+    BotInfo: 3
 }
 
 
@@ -104,6 +105,20 @@ window.onload = function() {
                 else
                     ShowToast(ToastType.Error, 'Failed to modify ' + payload.at);
                 break;
+            case ListOpcode.BotInfo:
+                $('#bot-info-modal').modal({ show: true });
+
+                document.getElementById('bot-info-title').innerText = 'Information for ' + payload.at.split('#')[0];
+                document.getElementById('bot-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
+
+                let html = '';
+
+                payload.badges.forEach(badge => {
+                    html += '<img src="../Images/' + badge + '.png" style="width: 30px; height: 30px; margin-right: 6px">';
+                });
+
+                document.getElementById('badges').innerHTML = html;
+                break;
         }
     }
     socket.onerror = function() { ServerUnreachable() };
@@ -119,11 +134,14 @@ function OnContextMenuUsed(invokedOn, selectedMenu) {
     const info = GetRowInformation(document.getElementById(invokedOn[0].parentNode.id));
 
     switch (selectedMenu.text()) {
-        case 'Modify':
+        case 'Modify user':
             OnModify(info);
             break;
+        case 'Get information':
+            OnGetInfo(info);
+            break;
         case 'Get token':
-            OnGetToken(info);
+            SendJson({ op: ListOpcode.Token, id: info.id });
             break;
     }
 }
@@ -146,8 +164,8 @@ function OnModify(info) {
 }
 
 
-function OnGetToken(info) {
-    SendJson({ op: 1, id: info.id });
+function OnGetInfo(info) {
+    SendJson({ op: ListOpcode.BotInfo, id: info.id });
 }
 
 

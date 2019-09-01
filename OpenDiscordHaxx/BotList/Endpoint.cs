@@ -50,6 +50,10 @@ namespace DiscordHaxx
 
                     SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, modClient));
                     break;
+                case ListOpcode.BotInfo:
+                    SocketServer.Broadcast("/list", 
+                                           BotInfo.FromClient(Server.Bots.First(c => c.Client.User.Id == obj.GetValue("id").ToObject<ulong>()).Client));
+                    break;
             }
         }
     }
