@@ -34,6 +34,16 @@
     }
 </script>
 
+<!-- For More Information in bot info -->
+<style>
+  .nav-pills li a {
+    color: rgb(202,204,207);
+  }
+
+  .nav-pills .active a {
+    color: rgb(230,252,255) !important;
+  }
+</style>
 
 <nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
   <div class="container-fluid">
@@ -74,7 +84,7 @@
     <!-- Bot list context menu -->
     <ul id="bot-list-context-menu" class="dropdown-menu dark-dropdown-menu" style="width: 175px" role="menu" style="display:none;">
         <li><a class="dark-dropdown">Modify user</a></li>
-        <li><a class="dark-dropdown">Get information</a></li>
+        <li><a class="dark-dropdown">Get profile</a></li>
         <li><a class="dark-dropdown">Get token</a></li>
     </ul>
 
@@ -106,40 +116,60 @@
     </div>
 
 
-    <!-- Bot info popup -->
-    <div id="bot-info-modal" class="modal fade" role="dialog" aria-hidden="true">
+    <!-- Profile popup -->
+    <div id="profile-modal" class="modal fade" role="dialog" aria-hidden="true">
 
         <div class="modal-dialog">
-            <div class="modal-content dark-container" style="height: 400px">
-                <div class="modal-header">
-                <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
-                <h4 id="bot-info-title" class="modal-title">Information for account</h4>
-                </div>
+            <div class="modal-content dark-container" style="height: 530px">
                 <div class="modal-body">
 
-                  <!-- Profile -->
-                  <div style="display: flex; margin-bottom: 10px">
+                  <!-- Top -->
+                  <div style="display: flex; margin-bottom: 14px">
                       <img src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px">
 
                       <div>
                         <!-- Name/Discriminator -->
-                        <p id="bot-at" style="font-size: 20px; margin-top: 7px;">Hackerman<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#1337</span></p>
+                        <p id="profile-at" style="font-size: 20px; margin-top: 7px;">Hackerman<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#1337</span></p>
 
-                        <div id="badges" style="display: flex; margin-top: -2px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
-                          <img src="../Images/Anarchy.png" style="width: 30px; height: 30px; margin-right: 6px">
+                        <div id="profile-badges" style="display: flex; margin-top: -2px">
                         </div>
                       </div>
                   </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
+                  <!-- More information -->
+                  <div style="margin-left: 9px">
+                      <ul class="nav nav-pills" style="border: none">
+                        <li class="active"><a style="background-color: rgb(42,45,51); border: none" data-toggle="pill" href="#guilds">Servers</a></li>
+                        <li><a style="background-color: rgb(42,45,51); border: none" data-toggle="pill" href="#friends">Friends</a></li>
+                      </ul>
+      
+                      <div class="tab-content form-control" style="background-color: rgb(50,53,59); color: rgb(230,252,255); width: 550px; height: 320px; border: none; margin-top: 2px">
+                        <div id="guilds" class="tab-pane fade in active" style="overflow: auto; max-height: 300px">
+                          <table class="table table-hover" style="background-color: rgb(50,53,59);">
+                            <thead>
+                              <th>Name</th>
+                              <th>Id</th>
+                            </thead>
+                            <tbody id="guild-list">
+                            </tbody>
+                          </table>
+                        </div>
+                      <div id="friends" class="tab-pane fade" style="overflow: auto; max-height: 300px">
+                        <table class="table table-hover" style="background-color: rgb(50,53,59);">
+                          <thead>
+                            <th>@</th>
+                            <th>Id</th>
+                          </thead>
+                          <tbody id="friends-list">
+                          </tbody>
+                        </table>
+                      </div>
+                  </div>
+                </div>
+              </div>
+          </div>
+      </div>
+    </div>
 
     <!-- Account token popup -->
     <div id="bot-token-modal" class="modal fade" role="dialog" aria-hidden="true">

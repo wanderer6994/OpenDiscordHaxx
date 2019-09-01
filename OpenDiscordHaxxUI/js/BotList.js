@@ -42,15 +42,12 @@ window.onload = function() {
                                             + '<td>' + bot.id + '</td>\n'
                                             + '<td>' + bot.hypesquad + '</td>\n'
                                             + '<td>' + bot.verification + '</td>\n';
-                        });
 
-                        botList.childNodes.forEach(row => {
                             $('#' + row.id).contextMenu({
                                 menuSelector: "#bot-list-context-menu",
                                 menuSelected: OnContextMenuUsed
                             });
                         });
-
                         break;
                     case ListAction.Remove:
 
@@ -106,10 +103,9 @@ window.onload = function() {
                     ShowToast(ToastType.Error, 'Failed to modify ' + payload.at);
                 break;
             case ListOpcode.BotInfo:
-                $('#bot-info-modal').modal({ show: true });
+                $('#profile-modal').modal({ show: true });
 
-                document.getElementById('bot-info-title').innerText = 'Information for ' + payload.at.split('#')[0];
-                document.getElementById('bot-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
+                document.getElementById('profile-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
 
                 let html = '';
 
@@ -117,7 +113,27 @@ window.onload = function() {
                     html += '<img src="../Images/' + badge + '.png" style="width: 30px; height: 30px; margin-right: 6px">';
                 });
 
-                document.getElementById('badges').innerHTML = html;
+                document.getElementById('profile-badges').innerHTML = html;
+
+
+                const guildList = document.getElementById('guild-list');
+                guildList.innerHTML = '';
+                payload.guilds.forEach(guild => {
+                    let row = guildList.insertRow(guildList.rows.length);
+                    row.id = 'guild-row-' + guildList.rows.length;
+                    row.innerHTML = '<td>' + guild.name + '</td>\n'
+                                    + '<td>' + guild.id + '</td>\n';
+                });
+
+                const friendList = document.getElementById('friends-list');
+                friendList.innerHTML = '';
+                payload.friends.forEach(friend => {
+                    let row = friendList.insertRow(friendList.rows.length);
+                    row.id = 'friend-row-' + friendList.rows.length;
+                    row.innerHTML = '<td>' + friend.at + '</td>\n'
+                                    + '<td>' + friend.id + '</td>\n';
+                });
+
                 break;
         }
     }
@@ -137,8 +153,8 @@ function OnContextMenuUsed(invokedOn, selectedMenu) {
         case 'Modify user':
             OnModify(info);
             break;
-        case 'Get information':
-            OnGetInfo(info);
+        case 'Get profile':
+            OnGetProfile(info);
             break;
         case 'Get token':
             SendJson({ op: ListOpcode.Token, id: info.id });
@@ -164,7 +180,7 @@ function OnModify(info) {
 }
 
 
-function OnGetInfo(info) {
+function OnGetProfile(info) {
     SendJson({ op: ListOpcode.BotInfo, id: info.id });
 }
 

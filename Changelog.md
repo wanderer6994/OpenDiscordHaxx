@@ -2,6 +2,7 @@
 
 ### Additions
 - Added support for setting custom thread amounts on attacks.
+- Added 'Get profile' to bot list.
 - Added Threads to the dashboard's 'Ongoing attacks' bot list.
 - Added cleaner and recon to Tools.
 - Added more input handling.

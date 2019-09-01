@@ -52,7 +52,7 @@ namespace DiscordHaxx
                     break;
                 case ListOpcode.BotInfo:
                     SocketServer.Broadcast("/list", 
-                                           BotInfo.FromClient(Server.Bots.First(c => c.Client.User.Id == obj.GetValue("id").ToObject<ulong>()).Client));
+                                           BotInfo.FromClient(Server.Bots.First(c => c.Client.User.Id == obj.GetValue("id").ToObject<ulong>())));
                     break;
             }
         }

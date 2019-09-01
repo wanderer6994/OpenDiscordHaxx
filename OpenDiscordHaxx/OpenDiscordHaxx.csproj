@@ -7,7 +7,7 @@
     <ProjectGuid>{3CD86024-869C-41C1-A18C-A33346C26CD5}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>DiscordHaxx</RootNamespace>
-    <AssemblyName>OpenDiscordHaxx</AssemblyName>
+    <AssemblyName>OpenDHBackend</AssemblyName>
     <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -55,8 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotList\Requests\BasicBotInfo.cs" />
-    <Compile Include="BotList\Requests\BotInfo.cs" />
+    <Compile Include="BotList\Requests\List\BasicBotInfo.cs" />
+    <Compile Include="BotList\Requests\Profile\BotInfo.cs" />
+    <Compile Include="BotList\Requests\Profile\FriendInfo.cs" />
+    <Compile Include="BotList\Requests\Profile\GuildInfo.cs" />
     <Compile Include="BotList\Requests\List\ListAction.cs" />
     <Compile Include="Dashboard\Requests\AttacksUpdate.cs" />
     <Compile Include="Dashboard\Requests\InnerRequest.cs" />
