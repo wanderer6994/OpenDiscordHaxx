@@ -23,6 +23,7 @@ This raidbot is powered by Anarchy (https://github.com/iLinked1337/Anarchy), whi
 # How to set it up
 First you must find the directory containg 'OpenDHBackend.exe' (in releases that's Backend).<br>
 In this directory you create a file called Tokens.txt, which is where you put your tokens.<br>
+Optionally you can also enable gateway clients by going to Config.json, which will give u more responsive bots.<br>
 Then to start it up open OpenDHBackend.exe.<br><br>
 
 Next find index.html (Frontend in releases), and open it in your preferred browser.<br><br>
@@ -37,6 +38,7 @@ Furthermore, if less accounts are loaded than tokens in the file there will be w
 If your accounts are not working, try putting them through the account checker, which will automatically remove invalid accounts (once again valid ones are wittent to 'Tokens-checked'.txt).<br>
 
 
-# Socket clients
-When your accounts are being loaded, all clients below 50 will be set as 'socket clients' (makes them more responsive).<br>
-If you are having some memory issues, try turning the limit down in Client/AccountList.cs, Line 45.
+# Gateway clients
+When your accounts are being loaded, all clients below 50 (or whatever your cap is) will be set as 'socket clients' (makes them more responsive).<br>
+If you are having some memory issues, try turning the limit down in Client/AccountList.cs, Line 45.<br>
+For enabling this, edit Config.json, located in the backend directory.

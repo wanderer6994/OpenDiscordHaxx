@@ -1,3 +1,4 @@
+/* stuff for nav bar*/
 div ul li ul {
     background-color: rgb(34,34,34) !important;
 }
@@ -12,6 +13,7 @@ div ul li ul li a  {
 div ul li ul li a:hover  {
     background-color: rgb(38,38,38) !important;
 }
+/* end of stuff for nav bar */
 
 
 .dark-body {

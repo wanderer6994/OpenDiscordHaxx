@@ -1,5 +1,6 @@
 ﻿using Discord;
 using Discord.Gateway;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,12 +13,22 @@ namespace DiscordHaxx
 {
     public class AccountList
     {
+        public Config Config { get; private set; }
         public List<RaidBotClient> Accounts { get; private set; }
         private bool _reloaderRunning;
         private bool _tokensLoading;
 
         public AccountList()
         {
+            try
+            {
+                Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Config.json"));
+            }
+            catch
+            {
+                Config = new Config();
+            }
+
             Accounts = new List<RaidBotClient>();
         }
 
@@ -42,7 +53,7 @@ namespace DiscordHaxx
                     {
                         DiscordClient client = null;
 
-                        if (Accounts.Count < 50)
+                        if (Accounts.Count <= Config.GatewayCap && Config.EnableGateway)
                         {
                             DiscordSocketClient sClient = new DiscordSocketClient();
                             sClient.OnLoggedIn += Client_OnLoggedIn;

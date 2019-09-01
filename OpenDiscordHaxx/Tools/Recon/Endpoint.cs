@@ -43,7 +43,11 @@ namespace DiscordHaxx
                                 if (bot.SocketClient)
                                 {
                                     if (guild == null)
+                                    {
                                         guild = bot.Client.GetGuild(req.GuildId);
+
+                                        bots++;
+                                    }
                                     else
                                     {
                                         if (bot.Guilds.Where(g => g.Id == req.GuildId).Count() > 0)

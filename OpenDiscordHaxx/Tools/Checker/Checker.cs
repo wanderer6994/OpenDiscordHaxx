@@ -43,7 +43,7 @@ namespace DiscordHaxx
                     }
                     catch (DiscordHttpException e)
                     {
-                        req.Valid = e.Code == (DiscordError.UnknownInvite & DiscordError.MaximumGuilds);
+                        req.Valid = e.Code == DiscordError.UnknownInvite || e.Code == DiscordError.MaximumGuilds;
                     }
                     catch (JsonReaderException)
                     {
