@@ -77,26 +77,26 @@
   </nav>
 
 <body class="dark-body">
-    <center>
-        <h1 class="dark-title" style="margin-top: 40px;">VC Spammer</h1>
-        <br>
+    <h1 class="dark-title" style="margin-top: 40px; text-align: center">VC Spammer</h1>
+    <br>
 
-        <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Server ID" id="guild_id">
+    <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild_id">
         
-        <fieldset>
-            <input type="number" min="1" class="form-control dark-input" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
-        </fieldset>
+    <fieldset>
+      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
+    </fieldset>
 
-        <form style="margin-top: 10px">
-            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
-                <input id="join" type="radio" name="optradio" onclick="CheckJoin()" checked>Join</label>
-
-            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
-                <input type="radio" name="optradio" onclick="CheckJoin()">Leave</label>
-        </form>
-
-        <button class="btn dark-btn" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
+    <center>
+      <div style="margin-top: 10px">
+        <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
+          <input id="join" type="radio" name="optradio" onclick="CheckJoin()" checked>Join</label>
+  
+        <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
+          <input type="radio" name="optradio" onclick="CheckJoin()">Leave</label>
+      </div>
     </center>
+
+    <button class="btn dark-btn center-block" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
 
     <div style="display: flex">
       <p style="color: rgb(230,252,255); font-family: Roboto; position: absolute; bottom: 0px; left: 10px;">Disclaimer: Only gateway-enabled bots can use this</p>

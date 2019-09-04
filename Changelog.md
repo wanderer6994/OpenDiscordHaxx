@@ -12,6 +12,7 @@
 ### Improvements
 - Made only 1 checker able to run at a time, making it harder to overload the tokens.
 - Made server automatically start reloading bots when Tokens.txt is changed.
+- Improved checker.
 - Improved botlist to not send as much data as well as be more responsive.
 - Fixed a CPU usage issue.
 - Improved a bunch of the web UI.

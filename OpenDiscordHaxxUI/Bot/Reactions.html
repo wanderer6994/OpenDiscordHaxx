@@ -74,26 +74,26 @@
   </nav>
 
 <body class="dark-body">
-    <center>
-        <h1 class="dark-title" style="margin-top: 40px;">Reactions</h1>
-        <br>
+  <h1 class="dark-title" style="margin-top: 40px; text-align: center">Reactions</h1>
+  <br>
 
-        <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Channel ID" id="channel_id">
-        <br>
-        <input type="number" min="1" class="form-control dark-input" style="width: 340px;" placeholder="Message ID" id="message_id">
-        <br>
-        <input class="form-control dark-input" style="width: 340px;" placeholder="Reaction" id="reaction">
+  <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Channel ID" id="channel_id">
+  <br>
+  <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Message ID" id="message_id">
+  <br>
+  <input class="form-control dark-input center-block" style="width: 340px;" placeholder="Reaction" id="reaction">
 
-        <form style="margin-top: 10px">
-            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
-                <input id="add" type="radio" name="optradio" checked>Add</label>
+  <center>
+    <div style="margin-top: 10px">
+      <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
+          <input id="add" type="radio" name="optradio" checked>Add</label>
 
-            <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
-                <input type="radio" name="optradio">Remove</label>
-        </form>
+      <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
+          <input type="radio" name="optradio">Remove</label>
+    </div>
+  </center>
 
-        <button class="btn dark-btn" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
+  <button class="btn dark-btn center-block" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
 
-        <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
-    </center>
+  <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </html>

@@ -31,8 +31,9 @@ namespace DiscordHaxx
                 }
 
                 SocketServer.Broadcast("/checker", new CheckerStartedRequest());
+                List<RaidBotClient> uncheckedClients = new List<RaidBotClient>(Server.Bots);
                 Directory.CreateDirectory("Checker-results");
-                foreach (var client in new List<RaidBotClient>(Server.Bots))
+                foreach (var client in new List<RaidBotClient>(uncheckedClients))
                 {
                     BotCheckedRequest req = new BotCheckedRequest(client);
 
@@ -55,10 +56,17 @@ namespace DiscordHaxx
                     catch (JsonReaderException)
                     {
                         SocketServer.Broadcast("/checker", new CheckerErrorRequest("ratelimit"));
+
+                        List<string> uncheckedTokens = new List<string>();
+                        foreach (var acc in uncheckedClients)
+                            uncheckedTokens.Add(acc.Client.Token);
+
+                        File.WriteAllText("Checker-results/Unchecked.txt", string.Join("\n", uncheckedTokens));
                         Finished = true;
                         break;
                     }
 
+                    uncheckedClients.Remove(client);
 
                     if (req.Valid)
                     {
