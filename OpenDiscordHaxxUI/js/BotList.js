@@ -41,7 +41,8 @@ window.onload = function() {
                             row.innerHTML = '<td>' + bot.at + '</td>\n'
                                             + '<td>' + bot.id + '</td>\n'
                                             + '<td>' + bot.hypesquad + '</td>\n'
-                                            + '<td>' + bot.verification + '</td>\n';
+                                            + '<td>' + bot.verification + '</td>\n'
+                                            + '<td style="display: none">' + bot.gateway + '</td>';
 
                             $('#' + row.id).contextMenu({
                                 menuSelector: "#bot-list-context-menu",
@@ -106,6 +107,7 @@ window.onload = function() {
                 $('#profile-modal').modal({ show: true });
 
                 document.getElementById('profile-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
+                document.getElementById('profile-pfp').src = 'http://cdn.discordapp.com/avatars/' + payload.id + '/' + payload.avatar_id;
 
                 let html = '';
 
@@ -123,6 +125,8 @@ window.onload = function() {
                     row.id = 'guild-row-' + guildList.rows.length;
                     row.innerHTML = '<td>' + guild.name + '</td>\n'
                                     + '<td>' + guild.id + '</td>\n';
+
+                    $('#' + row.id).contextMenu({});
                 });
 
                 const friendList = document.getElementById('friends-list');
@@ -132,8 +136,9 @@ window.onload = function() {
                     row.id = 'friend-row-' + friendList.rows.length;
                     row.innerHTML = '<td>' + friend.at + '</td>\n'
                                     + '<td>' + friend.id + '</td>\n';
-                });
 
+                    $('#' + row.id).contextMenu({});
+                });
                 break;
         }
     }
@@ -177,6 +182,9 @@ function OnModify(info) {
             break;
         }
     }
+
+    document.getElementById('status-pick').style.display = info.gateway == 'true' ? '' : 'none';
+    document.getElementById('status').selectedIndex = 0;
 }
 
 
@@ -189,5 +197,6 @@ function GetRowInformation(row) {
     return { at: row.childNodes[0].innerText, 
              id: row.childNodes[2].innerText, 
              hypesquad: row.childNodes[4].innerText,
-             verification: row.childNodes[6].innerText };
+             verification: row.childNodes[6].innerText,
+             gateway: row.childNodes[8].innerText };
 }

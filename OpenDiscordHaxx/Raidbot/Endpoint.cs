@@ -48,6 +48,9 @@ namespace DiscordHaxx
                         case "react":
                             bot = new Reactions(obj.ToObject<ReactionsRequest>());
                             break;
+                        case "vc":
+                            bot = new VCSpammer(obj.ToObject<VCRequest>());
+                            break;
                     }
 
                     Task.Run(() => bot.Start());

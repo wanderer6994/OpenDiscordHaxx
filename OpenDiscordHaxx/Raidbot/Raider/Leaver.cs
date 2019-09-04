@@ -39,18 +39,7 @@ namespace DiscordHaxx
                 }
                 catch (DiscordHttpException e)
                 {
-                    switch (e.Code)
-                    {
-                        case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
-                            break;
-                        case DiscordError.UnknownGuild:
-                            Console.WriteLine("[ERROR] invalid guild");
-                            break;
-                        default:
-                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                            break;
-                    }
+                    CheckError(e);
                 }
                 catch (RateLimitException) { }
             });

@@ -3,6 +3,8 @@ using System.Linq;
 using WebSocketSharp.Server;
 using Discord;
 using Newtonsoft.Json.Linq;
+using System;
+using Discord.Gateway;
 
 namespace DiscordHaxx
 {
@@ -10,7 +12,7 @@ namespace DiscordHaxx
     {
         protected override void OnOpen()
         {
-            Send(new ListRequest(ListAction.Add, Server.Bots.ToClients()));
+            Send(new ListRequest(ListAction.Add, Server.Bots));
         }
 
 
@@ -30,30 +32,54 @@ namespace DiscordHaxx
                     break;
                 case ListOpcode.BotModify:
                     ModRequest modReq = obj.ToObject<ModRequest>();
-                    RaidBotClient modClient = Server.Bots.First(c => c.Client.User.Id == modReq.Id);
 
-                    ModResponse resp = new ModResponse { At = modClient.Client.User.ToString() };
-
-                    try
+                    if (modReq.SetAll)
                     {
-                        if (modClient.Client.User.Hypesquad != modReq.Hypesquad)
-                            modClient.Client.User.SetHypesquad(modReq.Hypesquad);
-
-                        if (!modClient.SocketClient)
-                            modClient.Client.User.Update();
-
-                        resp.Success = true;
+                        foreach (var bot in Server.Bots)
+                            ModifyUser(bot, modReq);
                     }
-                    catch { }
+                    else
+                    {
+                        RaidBotClient bot = Server.Bots.First(c => c.Client.User.Id == modReq.Id);
 
-                    Send(resp);
+                        ModResponse resp = new ModResponse { At = bot.Client.User.ToString() };
+                        resp.Success = ModifyUser(bot, modReq);
 
-                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, modClient));
+                        Send(resp);
+                    }
                     break;
                 case ListOpcode.BotInfo:
                     SocketServer.Broadcast("/list", 
                                            BotInfo.FromClient(Server.Bots.First(c => c.Client.User.Id == obj.GetValue("id").ToObject<ulong>())));
                     break;
+            }
+        }
+
+
+        private static bool ModifyUser(RaidBotClient client, ModRequest req)
+        {
+            try
+            {
+                if (client.Client.User.Hypesquad != req.Hypesquad)
+                    client.Client.User.SetHypesquad(req.Hypesquad);
+
+                if (!client.SocketClient)
+                    client.Client.User.Update();
+
+                if (req.Status != "Unset")
+                {
+                    UserStatus status = (UserStatus)Enum.Parse(typeof(UserStatus), req.Status.Replace(" ", ""), true);
+
+                    ((DiscordSocketClient)client.Client).SetStatus(status);
+                }
+
+                SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, client));
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

@@ -1,11 +1,13 @@
 # 0.1.0.0
 
 ### Additions
+- Added VC spammer.
 - Added support for setting custom thread amounts on attacks.
 - Added 'Get profile' to bot list.
 - Added Threads to the dashboard's 'Ongoing attacks' bot list.
 - Added cleaner and recon to Tools.
 - Added more input handling.
+- Added support for changing the settings of all clients.
 
 ### Improvements
 - Made only 1 checker able to run at a time, making it harder to overload the tokens.

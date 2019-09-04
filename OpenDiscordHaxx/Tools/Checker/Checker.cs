@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DiscordHaxx
@@ -32,7 +31,7 @@ namespace DiscordHaxx
                 }
 
                 SocketServer.Broadcast("/checker", new CheckerStartedRequest());
-
+                Directory.CreateDirectory("Checker-results");
                 foreach (var client in new List<RaidBotClient>(Server.Bots))
                 {
                     BotCheckedRequest req = new BotCheckedRequest(client);
@@ -43,7 +42,15 @@ namespace DiscordHaxx
                     }
                     catch (DiscordHttpException e)
                     {
-                        req.Valid = e.Code == DiscordError.UnknownInvite || e.Code == DiscordError.MaximumGuilds;
+                        if (e.Code == DiscordError.UnknownInvite || e.Code == DiscordError.MaximumGuilds)
+                            req.Valid = true;
+                        else
+                        {
+                            if (e.Code == DiscordError.AccountUnverified)
+                                File.AppendAllText("Checker-results/Locked.txt", client.Client.Token + "\n");
+                            else
+                                File.AppendAllText("Checker-results/Invalid.txt", client.Client.Token + "\n");
+                        }
                     }
                     catch (JsonReaderException)
                     {
@@ -54,7 +61,11 @@ namespace DiscordHaxx
 
 
                     if (req.Valid)
+                    {
+                        File.AppendAllText("Checker-results/Valid.txt", client.Client.Token + "\n");
+
                         Progress.Valid++;
+                    }
                     else
                     {
                         Server.Bots.Remove(client);
@@ -65,15 +76,6 @@ namespace DiscordHaxx
                     req.Progress = Progress;
 
                     SocketServer.Broadcast("/checker", req);
-                }
-
-                if (Progress.Total > Server.Bots.Count)
-                {
-                    StringBuilder tokensToAdd = new StringBuilder();
-                    foreach (var bot in Server.Bots)
-                        tokensToAdd.AppendLine(bot.Client.Token);
-
-                    File.WriteAllText("Tokens-checked.txt", tokensToAdd.ToString());
                 }
 
                 SocketServer.Broadcast("/checker", new CheckerRequest(CheckerOpcode.Done));

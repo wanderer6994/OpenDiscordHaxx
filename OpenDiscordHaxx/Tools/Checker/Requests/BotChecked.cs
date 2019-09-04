@@ -5,7 +5,7 @@ namespace DiscordHaxx
 {
     public class BotCheckedRequest : CheckerRequest
     {
-        public BotCheckedRequest(DiscordClient client) : base(CheckerOpcode.BotChecked)
+        public BotCheckedRequest(RaidBotClient client) : base(CheckerOpcode.BotChecked)
         {
             Bot = BasicBotInfo.FromClient(client);
             Progress = new CheckerProgress();

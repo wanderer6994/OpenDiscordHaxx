@@ -75,7 +75,7 @@ namespace DiscordHaxx
                                 bot.Client.User.SetHypesquad(Hypesquad.None);
 
                             if (bot.Client.User.AvatarId != null)
-                                bot.Client.User.Modify(new UserSettings() { Avatar = null });
+                                bot.Client.User.ChangeProfile(new UserProfile() { Avatar = null });
                         }
                         catch { }
 

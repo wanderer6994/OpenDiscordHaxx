@@ -26,5 +26,13 @@ namespace DiscordHaxx
         {
             get { return (Hypesquad)Enum.Parse(typeof(Hypesquad), _hypesquad); }
         }
+
+
+        [JsonProperty("status")]
+        public string Status { get; private set; }
+
+
+        [JsonProperty("set_all")]
+        public bool SetAll { get; private set; }
     }
 }

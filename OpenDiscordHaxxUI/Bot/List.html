@@ -30,7 +30,9 @@
     function Modify() {
       SendJson({ op: ListOpcode.BotModify, 
                  id: document.getElementById('modify-id').innerText, 
-                 hypesquad: document.getElementById('modify-hype').value });
+                 hypesquad: document.getElementById('modify-hype').value,
+                 status: document.getElementById('status').value,
+                 set_all: document.getElementById('set-all').checked == true });
     }
 </script>
 
@@ -66,6 +68,7 @@
               <li><a href="Flooder.html">Flooder</a></li>
               <li><a href="Friender.html">Friender</a></li>
               <li><a href="Reactions.html">Reactions</a></li>
+              <li><a href="VCSpammer.html">VC spammer</a></li>
           </ul>
       </li>
       <li class="dropdown">
@@ -93,23 +96,42 @@
         <span id="modify-id" style="display: none"></span>
 
         <div class="modal-dialog">
-            <div class="modal-content dark-container" style="height: 400px">
+            <div class="modal-content dark-container" style="height: 430px">
                 <div class="modal-header">
                 <button type="button" class="close" style="color: rgb(230,252,255)" data-dismiss="modal" aria-hidden="true">&times;</button> 
                 <h4 id="modify-title" class="modal-title">Modify account</h4>
                 </div>
                 <div class="modal-body">
-                  <h3>Hypesquad</h3>
+                  <div>
+                    <h3>Hypesquad</h3>
                   
-                  <select id="modify-hype" class="form-control dark-input" style="width: 300px">
-                    <option style="font-family: Roboto; font-weight: 100;">None</option>
-                    <option style="font-family: Roboto; font-weight: 100;">Bravery</option>
-                    <option style="font-family: Roboto; font-weight: 100;">Brilliance</option>
-                    <option style="font-family: Roboto; font-weight: 100;">Balance</option>
-                  </select>
+                    <select id="modify-hype" class="form-control dark-input" style="width: 300px">
+                      <option style="font-family: Roboto; font-weight: 100;">None</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Bravery</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Brilliance</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Balance</option>
+                    </select>
+                  </div>
+
+                  <div id="status-pick" style="margin-top: 35px">
+                    <h3>Status</h3>
+
+                    <select id="status" class="form-control dark-input" style="width: 300px">
+                      <option style="font-family: Roboto; font-weight: 100;">Unset</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Online</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Idle</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Do not disturb</option>
+                      <option style="font-family: Roboto; font-weight: 100;">Offline</option>
+                    </select>
+                  </div>
 
 
-                  <button class="btn dark-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 292px; right: 15px;" onclick="Modify()">Apply</button>
+                  <div class="form-check" style="margin-top: 113px">
+                    <input class="form-check-input" type="checkbox" id="set-all">
+                    <label class="form-check-label" style="font-weight:300; font-size: 15px" for="set-all">Change for all bots</label>
+                  </div>
+    
+                  <button class="btn dark-btn" data-dismiss="modal" style="width: 180px; position: absolute; top: 320px; right: 15px;" onclick="Modify()">Apply</button>
                 </div>
             </div>
         </div>
@@ -125,7 +147,7 @@
 
                   <!-- Top -->
                   <div style="display: flex; margin-bottom: 14px">
-                      <img src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px">
+                      <img id="profile-pfp" src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;" onerror="this.src = ''">
 
                       <div>
                         <!-- Name/Discriminator -->
@@ -170,6 +192,7 @@
           </div>
       </div>
     </div>
+
 
     <!-- Account token popup -->
     <div id="bot-token-modal" class="modal fade" role="dialog" aria-hidden="true">

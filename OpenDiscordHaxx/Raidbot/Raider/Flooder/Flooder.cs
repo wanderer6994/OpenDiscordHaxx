@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,8 +29,11 @@ namespace DiscordHaxx
             {
                 Task.Run(() =>
                 {
-                    foreach (var bot in Server.Bots)
+                    foreach (var bot in new List<RaidBotClient>(Server.Bots))
                     {
+                        if (ShouldStop)
+                            break;
+
                         try
                         {
                             _clients.Add(new FloodClient(bot, request.ChannelId, true));

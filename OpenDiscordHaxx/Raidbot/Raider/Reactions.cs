@@ -22,7 +22,7 @@ namespace DiscordHaxx
             if (_request.MessageId <= 0)
                 throw new CheckException("Invalid message ID");
             if (string.IsNullOrWhiteSpace(_request.Reaction))
-                throw new CheckException("Invalid reaction");
+                throw new CheckException("Invalid emoji");
         }
 
 
@@ -44,12 +44,6 @@ namespace DiscordHaxx
                 {
                     switch (e.Code)
                     {
-                        case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
-                            break;
-                        case DiscordError.UnknownChannel:
-                            Console.WriteLine($"[ERROR] Unknown channel");
-                            break;
                         case DiscordError.UnknownMessage:
                             Console.WriteLine($"[ERROR] Unknown message");
                             break;
@@ -57,7 +51,7 @@ namespace DiscordHaxx
                             Console.WriteLine($"[ERROR] Unknown emoji");
                             break;
                         default:
-                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                            CheckError(e);
                             break;
                     }
                 }

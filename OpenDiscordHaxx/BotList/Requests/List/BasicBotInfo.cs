@@ -21,21 +21,27 @@ namespace DiscordHaxx
         public string Verification { get; set; }
 
 
-        public static BasicBotInfo FromClient(DiscordClient client)
+        [JsonProperty("gateway")]
+        public bool Gateway { get; set; }
+
+
+        public static BasicBotInfo FromClient(RaidBotClient client)
         {
             BasicBotInfo bot = new BasicBotInfo()
             {
-                At = client.User.ToString(),
-                Id = client.User.Id.ToString(),
-                Hypesquad = client.User.Hypesquad.ToString()
+                At = client.Client.User.ToString(),
+                Id = client.Client.User.Id.ToString(),
+                Hypesquad = client.Client.User.Hypesquad.ToString()
             };
 
-            if (client.User.TwoFactorAuth)
+            if (client.Client.User.TwoFactorAuth)
                 bot.Verification = "Phone verified";
-            else if (client.User.EmailVerified)
+            else if (client.Client.User.EmailVerified)
                 bot.Verification = "Email verified";
             else
                 bot.Verification = "None or locked";
+
+            bot.Gateway = client.SocketClient;
 
 
             return bot;

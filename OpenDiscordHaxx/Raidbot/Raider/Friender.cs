@@ -20,7 +20,7 @@ namespace DiscordHaxx
 
             if (string.IsNullOrWhiteSpace(_request.Username))
                 throw new CheckException("Please enter a username");
-            if (_request.Discriminator <= 1)
+            if (_request.Discriminator < 1)
                 throw new CheckException("Invalid discriminator");
         }
 
@@ -51,18 +51,10 @@ namespace DiscordHaxx
                 }
                 catch (DiscordHttpException e)
                 {
-                    switch (e.Code)
-                    {
-                        case DiscordError.InvalidRecipient:
-                            Console.WriteLine($"[ERROR] invalid recipient");
-                            break;
-                        case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
-                            break;
-                        default:
-                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                            break;
-                    }
+                    if (e.Code == DiscordError.InvalidRecipient)
+                        Console.WriteLine($"[ERROR] invalid recipient");
+                    else
+                        CheckError(e);
                 }
                 catch (RateLimitException) { }
             });

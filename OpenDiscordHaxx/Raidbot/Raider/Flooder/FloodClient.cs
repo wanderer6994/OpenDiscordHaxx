@@ -24,21 +24,10 @@ namespace DiscordHaxx
             }
             catch (DiscordHttpException e)
             {
-                switch (e.Code)
-                {
-                    case DiscordError.AccountUnverified:
-                        Console.WriteLine($"[ERROR] {_client.User} is unverified");
-                        break;
-                    case DiscordError.ChannelVerificationTooHigh:
-                        Console.WriteLine("[ERROR] channel verification too high");
-                        break;
-                    case DiscordError.UnknownChannel:
-                        Console.WriteLine("[ERROR] unknown channel");
-                        break;
-                    default:
-                        Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
-                        break;
-                }
+                if (e.Code == DiscordError.ChannelVerificationTooHigh)
+                    Console.WriteLine("[ERROR] channel verification too high");
+                else
+                    RaidBot.CheckError(e);
 
                 return false;
             }

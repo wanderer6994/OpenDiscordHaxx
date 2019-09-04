@@ -6,7 +6,7 @@ namespace DiscordHaxx
 {
     public class ListRequest : BotRequest
     {
-        public ListRequest(ListAction action, List<DiscordClient> bots) : base(ListOpcode.List)
+        public ListRequest(ListAction action, List<RaidBotClient> bots) : base(ListOpcode.List)
         {
             List<BasicBotInfo> info = new List<BasicBotInfo>();
             foreach (var client in bots)
@@ -17,8 +17,8 @@ namespace DiscordHaxx
         }
 
 
-        public ListRequest(ListAction action, DiscordClient bot) 
-                        : this(action, new List<DiscordClient>() { bot }) { }
+        public ListRequest(ListAction action, RaidBotClient bot) 
+                        : this(action, new List<RaidBotClient>() { bot }) { }
 
 
         [JsonProperty("bots")]

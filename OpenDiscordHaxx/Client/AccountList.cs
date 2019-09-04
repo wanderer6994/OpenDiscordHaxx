@@ -20,6 +20,12 @@ namespace DiscordHaxx
 
         public AccountList()
         {
+            Accounts = new List<RaidBotClient>();
+        }
+
+
+        public async void LoadAsync()
+        {
             try
             {
                 Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Config.json"));
@@ -29,15 +35,9 @@ namespace DiscordHaxx
                 Config = new Config();
             }
 
-            Accounts = new List<RaidBotClient>();
-        }
-
-
-        public async void LoadAsync()
-        {
             await Task.Run(() =>
             {
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, Accounts.ToClients()));
+                SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, Accounts));
                 Accounts.Clear();
                 Server.ServerStatus = "Loading bots";
                 _tokensLoading = true;
@@ -46,27 +46,26 @@ namespace DiscordHaxx
                 string[] tokens = File.Exists("Tokens.txt") 
                                         ? File.ReadAllLines("Tokens.txt") : new string[] { };
 
-
                 foreach (var token in tokens.Distinct())
                 {
+                    if (string.IsNullOrWhiteSpace(token))
+                        continue;
+
                     try
                     {
-                        DiscordClient client = null;
+                        RaidBotClient client = null;
 
                         if (Accounts.Count <= Config.GatewayCap && Config.EnableGateway)
                         {
                             DiscordSocketClient sClient = new DiscordSocketClient();
                             sClient.OnLoggedIn += Client_OnLoggedIn;
                             sClient.Login(token);
-                            Accounts.Add(new RaidBotClient(sClient));
-                            client = sClient;
+                            client = new RaidBotClient(sClient);
                         }
                         else
-                        {
-                            client = new DiscordClient(token);
-                            Accounts.Add(new RaidBotClient(client));
-                        }
+                            client = new RaidBotClient(new DiscordClient(token));
 
+                        Accounts.Add(client);
                         SocketServer.Broadcast("/list", new ListRequest(ListAction.Add, client));
                     }
                     catch (DiscordHttpException) { }
@@ -98,7 +97,7 @@ namespace DiscordHaxx
                             removedAccounts.RemoveAt(removedAccounts.IndexOf(bot));
                     }
 
-                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, removedAccounts.ToClients()));
+                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, removedAccounts));
                 }
 
 

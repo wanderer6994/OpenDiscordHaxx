@@ -46,6 +46,7 @@ namespace DiscordHaxx
             {
                 if (ShouldStop)
                     return;
+
                 try
                 {
                     if (_invite.Type == InviteType.Guild)
@@ -66,11 +67,8 @@ namespace DiscordHaxx
                         case DiscordError.InvalidInvite:
                             Console.WriteLine($"[ERROR] invalid invite");
                             break;
-                        case DiscordError.AccountUnverified:
-                            Console.WriteLine($"[ERROR] {bot.Client.User} is unverified");
-                            break;
                         default:
-                            Console.WriteLine($"[ERROR] Unknown: {e.Code} | {e.ErrorMessage}");
+                            CheckError(e);
                             break;
                     }
                 }
