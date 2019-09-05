@@ -128,7 +128,13 @@
                 <div class="modal-body">
                   <div style="display: flex; margin-bottom: 6px">
                     <input id="modify-pfp-file" type="file" style="display: none" onchange="ReadImageFile(this)">
-                    <img id="modify-pfp" src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-right: 22px; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;" onclick="document.getElementById('modify-pfp-file').click()" onerror="this.src = '../Images/Anarchy.png'">
+
+                    <!-- Profile picture -->
+                    <div style="width: 80px; height: 80px; margin-right: 22px;" onmouseover="$('#modify-pfp-darken').fadeTo(150, 0.3)" onmouseout="const darken = document.getElementById('modify-pfp-darken'); darken.style.display = 'none'; darken.style.opacity = '0%'">
+                      <img id="modify-pfp" src="../Images/Anarchy.png" style="width: 100%; height: 100%; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;" onerror="this.src = '../Images/Default.png'">
+                      <!-- This is used as an overlay to make the image appear a bit darker -->
+                      <div id="modify-pfp-darken" style="width: 80px; height: 80px; display: none; background-color: black; position: absolute; left: 15px; top: 15px; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%" onclick="$('#modify-pfp-file').click()"></div>
+                    </div>
   
                     <!-- Name/Discriminator -->
                     <p id="modify-at" style="font-size: 20px; margin-top: 25px">Hackerman<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#1337</span></p>
@@ -181,7 +187,7 @@
 
                   <!-- Top -->
                   <div style="display: flex; margin-bottom: 14px">
-                      <img id="profile-pfp" src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;" onerror="this.src = ''">
+                      <img id="profile-pfp" src="../Images/Anarchy.png" style="width: 80px; height: 80px; margin-bottom: 11px; margin-right: 22px; -moz-border-radius: 50%; -webkit-border-radius: 50%; border-radius: 50%;" onerror="this.src = '../Images/Default.png'">
 
                       <div>
                         <!-- Name/Discriminator -->

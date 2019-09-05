@@ -21,10 +21,6 @@ namespace DiscordHaxx
         public string Verification { get; set; }
 
 
-        [JsonProperty("gateway")]
-        public bool Gateway { get; set; }
-
-
         public static BasicBotInfo FromClient(RaidBotClient client)
         {
             BasicBotInfo bot = new BasicBotInfo()
@@ -40,9 +36,6 @@ namespace DiscordHaxx
                 bot.Verification = "Email verified";
             else
                 bot.Verification = "None or locked";
-
-            bot.Gateway = client.SocketClient;
-
 
             return bot;
         }

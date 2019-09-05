@@ -41,8 +41,7 @@ window.onload = function() {
                             row.innerHTML = '<td>' + bot.at + '</td>\n'
                                             + '<td>' + bot.id + '</td>\n'
                                             + '<td>' + bot.hypesquad + '</td>\n'
-                                            + '<td>' + bot.verification + '</td>\n'
-                                            + '<td style="display: none">' + bot.gateway + '</td>';
+                                            + '<td>' + bot.verification + '</td>\n';
 
                             $('#' + row.id).contextMenu({
                                 menuSelector: "#bot-list-context-menu",
@@ -174,24 +173,35 @@ function OnContextMenuUsed(invokedOn, selectedMenu) {
 }
 
 
-function OnModify(info) {
+function OnModify(payload) {
     $('#modify-bot-modal').modal({ show: true });
 
-    document.getElementById('modify-title').innerText = 'Modify ' + info.at;
-    document.getElementById('modify-id').innerText = info.id;
-    document.getElementById('modify-pfp').src = 'https://cdn.discordapp.com/avatars/' + info.id + '/' + info.avatar_id;
-    document.getElementById('modify-at').innerHTML = info.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + info.at.split('#')[1] + '</span>';
+    document.getElementById('modify-title').innerText = 'Modify ' + payload.at;
+    document.getElementById('modify-id').innerText = payload.id;
+    document.getElementById('modify-pfp').src = 'https://cdn.discordapp.com/avatars/' + payload.id + '/' + payload.avatar_id;
+    document.getElementById('modify-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
 
     const hype = document.getElementById('modify-hype');
-    for (i = 0; i < hype.options.length; i++) {
-        if (hype.options[i].innerText == info.hypesquad)
-        {
-            hype.selectedIndex = i;
-            break;
-        }
-    }
+    document.getElementById('bot-list').childNodes.forEach(row => {
+        if (row.nodeName != "#text") {
+            
+            const info = GetRowInformation(row);
 
-    document.getElementById('status-pick').style.display = info.gateway == true ? '' : 'none';
+            if (info.id == payload.id) {
+
+                for (i = 0; i < hype.options.length; i++) {
+                    if (hype.options[i].innerText == info.hypesquad)
+                    {
+                        hype.selectedIndex = i;
+                        break;
+                    }
+                }
+
+            }
+        }
+    });
+
+    document.getElementById('status-pick').style.display = payload.gateway == true ? '' : 'none';
     document.getElementById('status').selectedIndex = 0;
 }
 
@@ -200,6 +210,5 @@ function GetRowInformation(row) {
     return { at: row.childNodes[0].innerText, 
              id: row.childNodes[2].innerText, 
              hypesquad: row.childNodes[4].innerText,
-             verification: row.childNodes[6].innerText,
-             gateway: row.childNodes[8].innerText };
+             verification: row.childNodes[6].innerText };
 }
