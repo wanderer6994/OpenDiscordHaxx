@@ -16,8 +16,7 @@ namespace DiscordHaxx
                 _checker.StartAsync();
             }
             else
-                Send(JsonConvert.SerializeObject(new CheckerResumeRequest()
-                                                    { Progress = _checker.Progress }));
+                Send(JsonConvert.SerializeObject(new CheckerResumeRequest(_checker.Progress)));
         }
     }
 }

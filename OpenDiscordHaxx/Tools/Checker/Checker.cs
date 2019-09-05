@@ -10,12 +10,28 @@ namespace DiscordHaxx
     {
         public CheckerProgress Progress { get; private set; }
         public bool Finished { get; private set; }
+        private readonly string _checkDir;
 
 
         public Checker()
         {
             Progress = new CheckerProgress
-            {   Total = Server.Bots.Count   };
+            { Total = Server.Bots.Count };
+
+            int i = 1;
+            while (true)
+            {
+                _checkDir = "Checker-results " + i;
+
+                if (!Directory.Exists(_checkDir))
+                {
+                    Directory.CreateDirectory(_checkDir);
+
+                    break;
+                }
+                else
+                    i++;
+            }
         }
 
 
@@ -32,7 +48,6 @@ namespace DiscordHaxx
 
                 SocketServer.Broadcast("/checker", new CheckerStartedRequest());
                 List<RaidBotClient> uncheckedClients = new List<RaidBotClient>(Server.Bots);
-                Directory.CreateDirectory("Checker-results");
                 foreach (var client in new List<RaidBotClient>(uncheckedClients))
                 {
                     BotCheckedRequest req = new BotCheckedRequest(client);
@@ -48,9 +63,9 @@ namespace DiscordHaxx
                         else
                         {
                             if (e.Code == DiscordError.AccountUnverified)
-                                File.AppendAllText("Checker-results/Locked.txt", client.Client.Token + "\n");
+                                File.AppendAllText(_checkDir + "/Locked.txt", client.Client.Token + "\n");
                             else
-                                File.AppendAllText("Checker-results/Invalid.txt", client.Client.Token + "\n");
+                                File.AppendAllText(_checkDir + "/Invalid.txt", client.Client.Token + "\n");
                         }
                     }
                     catch (JsonReaderException)
@@ -61,7 +76,7 @@ namespace DiscordHaxx
                         foreach (var acc in uncheckedClients)
                             uncheckedTokens.Add(acc.Client.Token);
 
-                        File.WriteAllText("Checker-results/Unchecked.txt", string.Join("\n", uncheckedTokens));
+                        File.WriteAllText(_checkDir + "/Unchecked.txt", string.Join("\n", uncheckedTokens));
                         Finished = true;
                         break;
                     }
@@ -70,7 +85,7 @@ namespace DiscordHaxx
 
                     if (req.Valid)
                     {
-                        File.AppendAllText("Checker-results/Valid.txt", client.Client.Token + "\n");
+                        File.AppendAllText(_checkDir + "/Valid.txt", client.Client.Token + "\n");
 
                         Progress.Valid++;
                     }
