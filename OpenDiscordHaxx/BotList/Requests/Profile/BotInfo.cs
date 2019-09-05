@@ -11,8 +11,6 @@ namespace DiscordHaxx
         public BotInfo() : base(ListOpcode.BotInfo)
         {
             Badges = new List<string>();
-            Guilds = new List<GuildInfo>();
-            Friends = new List<FriendInfo>();
         }
 
         [JsonProperty("at")]
@@ -42,13 +40,19 @@ namespace DiscordHaxx
         [JsonProperty("friends")]
         public List<FriendInfo> Friends { get; private set; }
 
-        public static BotInfo FromClient(RaidBotClient bot)
+
+        [JsonProperty("gateway")]
+        public bool Gateway { get; private set; }
+
+
+        public static BotInfo FromClient(RaidBotClient bot, bool getGuildsAndFriends)
         {
             BotInfo info = new BotInfo
             {
                 At = bot.Client.User.ToString(),
                 Id = bot.Client.User.Id.ToString(),
-                AvatarId = bot.Client.User.AvatarId
+                AvatarId = bot.Client.User.AvatarId,
+                Gateway = bot.SocketClient
             };
 
             if (bot.Client.User.TwoFactorAuth)
@@ -58,7 +62,7 @@ namespace DiscordHaxx
             else
                 info.Verification = "None or locked";
 
-            foreach (Enum value in Enum.GetValues(typeof(Badge)))
+            foreach (Enum value in Enum.GetValues(typeof(DiscordBadge)))
             {
                 if (value.ToString() == "LocalUser" || value.ToString() == "None")
                     continue;
@@ -70,21 +74,27 @@ namespace DiscordHaxx
             if (bot.Client.User.Nitro > NitroType.None)
                 info.Badges.Add("Nitro");
 
-            if (bot.SocketClient)
+            if (getGuildsAndFriends)
             {
-                foreach (var guild in bot.Guilds)
-                    info.Guilds.Add(new GuildInfo(guild));
-            }
-            else
-            {
-                foreach (var guild in bot.Client.GetGuilds())
-                    info.Guilds.Add(new GuildInfo(guild));
-            }
+                info.Guilds = new List<GuildInfo>();
+                info.Friends = new List<FriendInfo>();
 
-            foreach (var relationship in bot.SocketClient ? bot.Relationships : bot.Client.GetRelationships())
-            {
-                if (relationship.Type == RelationshipType.Friends)
-                    info.Friends.Add(new FriendInfo(relationship));
+                if (bot.SocketClient)
+                {
+                    foreach (var guild in bot.Guilds)
+                        info.Guilds.Add(new GuildInfo(guild));
+                }
+                else
+                {
+                    foreach (var guild in bot.Client.GetGuilds())
+                        info.Guilds.Add(new GuildInfo(guild));
+                }
+
+                foreach (var relationship in bot.SocketClient ? bot.Relationships : bot.Client.GetRelationships())
+                {
+                    if (relationship.Type == RelationshipType.Friends)
+                        info.Friends.Add(new FriendInfo(relationship));
+                }
             }
 
             return info;

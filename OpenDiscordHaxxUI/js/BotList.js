@@ -104,41 +104,47 @@ window.onload = function() {
                     ShowToast(ToastType.Error, 'Failed to modify ' + payload.at);
                 break;
             case ListOpcode.BotInfo:
-                $('#profile-modal').modal({ show: true });
 
-                document.getElementById('profile-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
-                document.getElementById('profile-pfp').src = 'http://cdn.discordapp.com/avatars/' + payload.id + '/' + payload.avatar_id;
+                if (payload.guilds != null) {
+                    $('#profile-modal').modal({ show: true });
 
-                let html = '';
-
-                payload.badges.forEach(badge => {
-                    html += '<img src="../Images/' + badge + '.png" style="width: 30px; height: 30px; margin-right: 6px">';
-                });
-
-                document.getElementById('profile-badges').innerHTML = html;
-
-
-                const guildList = document.getElementById('guild-list');
-                guildList.innerHTML = '';
-                payload.guilds.forEach(guild => {
-                    let row = guildList.insertRow(guildList.rows.length);
-                    row.id = 'guild-row-' + guildList.rows.length;
-                    row.innerHTML = '<td>' + guild.name + '</td>\n'
-                                    + '<td>' + guild.id + '</td>\n';
-
-                    $('#' + row.id).contextMenu({});
-                });
-
-                const friendList = document.getElementById('friends-list');
-                friendList.innerHTML = '';
-                payload.friends.forEach(friend => {
-                    let row = friendList.insertRow(friendList.rows.length);
-                    row.id = 'friend-row-' + friendList.rows.length;
-                    row.innerHTML = '<td>' + friend.at + '</td>\n'
-                                    + '<td>' + friend.id + '</td>\n';
-
-                    $('#' + row.id).contextMenu({});
-                });
+                    document.getElementById('profile-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
+                    document.getElementById('profile-pfp').src = 'http://cdn.discordapp.com/avatars/' + payload.id + '/' + payload.avatar_id;
+    
+                    let html = '';
+    
+                    payload.badges.forEach(badge => {
+                        html += '<img src="../Images/' + badge + '.png" style="width: 30px; height: 30px; margin-right: 6px">';
+                    });
+    
+                    document.getElementById('profile-badges').innerHTML = html;
+    
+    
+                    const guildList = document.getElementById('guild-list');
+                    guildList.innerHTML = '';
+                    payload.guilds.forEach(guild => {
+                        let row = guildList.insertRow(guildList.rows.length);
+                        row.id = 'guild-row-' + guildList.rows.length;
+                        row.innerHTML = '<td>' + guild.name + '</td>\n'
+                                        + '<td>' + guild.id + '</td>\n';
+    
+                        $('#' + row.id).contextMenu({});
+                    });
+    
+                    const friendList = document.getElementById('friends-list');
+                    friendList.innerHTML = '';
+                    payload.friends.forEach(friend => {
+                        let row = friendList.insertRow(friendList.rows.length);
+                        row.id = 'friend-row-' + friendList.rows.length;
+                        row.innerHTML = '<td>' + friend.at + '</td>\n'
+                                        + '<td>' + friend.id + '</td>\n';
+    
+                        $('#' + row.id).contextMenu({});
+                    });   
+                }
+                else {
+                    OnModify(payload);
+                }
                 break;
         }
     }
@@ -156,10 +162,10 @@ function OnContextMenuUsed(invokedOn, selectedMenu) {
 
     switch (selectedMenu.text()) {
         case 'Modify user':
-            OnModify(info);
+            SendJson({ op: ListOpcode.BotInfo, id: info.id, get_guilds_and_friends: false });
             break;
         case 'Get profile':
-            OnGetProfile(info);
+            SendJson({ op: ListOpcode.BotInfo, id: info.id, get_guilds_and_friends: true });
             break;
         case 'Get token':
             SendJson({ op: ListOpcode.Token, id: info.id });
@@ -173,6 +179,8 @@ function OnModify(info) {
 
     document.getElementById('modify-title').innerText = 'Modify ' + info.at;
     document.getElementById('modify-id').innerText = info.id;
+    document.getElementById('modify-pfp').src = 'https://cdn.discordapp.com/avatars/' + info.id + '/' + info.avatar_id;
+    document.getElementById('modify-at').innerHTML = info.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + info.at.split('#')[1] + '</span>';
 
     const hype = document.getElementById('modify-hype');
     for (i = 0; i < hype.options.length; i++) {
@@ -183,13 +191,8 @@ function OnModify(info) {
         }
     }
 
-    document.getElementById('status-pick').style.display = info.gateway == 'true' ? '' : 'none';
+    document.getElementById('status-pick').style.display = info.gateway == true ? '' : 'none';
     document.getElementById('status').selectedIndex = 0;
-}
-
-
-function OnGetProfile(info) {
-    SendJson({ op: ListOpcode.BotInfo, id: info.id });
 }
 
 

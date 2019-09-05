@@ -55,8 +55,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotList\Requests\DiscordImage.cs" />
     <Compile Include="BotList\Requests\List\BasicBotInfo.cs" />
     <Compile Include="BotList\Requests\Profile\BotInfo.cs" />
+    <Compile Include="BotList\Requests\Profile\BotInfoRequest.cs" />
     <Compile Include="BotList\Requests\Profile\FriendInfo.cs" />
     <Compile Include="BotList\Requests\Profile\GuildInfo.cs" />
     <Compile Include="BotList\Requests\List\ListAction.cs" />

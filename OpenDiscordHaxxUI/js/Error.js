@@ -12,11 +12,6 @@ function FatalError(errorMsg) {
 }
 
 
-function ServerUnreachable() {
-    FatalError('The server is unreachable,<br>try again later.');
-}
-
-
 function HideElements() {
     document.body.childNodes.forEach(element => {
         if (element.id != 'odh-nav') {
@@ -25,4 +20,9 @@ function HideElements() {
                 element.style.display = 'none';
         }
     });
+}
+
+
+function ServerUnreachable() {
+    FatalError('The server is unreachable,<br>try again later.');
 }

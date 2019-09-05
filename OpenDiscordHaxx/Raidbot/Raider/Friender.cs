@@ -40,9 +40,9 @@ namespace DiscordHaxx
 
                         if (results.Count > 0)
                         {
-                            if (results[0].Type == (RelationshipType.Friends & RelationshipType.OutgoingRequest))
+                            if (results[0].Type == RelationshipType.Friends || results[0].Type == RelationshipType.OutgoingRequest)
                                 return;
-                            else if (results[0].Type == (RelationshipType.Blocked & RelationshipType.IncomingRequest))
+                            else if (results[0].Type == RelationshipType.Blocked || results[0].Type == RelationshipType.IncomingRequest)
                                 results[0].Remove();
                         }
                     }

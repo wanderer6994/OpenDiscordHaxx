@@ -1,8 +1,8 @@
-﻿using WebSocketSharp;
-using WebSocketSharp.Server;
+﻿using WebSocketSharp.Server;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Discord;
 
 namespace DiscordHaxx
 {
@@ -19,7 +19,7 @@ namespace DiscordHaxx
 
     public class RaidBotEndpoint : WebSocketBehavior
     {
-        protected override void OnMessage(MessageEventArgs e)
+        protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
             RaidSuccessStatus status = new RaidSuccessStatus();
 
@@ -63,6 +63,13 @@ namespace DiscordHaxx
                 catch (CheckException ex)
                 {
                     status.Message = ex.Issue;
+                }
+                catch (RateLimitException ex)
+                {
+                    if (ex.RetryAfter == 0)
+                        status.Message = "You are CF ratelimited";
+                    else
+                        status.Message = ex.Message;
                 }
                 catch (JsonReaderException)
                 {

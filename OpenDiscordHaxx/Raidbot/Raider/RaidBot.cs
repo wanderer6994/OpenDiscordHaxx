@@ -10,6 +10,7 @@ namespace DiscordHaxx
         public bool ShouldStop { get; set; }
         public Attack Attack { get; protected set; }
 
+
         public abstract void Start();
 
 

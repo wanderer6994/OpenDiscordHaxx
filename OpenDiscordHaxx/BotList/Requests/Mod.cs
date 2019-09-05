@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Discord;
 using Newtonsoft.Json;
 
@@ -30,6 +31,18 @@ namespace DiscordHaxx
 
         [JsonProperty("status")]
         public string Status { get; private set; }
+
+
+        [JsonProperty("avatar")]
+        private string _avatar;
+
+        public Image Avatar
+        {
+            get
+            {
+                return new ReverseDiscordImage() { Base64 = _avatar }.Image;
+            }
+        }
 
 
         [JsonProperty("set_all")]

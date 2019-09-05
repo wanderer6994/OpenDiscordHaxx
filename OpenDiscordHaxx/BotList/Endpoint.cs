@@ -5,6 +5,7 @@ using Discord;
 using Newtonsoft.Json.Linq;
 using System;
 using Discord.Gateway;
+using System.Collections.Generic;
 
 namespace DiscordHaxx
 {
@@ -35,7 +36,7 @@ namespace DiscordHaxx
 
                     if (modReq.SetAll)
                     {
-                        foreach (var bot in Server.Bots)
+                        foreach (var bot in new List<RaidBotClient>(Server.Bots))
                             ModifyUser(bot, modReq);
                     }
                     else
@@ -49,8 +50,10 @@ namespace DiscordHaxx
                     }
                     break;
                 case ListOpcode.BotInfo:
+                    BotInfoRequest infoReq = JsonConvert.DeserializeObject<BotInfoRequest>(e.Data);
+
                     SocketServer.Broadcast("/list", 
-                                           BotInfo.FromClient(Server.Bots.First(c => c.Client.User.Id == obj.GetValue("id").ToObject<ulong>())));
+                                      BotInfo.FromClient(Server.Bots.First(b => b.Client.User.Id == infoReq.Id), infoReq.GetGuildsAndFriends));
                     break;
             }
         }
@@ -62,6 +65,9 @@ namespace DiscordHaxx
             {
                 if (client.Client.User.Hypesquad != req.Hypesquad)
                     client.Client.User.SetHypesquad(req.Hypesquad);
+
+                if (req.Avatar != null)
+                    client.Client.User.ChangeProfile(new UserProfile() { Avatar = req.Avatar });
 
                 if (!client.SocketClient)
                     client.Client.User.Update();
