@@ -34,6 +34,7 @@ namespace DiscordHaxx
             Guilds.Add(args.Guild);
         }
 
+
         private void Client_OnLeftGuild(DiscordSocketClient client, GuildEventArgs args)
         {
             Guilds.Remove(args.Guild);
@@ -51,6 +52,7 @@ namespace DiscordHaxx
         {
             Relationships.Add(args.Relationship);
         }
+
 
         private void Client_OnRelationshipRemoved(object sender, RelationshipEventArgs args)
         {
