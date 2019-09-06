@@ -76,7 +76,7 @@
     <Compile Include="Raidbot\Friender\Friender.cs" />
     <Compile Include="Raidbot\Joiner\Joiner.cs" />
     <Compile Include="Raidbot\Leaver\Leaver.cs" />
-    <Compile Include="Raidbot\Reactions\Reactions.cs" />
+    <Compile Include="Raidbot\ReactionSpammer\ReactionSpammer.cs" />
     <Compile Include="BotList\Endpoint.cs" />
     <Compile Include="BotList\Requests\Opcode.cs" />
     <Compile Include="BotList\Requests\BotRequest.cs" />
@@ -109,7 +109,7 @@
     <Compile Include="Dashboard\Requests\StatusUpdate.cs" />
     <Compile Include="Dashboard\Requests\Opcode.cs" />
     <Compile Include="Dashboard\Requests\Request.cs" />
-    <Compile Include="Raidbot\Reactions\ReactionsRequest.cs" />
+    <Compile Include="Raidbot\ReactionSpammer\ReactionsRequest.cs" />
     <Compile Include="SocketServer.cs" />
     <Compile Include="Tools\Cleaner\Requests\AccountCleaned.cs" />
     <Compile Include="Tools\Cleaner\Cleaner.cs" />

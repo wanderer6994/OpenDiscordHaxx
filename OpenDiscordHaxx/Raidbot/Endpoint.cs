@@ -35,7 +35,7 @@ namespace DiscordHaxx
                             bot = new Friender(obj.ToObject<FriendRequest>());
                             break;
                         case "react":
-                            bot = new Reactions(obj.ToObject<ReactionsRequest>());
+                            bot = new ReactionSpammer(obj.ToObject<ReactionsRequest>());
                             break;
                         case "vc":
                             bot = new VCSpammer(obj.ToObject<VCRequest>());

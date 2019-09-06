@@ -5,14 +5,14 @@ using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
-    public class Reactions : RaidBot
+    public class ReactionSpammer : RaidBot
     {
         private readonly ReactionsRequest _request;
 
 
-        public Reactions(ReactionsRequest request)
+        public ReactionSpammer(ReactionsRequest request)
         {
-            Attack = new Attack(this) { Type = "Reactions", Bots = Server.Bots.Count };
+            Attack = new Attack(this) { Type = "Reaction spammer", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
             _request = request;
