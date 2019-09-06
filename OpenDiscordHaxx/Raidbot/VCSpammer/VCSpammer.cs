@@ -1,19 +1,18 @@
 ﻿using Discord.Gateway;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
     public class VCSpammer : RaidBot
     {
-        private VCRequest _request;
-        private List<DiscordSocketClient> _clients;
+        private readonly VCRequest  _request;
+        private readonly List<DiscordSocketClient> _clients;
 
         public VCSpammer(VCRequest request)
         {
             _request = request;
-            Threads = request.Threads;
+            Threads = 1;
 
             if (_request.GuildId <= 0)
                 throw new CheckException("Invalid server ID");
@@ -32,16 +31,18 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(_clients, new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            foreach (var bot in _clients)
             {
                 if (ShouldStop)
-                    return;
+                    break;
 
                 if (_request.Join)
                     bot.JoinVoiceChannel(_request.GuildId, _request.ChannelId);
                 else
                     bot.LeaveVoiceChannel(_request.GuildId);
-            });
+
+                Thread.Sleep(_request.Delay);
+            }
 
             Server.OngoingAttacks.Remove(Attack);
         }

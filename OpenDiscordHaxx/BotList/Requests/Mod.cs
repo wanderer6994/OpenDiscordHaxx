@@ -21,7 +21,6 @@ namespace DiscordHaxx
         [JsonProperty("hypesquad")]
 #pragma warning disable CS0649
         private readonly string _hypesquad;
-#pragma warning restore CS0649
 
         public Hypesquad Hypesquad
         {
@@ -34,7 +33,8 @@ namespace DiscordHaxx
 
 
         [JsonProperty("avatar")]
-        private string _avatar;
+        private readonly string _avatar;
+#pragma warning restore CS0649
 
         public Image Avatar
         {

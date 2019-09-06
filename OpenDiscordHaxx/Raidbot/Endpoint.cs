@@ -6,22 +6,11 @@ using Discord;
 
 namespace DiscordHaxx
 {
-    class RaidSuccessStatus
-    {
-        [JsonProperty("succeeded")]
-        public bool Succeeded { get; set; }
-
-
-        [JsonProperty("message")]
-        public string Message { get; set; }
-    }
-
-
     public class RaidBotEndpoint : WebSocketBehavior
     {
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
-            RaidSuccessStatus status = new RaidSuccessStatus();
+            BotStartSuccess status = new BotStartSuccess();
 
             if (Server.Bots.Count > 0)
             {
@@ -77,9 +66,7 @@ namespace DiscordHaxx
                 }
             }
             else
-            {
                 status.Message = "No bots are loaded";
-            }
 
             Send(JsonConvert.SerializeObject(status));
         }
