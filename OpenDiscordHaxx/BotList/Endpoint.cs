@@ -79,7 +79,7 @@ namespace DiscordHaxx
                     ((DiscordSocketClient)client.Client).SetStatus(status);
                 }
 
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, client));
+                UpdateList(ListAction.Update, client);
 
                 return true;
             }
@@ -87,6 +87,18 @@ namespace DiscordHaxx
             {
                 return false;
             }
+        }
+
+
+        public static void UpdateList(ListAction action, RaidBotClient bot)
+        {
+            UpdateList(action, new List<RaidBotClient>() { bot });
+        }
+
+
+        public static void UpdateList(ListAction action, List<RaidBotClient> bots)
+        {
+            SocketServer.Broadcast("/list", new ListRequest(action, bots));
         }
     }
 }

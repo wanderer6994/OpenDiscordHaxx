@@ -13,8 +13,8 @@ namespace DiscordHaxx
 {
     public class AccountList
     {
-        public Config Config { get; private set; }
         public List<RaidBotClient> Accounts { get; private set; }
+        private Config _config;
         private bool _reloaderRunning;
         private bool _tokensLoading;
 
@@ -28,16 +28,16 @@ namespace DiscordHaxx
         {
             try
             {
-                Config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Config.json"));
+                _config = JsonConvert.DeserializeObject<Config>(File.ReadAllText("Config.json"));
             }
             catch
             {
-                Config = new Config();
+                _config = new Config();
             }
 
             await Task.Run(() =>
             {
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, Accounts));
+                BotListEndpoint.UpdateList(ListAction.Remove, Accounts);
                 Accounts.Clear();
                 Server.ServerStatus = "Loading bots";
                 _tokensLoading = true;
@@ -55,7 +55,7 @@ namespace DiscordHaxx
                     {
                         RaidBotClient client = null;
 
-                        if (Accounts.Count <= Config.GatewayCap && Config.EnableGateway)
+                        if (Accounts.Count <= _config.GatewayCap && _config.EnableGateway)
                         {
                             DiscordSocketClient sClient = new DiscordSocketClient();
                             sClient.OnLoggedIn += Client_OnLoggedIn;
@@ -66,7 +66,7 @@ namespace DiscordHaxx
                             client = new RaidBotClient(new DiscordClient(token));
 
                         Accounts.Add(client);
-                        SocketServer.Broadcast("/list", new ListRequest(ListAction.Add, client));
+                        BotListEndpoint.UpdateList(ListAction.Add, client);
                     }
                     catch (DiscordHttpException) { }
                     catch (Exception e)
@@ -79,12 +79,7 @@ namespace DiscordHaxx
                 var bruh = Accounts.GroupBy(bot => bot.Client.User.Id);
                 List<RaidBotClient> removedAccounts = new List<RaidBotClient>();
                 foreach (var ok in bruh)
-                {
-                    List<RaidBotClient> clients = ok.ToList();
-                    clients.RemoveAt(0);
-
-                    removedAccounts.AddRange(clients);
-                }
+                    removedAccounts.AddRange(ok.ToList().Skip(1));
 
                 Accounts = bruh.Select(group => group.First()).ToList();
 
@@ -97,7 +92,7 @@ namespace DiscordHaxx
                             removedAccounts.RemoveAt(removedAccounts.IndexOf(bot));
                     }
 
-                    SocketServer.Broadcast("/list", new ListRequest(ListAction.Remove, removedAccounts));
+                    BotListEndpoint.UpdateList(ListAction.Remove, removedAccounts);
                 }
 
 
@@ -150,7 +145,7 @@ namespace DiscordHaxx
                             currentContent = content;
                         }
 
-                        Thread.Sleep(2000);
+                        Thread.Sleep(1500);
                     }
                 }
             });

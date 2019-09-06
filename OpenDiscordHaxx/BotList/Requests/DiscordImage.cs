@@ -21,8 +21,9 @@ namespace DiscordHaxx
                     Image = null;
                 else
                 {
-                    using (MemoryStream ms = new MemoryStream(Convert.FromBase64String(value.Split(',')[1])))
-                        Image = Image.FromStream(ms);
+                    MemoryStream ms = new MemoryStream(Convert.FromBase64String(value.Split(',')[1]));
+                    Image = Image.FromStream(ms);
+                    ms.Dispose();
                 }
             }
         }

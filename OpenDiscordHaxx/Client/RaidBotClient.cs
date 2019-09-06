@@ -43,7 +43,7 @@ namespace DiscordHaxx
         private void Client_OnUserUpdated(DiscordSocketClient client, UserEventArgs args)
         {
             if (args.User.Id == client.User.Id)
-                SocketServer.Broadcast("/list", new ListRequest(ListAction.Update, new RaidBotClient(client)));
+                BotListEndpoint.UpdateList(ListAction.Update, new RaidBotClient(client));
         }
 
 
