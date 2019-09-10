@@ -30,6 +30,9 @@ Next find index.html (Frontend in releases), and open it in your preferred brows
 
 Now you should be ready to raid! :)<br>
 
+## To use it on mobile devices head over to [here](UsingODHOnOtherDevices.md)
+
+
 # Accounts
 When the server is starting up the accounts will be loaded, while this is going on the server's status will be set as 'LOADING BOTS'.<br>
 Whenever the contents of Tokens.txt are changed, the server will remove all current bots and load in the new ones.<br>
