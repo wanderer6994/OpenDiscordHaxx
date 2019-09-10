@@ -38,3 +38,5 @@ Upload all the html files to the working directory for apache in ur xampp direct
 Go to your device, naviagte to you're localip/ip
 ## Step 4
 Profit
+
+### Guide by Kade, Anarchy Developer. uwu
