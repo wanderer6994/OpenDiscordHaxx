@@ -40,7 +40,7 @@ namespace DiscordHaxx
         {
             get
             {
-                return new ReverseDiscordImage() { Base64 = _avatar }.Image;
+                return new DiscordImage(_avatar).Image;
             }
         }
 

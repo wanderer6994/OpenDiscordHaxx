@@ -1,3 +1,8 @@
+# 0.1.1.0
+
+### Additions
+- Added support for doing stuff like :joy: instead of the unicod reprisentation.
+
 # 0.1.0.0
 
 ### Additions

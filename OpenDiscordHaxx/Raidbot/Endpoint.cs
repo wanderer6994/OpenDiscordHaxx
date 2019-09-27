@@ -23,7 +23,9 @@ namespace DiscordHaxx
                     switch (obj.GetValue("op").ToString())
                     {
                         case "join":
-                            bot = new Joiner(obj.ToObject<JoinRequest>());
+                            JoinRequest join = obj.ToObject<JoinRequest>();
+
+                            bot = new Joiner(join.Invite, join.Threads);
                             break;
                         case "leave":
                             bot = new Leaver(obj.ToObject<LeaveRequest>());

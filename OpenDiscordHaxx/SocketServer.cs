@@ -17,6 +17,7 @@ namespace DiscordHaxx
             _server.AddWebSocketService<CheckerEndpoint>("/checker");
             _server.AddWebSocketService<CleanerEndpoint>("/cleaner");
             _server.AddWebSocketService<ReconEndpoint>("/recon");
+            _server.AddWebSocketService<FarmerEndpoint>("/farmer");
             _server.Start();
         }
 

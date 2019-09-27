@@ -63,7 +63,8 @@ namespace DiscordHaxx
                         else
                         {
                             if (e.Code == DiscordError.AccountUnverified)
-                                File.AppendAllText(_checkDir + "/Locked.txt", client.Client.Token + "\n");
+                                File.AppendAllText(_checkDir + "/L" +
+                                    "ocked.txt", client.Client.Token + "\n");
                             else
                                 File.AppendAllText(_checkDir + "/Invalid.txt", client.Client.Token + "\n");
                         }

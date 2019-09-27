@@ -54,7 +54,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BotList\Requests\DiscordImage.cs" />
     <Compile Include="BotList\Requests\List\BasicBotInfo.cs" />
     <Compile Include="BotList\Requests\Profile\BotInfo.cs" />
     <Compile Include="BotList\Requests\Profile\BotInfoRequest.cs" />
@@ -117,6 +116,12 @@
     <Compile Include="Tools\Cleaner\Requests\CleanerOpcode.cs" />
     <Compile Include="Tools\Cleaner\Requests\CleanerRequest.cs" />
     <Compile Include="Tools\Cleaner\Requests\CleanOptions.cs" />
+    <Compile Include="Tools\DankFarmer\Farmer.cs" />
+    <Compile Include="Tools\DankFarmer\FarmerEndpoint.cs" />
+    <Compile Include="Tools\DankFarmer\Models\FarmerErrorRequest.cs" />
+    <Compile Include="Tools\DankFarmer\Models\FarmerOpcode.cs" />
+    <Compile Include="Tools\DankFarmer\Models\FarmerRequest.cs" />
+    <Compile Include="Tools\DankFarmer\Models\StartFarmerRequest.cs" />
     <Compile Include="Tools\Recon\Endpoint.cs" />
     <Compile Include="Tools\Recon\Requests\Opcode.cs" />
     <Compile Include="Tools\Recon\Requests\Request.cs" />

@@ -1,13 +1,18 @@
 ﻿using Discord;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
     public class ReactionSpammer : RaidBot
     {
-        private readonly ReactionsRequest _request;
+        private readonly ulong _channelId;
+        private readonly ulong _messageId;
+        private readonly string _reaction;
+        private readonly bool _add;
 
 
         public ReactionSpammer(ReactionsRequest request)
@@ -15,14 +20,22 @@ namespace DiscordHaxx
             Attack = new Attack(this) { Type = "Reaction spammer", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
-            _request = request;
+            _channelId = request.ChannelId;
+            _messageId = request.MessageId;
+            _reaction = request.Reaction;
+            _add = request.Add;
 
-            if (_request.ChannelId <= 0)
+            if (_channelId <= 0)
                 throw new CheckException("Invalid channel ID");
-            if (_request.MessageId <= 0)
+            if (_messageId <= 0)
                 throw new CheckException("Invalid message ID");
-            if (string.IsNullOrWhiteSpace(_request.Reaction))
+            if (string.IsNullOrWhiteSpace(_reaction))
                 throw new CheckException("Invalid emoji");
+
+            var emojis = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("Emojis.json"));
+
+
+            emojis.TryGetValue(_reaction, out _reaction);
         }
 
 
@@ -35,10 +48,10 @@ namespace DiscordHaxx
 
                 try
                 {
-                    if (_request.Add)
-                        bot.Client.AddMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
+                    if (_add)
+                        bot.Client.AddMessageReaction(_channelId, _messageId, _reaction);
                     else
-                        bot.Client.RemoveMessageReaction(_request.ChannelId, _request.MessageId, _request.Reaction);
+                        bot.Client.RemoveMessageReaction(_channelId, _messageId, _reaction);
                 }
                 catch (DiscordHttpException e)
                 {

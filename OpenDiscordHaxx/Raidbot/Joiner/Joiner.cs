@@ -13,20 +13,20 @@ namespace DiscordHaxx
 #pragma warning restore IDE1006
 
 
-        public Joiner(JoinRequest request)
+        public Joiner(string invite, int threads)
         {
             Attack = new Attack(this) { Type = "Joiner", Bots = Server.Bots.Count };
 
-            Threads = request.Threads;
+            Threads = threads;
             try
             {
-                _invite = new DiscordClient().GetInvite(request.Invite.Split('/').Last());
+                _invite = new DiscordClient().GetInvite(invite.Split('/').Last());
             }
             catch (DiscordHttpException e)
             {
                 if (e.Code == DiscordError.InvalidInvite || e.Code == DiscordError.UnknownInvite)
                 {
-                    Console.WriteLine($"[FATAL] {request.Invite} is invalid");
+                    Console.WriteLine($"[FATAL] {invite} is invalid");
                     
                     throw new CheckException("Invalid invite");
                 }
