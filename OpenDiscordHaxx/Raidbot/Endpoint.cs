@@ -3,11 +3,17 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Discord;
+using System.Linq;
 
 namespace DiscordHaxx
 {
     public class RaidBotEndpoint : WebSocketBehavior
     {
+        protected override void OnOpen()
+        {
+            Send(JsonConvert.SerializeObject(new RaidBotInfoRequest() { SocketClients = Server.Bots.Where(b => b.SocketClient).Count() > 0 }));
+        }
+
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
         {
             BotStartSuccess status = new BotStartSuccess();

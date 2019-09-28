@@ -7,10 +7,17 @@ window.onload = function() {
         
         const payload = JSON.parse(args.data);
 
-        if (payload.succeeded)
-            payload.message = '<strong>Success!</strong> ' + payload.message;
-
-        ShowToast(payload.succeeded ? ToastType.Success : ToastType.Error, payload.message);
+        switch (payload.op) {
+            case 'info':
+                HandleInfo(payload); //all raidbot implementations are expected to have one of these
+                break;
+            case 'raid_success':
+                if (payload.succeeded)
+                    payload.message = '<strong>Success!</strong> ' + payload.message;
+        
+                ShowToast(payload.succeeded ? ToastType.Success : ToastType.Error, payload.message);
+                break;
+        }
     }
     socket.onerror = function() { ServerUnreachable() };
 }

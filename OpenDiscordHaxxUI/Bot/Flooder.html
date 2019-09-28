@@ -6,6 +6,7 @@
                                 message: document.getElementById('message').value,
                                 dm: document.getElementById('dm-channel').checked == true,
                                 use_embed: document.getElementById('use-embed').checked == true,
+                                mass_mention: document.getElementById('mass_mention').checked == true,
                                 embed: {
                                   title: document.getElementById('embed-title').value,
                                   description: document.getElementById('embed-desc').value,
@@ -30,6 +31,11 @@
       const container = document.getElementById('embed-container');
 
       container.style.display = document.getElementById('use-embed').checked ? 'inline-block' : 'none';
+    }
+
+
+    function HandleInfo(info) {
+      document.getElementById('mass_mention_container').style.display = info.socket_clients ? 'inline-block' : 'none';
     }
 </script>
 
@@ -115,15 +121,15 @@
 
           <div style="width: 723px; display: inline-flex">
 
-            <div class="form-control dark-container center-block" style="width: 360px; height: 252px; padding: 0; display: inline-block;">
+            <div class="form-control dark-container center-block" style="width: 360px; height: 280px; padding: 0; display: inline-block;">
             
               <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 10px" placeholder="Channel ID" id="channel-id">
               <br>
         
               <textarea class="form-control dark-input center-block" rows="5" style="width: 340px; resize: none" placeholder="Message" id="message"></textarea>
               
-              <!-- Check options (dm channel, add embed) -->
-              <div class="center-block" style="width: 226px; margin-top: 16px">
+              <!-- Check options (dm channel, add embed, mass mention) -->
+              <div class="center-block" style="width: 320px; margin-top: 16px">
         
                 <div style="display: inline" onclick="CheckDM()">
                   <input type="checkbox" id="dm-channel">
@@ -134,11 +140,17 @@
                   <input type="checkbox" id="use-embed">
                   <label for="use-embed">Add embed</label>
                 </div>
+
+
+                <div id="mass_mention_container" style="display: none">
+                  <input type="checkbox" id="mass_mention">
+                  <label for="mass_mention">Mass mention</label>
+                </div>
               </div>
       
             </div>
       
-            <div id="embed-container" class="form-control dark-container" style="width: 340px; height: 252px; margin-left: 20px; display: none">
+            <div id="embed-container" class="form-control dark-container" style="width: 340px; height: 280px; margin-left: 20px; display: none">
               
               <input class="form-control dark-input center-block" style="width: 312px; margin-top: 7px" placeholder="Title" id="embed-title">
               <input class="form-control dark-input center-block" style="width: 312px; margin-top: 15px" placeholder="Description" id="embed-desc">

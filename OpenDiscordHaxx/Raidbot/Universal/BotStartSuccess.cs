@@ -4,6 +4,10 @@ namespace DiscordHaxx
 {
     public class BotStartSuccess
     {
+        [JsonProperty("op")]
+        private string _op = "raid_success";
+
+
         [JsonProperty("succeeded")]
         public bool Succeeded { get; set; }
 

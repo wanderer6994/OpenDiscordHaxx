@@ -7,20 +7,22 @@ namespace DiscordHaxx
     {
         private readonly DiscordClient _client;
         private readonly ulong _channelId;
+        private readonly string _message;
 
 
-        public FloodClient(DiscordClient client, ulong id, bool dm)
+        public FloodClient(DiscordClient client, ulong id, bool dm, string message)
         {
             _client = client;
             _channelId = dm ? _client.CreateDM(id).Id : id;
+            _message = message;
         }
 
 
-        public bool TrySendMessage(string message, Embed embed)
+        public bool TrySendMessage(Embed embed)
         {
             try
             {
-                _client.SendMessage(_channelId, message, false, embed);
+                _client.SendMessage(_channelId, _message, false, embed);
             }
             catch (DiscordHttpException e)
             {

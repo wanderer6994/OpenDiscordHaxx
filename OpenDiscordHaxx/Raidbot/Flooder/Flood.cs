@@ -17,12 +17,12 @@ namespace DiscordHaxx
         public bool DM { get; private set; }
 
 
-        [JsonProperty("mass_mention")]
-        public bool MassMention { get; private set; }
-
-
         [JsonProperty("use_embed")]
         public bool UseEmbed { get; private set; }
+
+
+        [JsonProperty("mass_mention")]
+        public bool MassMention { get; private set; }
 
 
         [JsonProperty("embed")]

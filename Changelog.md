@@ -1,7 +1,10 @@
 # 0.1.1.0
 
 ### Additions
-- Added support for doing stuff like :joy: instead of the unicod reprisentation.
+- Added support for reacting with stuff like :joy: instead of the unicode reprisentation.
+- Added anti-invite-tracking meassures.
+- Added mass mention option to flooder, allowing you to still make hella noise without any pingable roles.
+
 
 # 0.1.0.0
 

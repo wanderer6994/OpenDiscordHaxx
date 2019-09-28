@@ -42,40 +42,90 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            int offset = TryMakeInvite();
+
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots).Skip(offset + 1), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
                 if (ShouldStop)
                     return;
 
-                try
-                {
-                    if (_invite.Type == InviteType.Guild)
-                        bot.Client.JoinGuild(_invite.Code);
-                    else
-                        bot.Client.JoinGroup(_invite.Code);
-                }
-                catch (DiscordHttpException e)
-                {
-                    switch (e.Code)
-                    {
-                        case DiscordError.UnknownInvite:
-                            Console.WriteLine($"[ERROR] unknown invite");
-
-                            if (_invite.Type == InviteType.Group)
-                                ShouldStop = true;
-                            break;
-                        case DiscordError.InvalidInvite:
-                            Console.WriteLine($"[ERROR] invalid invite");
-                            break;
-                        default:
-                            CheckError(e);
-                            break;
-                    }
-                }
-                catch (RateLimitException) { }
+                TryJoin(bot);
             });
 
             Server.OngoingAttacks.Remove(Attack);
+        }
+
+
+        public int TryMakeInvite()
+        {
+            int offset = 0;
+
+            if (_invite.Type == InviteType.Guild)
+            {
+                for (int i = 0; i < Server.Bots.Count; i++)
+                {
+                    if (TryJoin(Server.Bots[i]))
+                    {
+                        try
+                        {
+                            GuildInvite inv = Server.Bots[i].Client.GetGuildInvite(_invite.Code);
+
+                            _invite = Server.Bots[i].Client.CreateInvite(inv.Channel.Id);
+
+                            offset = i;
+
+                            break;
+                        }
+                        catch (DiscordHttpException ex)
+                        {
+                            if (ex.Code == DiscordError.MissingPermissions)
+                            {
+                                offset = i;
+
+                                break;
+                            }
+                        }
+                        catch { }
+                    }
+                }
+            }
+
+            return offset;
+        }
+
+
+        private bool TryJoin(RaidBotClient bot)
+        {
+            try
+            {
+                if (_invite.Type == InviteType.Guild)
+                    bot.Client.JoinGuild(_invite.Code);
+                else
+                    bot.Client.JoinGroup(_invite.Code);
+
+                return true;
+            }
+            catch (DiscordHttpException e)
+            {
+                switch (e.Code)
+                {
+                    case DiscordError.UnknownInvite:
+                        Console.WriteLine($"[ERROR] unknown invite");
+
+                        if (_invite.Type == InviteType.Group)
+                            ShouldStop = true;
+                        break;
+                    case DiscordError.InvalidInvite:
+                        Console.WriteLine($"[ERROR] invalid invite");
+                        break;
+                    default:
+                        CheckError(e);
+                        break;
+                }
+            }
+            catch (RateLimitException) { }
+
+            return false;
         }
     }
 }

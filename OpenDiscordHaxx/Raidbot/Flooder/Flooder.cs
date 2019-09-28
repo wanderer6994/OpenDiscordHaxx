@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Discord;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -8,6 +10,7 @@ namespace DiscordHaxx
     {
         private readonly FloodRequest _request;
         private readonly List<FloodClient> _clients;
+        private List<string> _mentionChunks = null;
         private bool _ready;
 
         public Flooder(FloodRequest request)
@@ -36,7 +39,7 @@ namespace DiscordHaxx
 
                         try
                         {
-                            _clients.Add(new FloodClient(bot, request.ChannelId, true));
+                            _clients.Add(new FloodClient(bot, request.ChannelId, true, request.Message));
                         }
                         catch { }
                     }
@@ -47,8 +50,25 @@ namespace DiscordHaxx
             else
             {
                 foreach (var bot in Server.Bots)
-                    _clients.Add(new FloodClient(bot, request.ChannelId, false));
+                    GenerateMemberChunks(bot);
 
+                int i = 0;
+                foreach (var bot in Server.Bots)
+                {
+                    string msg = _request.Message;
+
+                    if (_mentionChunks != null)
+                    {
+                        if (i >= _mentionChunks.Count)
+                            i = 0;
+
+                        msg += _mentionChunks[i];
+
+                        i++;
+                    }
+
+                    _clients.Add(new FloodClient(bot, request.ChannelId, false, msg));
+                }
                 _ready = true;
             }
         }
@@ -56,7 +76,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            while (!_ready) { Thread.Sleep(200); }
+            while (!_ready) { Thread.Sleep(1); }
 
             while (true)
             {
@@ -68,7 +88,7 @@ namespace DiscordHaxx
                     if (ShouldStop)
                         return;
 
-                    if (!bot.TrySendMessage(_request.Message, _request.UseEmbed ? _request.Embed : null))
+                    if (!bot.TrySendMessage(_request.UseEmbed ? _request.Embed : null))
                         _clients.Remove(bot);
                 });
 
@@ -78,6 +98,45 @@ namespace DiscordHaxx
             }
 
             Server.OngoingAttacks.Remove(Attack);
+        }
+
+
+        private void GenerateMemberChunks(RaidBotClient bot)
+        {
+            if (_request.MassMention && bot.SocketClient && _mentionChunks == null)
+            {
+                try
+                {
+                    GuildChannel channel = bot.Client.GetGuildChannel(_request.ChannelId);
+
+                    IReadOnlyList<GuildMember> members = bot.Client.GetAllGuildMembers(channel.GuildId);
+
+                    _mentionChunks = new List<string>();
+
+                    int i = 0;
+                    while (i < members.Count)
+                    {
+                        StringBuilder builder = new StringBuilder();
+
+                        while (true)
+                        {
+                            if (i >= members.Count)
+                                break;
+
+                            if (builder.Length + $"<@{members[i].User.Id}>".Length < 2000 - _request.Message.Length)
+                            {
+                                builder.Append($"<@{members[i].User.Id}>");
+                                i++;
+                            }
+                            else
+                                break;
+                        }
+
+                        _mentionChunks.Add(builder.ToString());
+                    }
+                }
+                catch { }
+            }
         }
     }
 }

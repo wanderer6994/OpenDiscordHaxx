@@ -68,6 +68,7 @@
     <Compile Include="Client\RaidBotClient.cs" />
     <Compile Include="Raidbot\Universal\BotStartSuccess.cs" />
     <Compile Include="Raidbot\Universal\RaidBot.cs" />
+    <Compile Include="Raidbot\Universal\RaidBotInfoRequest.cs" />
     <Compile Include="Raidbot\VCSpammer\VCSpammer.cs" />
     <Compile Include="Raidbot\Universal\CheckException.cs" />
     <Compile Include="Raidbot\Flooder\FloodClient.cs" />
