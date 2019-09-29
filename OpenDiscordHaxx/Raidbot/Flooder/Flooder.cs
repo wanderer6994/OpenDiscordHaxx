@@ -20,8 +20,11 @@ namespace DiscordHaxx
             Threads = request.Threads;
             _request = request;
 
-            if (string.IsNullOrWhiteSpace(_request.Message))
-                throw new CheckException("Cannot send empty messages");
+            if (!request.UseEmbed && !request.MassMention)
+            {
+                if (string.IsNullOrWhiteSpace(_request.Message))
+                    throw new CheckException("Cannot send empty messages");
+            }
 
             if (_request.ChannelId <= 0)
                 throw new CheckException("Invalid channel ID");

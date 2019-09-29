@@ -57,6 +57,10 @@ namespace DiscordHaxx
                         CheckError(e);
                 }
                 catch (RateLimitException) { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unknown exception occured: {ex}");
+                }
             });
 
             Server.OngoingAttacks.Remove(Attack);

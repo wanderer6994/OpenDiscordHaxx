@@ -10,6 +10,8 @@ namespace DiscordHaxx
         {
             Console.Title = "OpenDiscordHaxx [BETA]";
 
+            BotStorage.Initialize();
+
             Server.OngoingAttacks.CollectionChanged += OngoingAttacks_CollectionChanged;
             SocketServer.Start();
             Server.StartAccountBroadcasterAsync();

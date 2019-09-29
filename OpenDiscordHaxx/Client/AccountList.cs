@@ -63,7 +63,26 @@ namespace DiscordHaxx
                             client = new RaidBotClient(sClient);
                         }
                         else
+                        {
                             client = new RaidBotClient(new DiscordClient(token));
+
+                            Task.Run(() =>
+                            {
+                                IReadOnlyList<PartialGuild> guilds = client.Client.GetGuilds();
+
+                                foreach (var partialGuild in guilds)
+                                {
+                                    try
+                                    {
+                                        Guild guild = partialGuild.GetGuild();
+
+                                        BotStorage.AddEmojis(guild.Emojis);
+                                        BotStorage.AddChannels(guild.GetChannels());
+                                    }
+                                    catch { }
+                                }
+                            });
+                        }
 
                         Accounts.Add(client);
                         BotListEndpoint.UpdateList(ListAction.Add, client);
@@ -117,8 +136,14 @@ namespace DiscordHaxx
         private void Client_OnLoggedIn(DiscordSocketClient client, LoginEventArgs args)
         {
             RaidBotClient raidClient = Accounts.First(acc => acc.Client.User.Id == client.User.Id);
-            raidClient.Guilds = args.Guilds.Cast<Guild>().ToList(); 
+            raidClient.Guilds = args.Guilds.Cast<Guild>().ToList();
             raidClient.Relationships = args.Relationships.ToList();
+
+            foreach (var guild in args.Guilds)
+            {
+                BotStorage.AddEmojis(guild.Emojis);
+                BotStorage.AddChannels(guild.Channels);
+            }
         }
 
         private async void StartAutoReloaderAsync()

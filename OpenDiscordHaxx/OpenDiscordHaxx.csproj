@@ -60,6 +60,7 @@
     <Compile Include="BotList\Requests\Profile\FriendInfo.cs" />
     <Compile Include="BotList\Requests\Profile\GuildInfo.cs" />
     <Compile Include="BotList\Requests\List\ListAction.cs" />
+    <Compile Include="BotStorage.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Dashboard\Requests\AttacksUpdate.cs" />
     <Compile Include="Dashboard\Requests\InnerRequest.cs" />

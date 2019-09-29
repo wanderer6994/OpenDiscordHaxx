@@ -20,6 +20,7 @@ namespace DiscordHaxx
 
         public bool TrySendMessage(Embed embed)
         {
+            
             try
             {
                 _client.SendMessage(_channelId, _message, false, embed);
@@ -34,6 +35,12 @@ namespace DiscordHaxx
                 return false;
             }
             catch (RateLimitException) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unknown exception occured: {ex}");
+
+                return false;
+            }
 
 
             return true;

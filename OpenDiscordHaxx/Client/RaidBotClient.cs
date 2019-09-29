@@ -31,6 +31,13 @@ namespace DiscordHaxx
 
         private void Client_OnJoinedGuild(DiscordSocketClient client, GuildEventArgs args)
         {
+            BotStorage.AddEmojis(args.Guild.Emojis);
+            try
+            {
+                BotStorage.AddChannels(args.Guild.GetChannels());
+            }
+            catch { }
+
             Guilds.Add(args.Guild);
         }
 

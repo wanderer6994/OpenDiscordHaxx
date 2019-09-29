@@ -59,7 +59,7 @@ namespace DiscordHaxx
         public int TryMakeInvite()
         {
             int offset = 0;
-
+            
             if (_invite.Type == InviteType.Guild)
             {
                 for (int i = 0; i < Server.Bots.Count; i++)
@@ -89,7 +89,7 @@ namespace DiscordHaxx
                     }
                 }
             }
-
+            
             return offset;
         }
 
@@ -124,6 +124,10 @@ namespace DiscordHaxx
                 }
             }
             catch (RateLimitException) { }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unknown exception occured: {ex}");
+            }
 
             return false;
         }

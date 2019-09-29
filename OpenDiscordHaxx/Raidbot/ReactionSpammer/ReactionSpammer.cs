@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DiscordHaxx
@@ -32,10 +33,37 @@ namespace DiscordHaxx
             if (string.IsNullOrWhiteSpace(_reaction))
                 throw new CheckException("Invalid emoji");
 
-            var emojis = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("Emojis.json"));
+            if (!BotStorage.DefaultEmojis.TryGetValue(_reaction, out _reaction))
+            {
+                _reaction = request.Reaction; //for some reason TryGetValue sets _reaction to null if not found
 
+                if (_reaction.StartsWith(":"))
+                {
+                    ulong guildId = 0;
 
-            emojis.TryGetValue(_reaction, out _reaction);
+                    foreach (var channel in BotStorage.GuildChannels)
+                    {
+                        if (channel.Id == _channelId)
+                        {
+                            guildId = channel.GuildId;
+
+                            break;
+                        }
+                    }
+
+                    List<Emoji> guildEmojis = BotStorage.CustomEmojis.Where(e => e.GuildId == guildId).ToList();
+
+                    foreach (var emoji in guildEmojis)
+                    {
+                        if (emoji.Name == _reaction.Replace(":", ""))
+                        {
+                            _reaction = $"{emoji.Name}:{emoji.Id}";
+
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
 
@@ -69,6 +97,10 @@ namespace DiscordHaxx
                     }
                 }
                 catch (RateLimitException) { }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Unknown exception occured: {ex}");
+                }
             });
 
             Server.OngoingAttacks.Remove(Attack);
