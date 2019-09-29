@@ -32,6 +32,7 @@ namespace DiscordHaxx
                 AddEmoji(emoji);
         }
 
+
         public static void AddChannel(GuildChannel channel)
         {
             GuildChannels.RemoveAll(c => c.Id == channel.Id);

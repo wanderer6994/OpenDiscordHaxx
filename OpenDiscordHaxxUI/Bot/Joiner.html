@@ -1,6 +1,7 @@
 <script>
     function Submit() {
         StartBot({ 'op': 'join', 'invite': document.getElementById('invite').value,
+                                 'anti_track': document.getElementById('track').value == true,
                                  'threads': document.getElementById('thread-amount').value });
     }
 </script>
@@ -63,7 +64,7 @@
               <li><a href="../Tools/Cleaner.html">Cleaner</a></li>
               <li><a href="../Tools/Recon.html">Server recon</a></li>
             </ul>
-          </li>
+        </li>
     </ul>
   </div>
   </nav>
@@ -74,7 +75,12 @@
       <br>
 
       <input class="form-control dark-input center-block" style="width: 340px;" placeholder="Invite" id="invite">
-      <br><br>
+      <br>
+      <div class="center-block" style="width: 85px">
+        <input type="checkbox" id="track" checked>
+        <label style="color: rgb(210,212,215); font-size: 16px; font-weight: 300;" for="track">Anti-track</label>
+      </div>
+      <br>
 
       <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
 

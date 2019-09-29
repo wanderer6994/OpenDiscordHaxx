@@ -6,5 +6,9 @@ namespace DiscordHaxx
     {
         [JsonProperty("invite")]
         public string Invite { get; private set; }
+
+
+        [JsonProperty("anti_track")]
+        public bool EnableAntiTrack { get; private set; }
     }
 }

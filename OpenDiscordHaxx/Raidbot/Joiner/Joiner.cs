@@ -10,10 +10,11 @@ namespace DiscordHaxx
     {
 #pragma warning disable IDE1006
         private Invite _invite { get; set; }
+        private bool _enableAntiTrack;
 #pragma warning restore IDE1006
 
 
-        public Joiner(string invite, int threads)
+        public Joiner(string invite, int threads, bool enableAntiTrack)
         {
             Attack = new Attack(this) { Type = "Joiner", Bots = Server.Bots.Count };
 
@@ -37,6 +38,8 @@ namespace DiscordHaxx
                     throw new CheckException($"Code: {e.Code}");
                 }
             }
+
+            _enableAntiTrack = enableAntiTrack;
         }
 
 
@@ -53,44 +56,6 @@ namespace DiscordHaxx
             });
 
             Server.OngoingAttacks.Remove(Attack);
-        }
-
-
-        public int TryMakeInvite()
-        {
-            int offset = 0;
-            
-            if (_invite.Type == InviteType.Guild)
-            {
-                for (int i = 0; i < Server.Bots.Count; i++)
-                {
-                    if (TryJoin(Server.Bots[i]))
-                    {
-                        try
-                        {
-                            GuildInvite inv = Server.Bots[i].Client.GetGuildInvite(_invite.Code);
-
-                            _invite = Server.Bots[i].Client.CreateInvite(inv.Channel.Id);
-
-                            offset = i;
-
-                            break;
-                        }
-                        catch (DiscordHttpException ex)
-                        {
-                            if (ex.Code == DiscordError.MissingPermissions)
-                            {
-                                offset = i;
-
-                                break;
-                            }
-                        }
-                        catch { }
-                    }
-                }
-            }
-            
-            return offset;
         }
 
 
@@ -130,6 +95,44 @@ namespace DiscordHaxx
             }
 
             return false;
+        }
+
+
+        public int TryMakeInvite()
+        {
+            int offset = 0;
+
+            if (_enableAntiTrack && _invite.Type == InviteType.Guild)
+            {
+                for (int i = 0; i < Server.Bots.Count; i++)
+                {
+                    if (TryJoin(Server.Bots[i]))
+                    {
+                        try
+                        {
+                            GuildInvite inv = Server.Bots[i].Client.GetGuildInvite(_invite.Code);
+
+                            _invite = Server.Bots[i].Client.CreateInvite(inv.Channel.Id);
+
+                            offset = i;
+
+                            break;
+                        }
+                        catch (DiscordHttpException ex)
+                        {
+                            if (ex.Code == DiscordError.MissingPermissions)
+                            {
+                                offset = i;
+
+                                break;
+                            }
+                        }
+                        catch { }
+                    }
+                }
+            }
+
+            return offset;
         }
     }
 }
