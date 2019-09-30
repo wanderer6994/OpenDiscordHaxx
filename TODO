@@ -1,4 +1,3 @@
 # Shit to add
 - Add invite preview on joiner
 - Implement BotStorage into other parts of OpenDH
-- Optimize bot list reloading

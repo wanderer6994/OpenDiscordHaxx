@@ -31,7 +31,7 @@ namespace DiscordHaxx
                         case "join":
                             JoinRequest join = obj.ToObject<JoinRequest>();
 
-                            bot = new Joiner(join.Invite, join.Threads);
+                            bot = new Joiner(join.Invite, join.Threads, join.EnableAntiTrack);
                             break;
                         case "leave":
                             bot = new Leaver(obj.ToObject<LeaveRequest>());

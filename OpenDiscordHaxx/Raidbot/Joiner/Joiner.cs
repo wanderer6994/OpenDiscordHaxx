@@ -9,8 +9,8 @@ namespace DiscordHaxx
     public class Joiner : RaidBot
     {
 #pragma warning disable IDE1006
-        private Invite _invite { get; set; }
-        private bool _enableAntiTrack;
+        private Invite _invite;
+        private readonly bool _enableAntiTrack;
 #pragma warning restore IDE1006
 
 
@@ -111,6 +111,14 @@ namespace DiscordHaxx
                         try
                         {
                             GuildInvite inv = Server.Bots[i].Client.GetGuildInvite(_invite.Code);
+
+                            Task.Run(() =>
+                            {
+                                Guild guild = inv.Guild.GetGuild();
+
+                                BotStorage.CustomEmojis.AddRange(guild.Emojis);
+                                BotStorage.GuildChannels.AddRange(guild.GetChannels());
+                            });
 
                             _invite = Server.Bots[i].Client.CreateInvite(inv.Channel.Id);
 

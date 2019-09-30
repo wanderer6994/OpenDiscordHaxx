@@ -37,16 +37,22 @@ namespace DiscordHaxx
 
             await Task.Run(() =>
             {
-                BotListEndpoint.UpdateList(ListAction.Remove, Accounts);
-                Accounts.Clear();
+                string[] tokens = File.Exists("Tokens.txt")
+                        ? File.ReadAllLines("Tokens.txt") : new string[] { };
+
+                List<RaidBotClient> clientsToRemove = Accounts.Where(a => !tokens.Contains(a.Client.Token)).ToList();
+
+                Accounts.RemoveAll(a => !tokens.Contains(a.Client.Token));
+                BotListEndpoint.UpdateList(ListAction.Remove, clientsToRemove);
+
                 Server.ServerStatus = "Loading bots";
                 _tokensLoading = true;
 
+                List<string> currentTokens = new List<string>();
+                foreach (var client in Accounts)
+                    currentTokens.Add(client.Client.Token);
 
-                string[] tokens = File.Exists("Tokens.txt") 
-                                        ? File.ReadAllLines("Tokens.txt") : new string[] { };
-
-                foreach (var token in tokens.Distinct())
+                foreach (var token in tokens.Distinct().Where(t => !currentTokens.Contains(t)))
                 {
                     if (string.IsNullOrWhiteSpace(token))
                         continue;

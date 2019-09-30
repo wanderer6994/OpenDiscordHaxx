@@ -42,7 +42,7 @@ namespace DiscordHaxx
         {
             try
             {
-                _joiner = new Joiner(_request.Invite, _request.Threads);
+                _joiner = new Joiner(_request.Invite, _request.Threads, false);
 
                 return true;
             }
