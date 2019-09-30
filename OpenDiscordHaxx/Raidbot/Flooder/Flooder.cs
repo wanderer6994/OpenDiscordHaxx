@@ -1,5 +1,6 @@
 ﻿using Discord;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -112,7 +113,7 @@ namespace DiscordHaxx
                 {
                     GuildChannel channel = bot.Client.GetGuildChannel(_request.ChannelId);
 
-                    IReadOnlyList<GuildMember> members = bot.Client.GetAllGuildMembers(channel.GuildId);
+                    List<GuildMember> members = bot.Client.GetAllGuildMembers(channel.GuildId).Where(m => Server.Bots.Where(b => b.Client.User.Id == m.User.Id).Count() == 0).ToList();
 
                     _mentionChunks = new List<string>();
 

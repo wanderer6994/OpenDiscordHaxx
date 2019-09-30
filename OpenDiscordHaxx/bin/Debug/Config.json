@@ -1,4 +1,4 @@
 {
     "enable_gateway": true,
-    "gateway_cap": 1
+    "gateway_cap": 5
 }
