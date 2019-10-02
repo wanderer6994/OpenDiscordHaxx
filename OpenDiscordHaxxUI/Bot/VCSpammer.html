@@ -2,7 +2,7 @@
 
 <script>
     function Submit() {
-        StartBot({ 'op': 'vc', 'guild_id': document.getElementById('guild_id').value,
+        SendJSON({ 'op': 'vc', 'guild_id': document.getElementById('guild_id').value,
                                'channel_id': document.getElementById('channel_id').value, 
                                'join': document.getElementById('join').checked,
                                'delay': document.getElementById('delay').value });

@@ -1,6 +1,6 @@
 <script>
     function Submit() {
-        StartBot({ op: 'leave', guild_id: document.getElementById('guild-id').value,
+        SendJSON({ op: 'leave', guild_id: document.getElementById('guild-id').value,
                                 group: document.getElementById('group').checked == true,
                                 threads: document.getElementById('thread-amount').value });
     }

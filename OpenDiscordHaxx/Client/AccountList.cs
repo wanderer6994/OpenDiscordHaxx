@@ -74,19 +74,23 @@ namespace DiscordHaxx
 
                             Task.Run(() =>
                             {
-                                IReadOnlyList<PartialGuild> guilds = client.Client.GetGuilds();
-
-                                foreach (var partialGuild in guilds)
+                                try
                                 {
-                                    try
-                                    {
-                                        Guild guild = partialGuild.GetGuild();
+                                    IReadOnlyList<PartialGuild> guilds = client.Client.GetGuilds();
 
-                                        BotStorage.AddEmojis(guild.Emojis);
-                                        BotStorage.AddChannels(guild.GetChannels());
+                                    foreach (var partialGuild in guilds)
+                                    {
+                                        try
+                                        {
+                                            Guild guild = partialGuild.GetGuild();
+
+                                            BotStorage.AddEmojis(guild.Emojis);
+                                            BotStorage.AddChannels(guild.GetChannels());
+                                        }
+                                        catch { }
                                     }
-                                    catch { }
                                 }
+                                catch { }
                             });
                         }
 

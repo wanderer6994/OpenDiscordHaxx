@@ -1,6 +1,6 @@
 <script>
     function Submit() {
-        StartBot({ 'op': 'friend', 'username': document.getElementById('username').value, 
+        SendJSON({ 'op': 'friend', 'username': document.getElementById('username').value, 
                                    'discriminator': document.getElementById('discriminator').value,
                                    'threads': document.getElementById('thread-amount').value });
     }

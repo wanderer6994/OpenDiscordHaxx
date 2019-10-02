@@ -22,6 +22,6 @@ window.onload = function() {
     socket.onerror = function() { ServerUnreachable() };
 }
 
-function StartBot(data) {
+function SendJSON(data) {
     socket.send(JSON.stringify(data));
 }

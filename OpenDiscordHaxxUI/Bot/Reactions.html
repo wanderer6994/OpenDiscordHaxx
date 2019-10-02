@@ -2,7 +2,7 @@
 
 <script>
     function Submit() {
-        StartBot({ 'op': 'react', 'channel_id': document.getElementById('channel_id').value, 
+      SendJSON({ 'op': 'react', 'channel_id': document.getElementById('channel_id').value, 
                                   'message_id': document.getElementById('message_id').value,
                                   'reaction': document.getElementById('reaction').value,
                                   'add': document.getElementById('add').checked,

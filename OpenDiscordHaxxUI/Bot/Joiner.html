@@ -1,8 +1,24 @@
 <script>
     function Submit() {
-        StartBot({ 'op': 'join', 'invite': document.getElementById('invite').value,
+        SendJSON({ 'op': 'join', 'invite': document.getElementById('invite').value,
                                  'anti_track': document.getElementById('track').value == true,
                                  'threads': document.getElementById('thread-amount').value });
+    }
+
+
+    function CheckInvite(invite) {
+        const splitted = invite.value.split('/');
+        const invite_code = splitted.length > 0 ? splitted[splitted.length - 1] : splitted[0];
+
+        const req = new XMLHttpRequest();
+        req.open("GET", 'https://discordapp.com/api/v6/invite/' + invite_code + '?with_counts=true');
+        req.send();
+
+        req.onreadystatechange = function() {
+          if (this.readyState == 4) {
+            console.log(req);
+          }
+        }
     }
 </script>
 
@@ -31,6 +47,7 @@
     <script src="../js/Toast.js"></script>
     <script src="../js/Error.js"></script>
     <script src="../js/RaidBot.js"></script>
+    <script src="../js/InvitePreview.js"></script>
 </head>
 
 <nav id="odh-nav" class="navbar navbar-inverse" style="border: none">
@@ -74,7 +91,7 @@
       <h1 class="dark-title" style="margin-top: 40px;">Joiner</h1>
       <br>
 
-      <input class="form-control dark-input center-block" style="width: 340px;" placeholder="Invite" id="invite">
+      <input class="form-control dark-input center-block" style="width: 340px;" placeholder="Invite" id="invite" oninput="CheckInvite(this)">
       <br>
       <div class="center-block" style="width: 85px">
         <input type="checkbox" id="track" checked>
@@ -83,6 +100,13 @@
       <br>
 
       <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
+
+      <div class="form-control dark-container" style="width: 400px; height: 250px; position: absolute; bottom: 10px; left: 10px;">
+        <p class="dark-title" style="font-size: 33px">Guild</p>
+        <hr style="margin-top: -10px">
+
+
+      </div>
 
       <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
 </body>

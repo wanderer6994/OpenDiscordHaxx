@@ -2,7 +2,7 @@
 
 <script>
     function Submit() {
-        StartBot({ op: 'flood', channel_id: document.getElementById('channel-id').value, 
+        SendJSON({ op: 'flood', channel_id: document.getElementById('channel-id').value, 
                                 message: document.getElementById('message').value,
                                 dm: document.getElementById('dm-channel').checked == true,
                                 use_embed: document.getElementById('use-embed').checked == true,
