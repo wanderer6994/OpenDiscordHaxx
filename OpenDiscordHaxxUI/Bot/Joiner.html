@@ -16,7 +16,12 @@
 
         req.onreadystatechange = function() {
           if (this.readyState == 4) {
-            console.log(req);
+            if (this.status == 200 || this.status == 425) {
+              HandleInvite(this.responseText);
+            }
+            else {
+              document.getElementById('invite-preview').style.display = 'none';
+            }
           }
         }
     }
@@ -101,11 +106,37 @@
 
       <button class="btn dark-btn center-block" style="width: 240px;" onclick="Submit()">Start</button>
 
-      <div class="form-control dark-container" style="width: 400px; height: 250px; position: absolute; bottom: 10px; left: 10px;">
-        <p class="dark-title" style="font-size: 33px">Guild</p>
-        <hr style="margin-top: -10px">
+      <div id="invite-preview" class="form-control dark-container" style="width: 400px; height: 250px; position: absolute; bottom: 10px; left: 10px; display: none">
+
+        <style>
+          .p {
+            color: rgb(230,252,255); 
+            font-size: 14px;
+          }  
+        </style>
 
 
+        <div id="guild-invite-preview" style="width: 100%; height: 100%; display: none">
+          <p class="dark-title" style="font-size: 33px">Guild</p>
+          <div style="margin-top: -10px">
+            <hr>
+  
+            <p id="guild-preview-name">Name: Guild name</p>
+            <p id="guild-preview-verification">Verification level: None</p>
+            <p id="guild-preview-members">Members: Amount of members</p>
+          </div>
+        </div>
+
+        <div id="group-invite-preview" style="width: 100%; height: 100%; display: none">
+          <p class="dark-title" style="font-size: 33px">Group</p>
+          <div style="margin-top: -10px">
+            <hr>
+  
+            <p id="group-preview-name">Name: Group name</p>
+            <p id="group-preview-recipients">Recipients: Amount of recipients</p>
+            <p id="group-preview-inviter">Inviter: not ilinked<span style="color: rgb(200,202,205); margin-left: 2px">#1337</span></p>
+          </div>
+        </div>
       </div>
 
       <input type="number" min="1" max="2000" class="form-control dark-input" placeholder="Threads" id="thread-amount">
