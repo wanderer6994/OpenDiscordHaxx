@@ -60,13 +60,13 @@
     <Compile Include="BotList\Requests\Profile\FriendInfo.cs" />
     <Compile Include="BotList\Requests\Profile\GuildInfo.cs" />
     <Compile Include="BotList\Requests\List\ListAction.cs" />
-    <Compile Include="BotStorage.cs" />
+    <Compile Include="Bots\BotStorage.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="Dashboard\Requests\AttacksUpdate.cs" />
     <Compile Include="Dashboard\Requests\InnerRequest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Client\RaidBotClient.cs" />
+    <Compile Include="Bots\RaidBotClient.cs" />
     <Compile Include="Raidbot\Universal\BotStartSuccess.cs" />
     <Compile Include="Raidbot\Universal\RaidBot.cs" />
     <Compile Include="Raidbot\Universal\RaidBotInfoRequest.cs" />
@@ -84,7 +84,7 @@
     <Compile Include="BotList\Requests\List\List.cs" />
     <Compile Include="BotList\Requests\Mod.cs" />
     <Compile Include="BotList\Requests\ModResp.cs" />
-    <Compile Include="Client\AccountList.cs" />
+    <Compile Include="Bots\AccountList.cs" />
     <Compile Include="Raidbot\VCSpammer\VCRequest.cs" />
     <Compile Include="Tools\Checker\Checker.cs" />
     <Compile Include="Tools\Checker\Requests\BotChecked.cs" />

@@ -1,3 +1,12 @@
+const GuildVerificationLevel = {
+    None = 0,
+    Low = 1,
+    Medium = 2,
+    High = 3,
+    VeryHigh = 4
+}
+
+
 function HandleInvite(data) {
     data = JSON.parse(data);
 
@@ -27,15 +36,15 @@ function HandleInvite(data) {
 
 function GetVerificationLevel(guild) {
     switch (guild.verification_level) {
-        case 0:
+        case GuildVerificationLevel.None:
             return 'None';
-        case 1:
+        case GuildVerificationLevel.low:
             return 'Low';
-        case 2:
+        case GuildVerificationLevel.Medium:
             return 'Medium';
-        case 3:
+        case GuildVerificationLevel.High:
             return 'High';
-        case 4:
+        case GuildVerificationLevel.VeryHigh:
             return 'Very high';
     }
 }

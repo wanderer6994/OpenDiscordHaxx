@@ -8,7 +8,7 @@ namespace DiscordHaxx
 {
     public class Friender : RaidBot
     {
-        private readonly FriendRequest _request;
+        private readonly ulong _userId;
 
 
         public Friender(FriendRequest request)
@@ -16,18 +16,37 @@ namespace DiscordHaxx
             Attack = new Attack(this) { Type = "Friender", Bots = Server.Bots.Count };
 
             Threads = request.Threads;
-            _request = request;
+            _userId = request.UserId;
 
-            if (string.IsNullOrWhiteSpace(_request.Username))
-                throw new CheckException("Please enter a username");
-            if (_request.Discriminator < 1)
-                throw new CheckException("Invalid discriminator");
+            if (request.UserId <= 0)
+                throw new CheckException("Invalid user ID");
+            else
+            {
+                if (BotStorage.Users.Where(u => u.Id == _userId).Count() == 0)
+                {
+                    User foundUser = null;
+
+                    foreach (var bot in new List<RaidBotClient>(Server.Bots))
+                    {
+                        try
+                        {
+                            foundUser = bot.Client.GetUser(_userId);
+
+                            break;
+                        }
+                        catch { }
+                    }
+
+                    if (foundUser == null)
+                        throw new CheckException("User does not exist");
+                }
+            }
         }
 
 
         public override void Start()
         {
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
             {
                 if (ShouldStop)
                     return;
@@ -36,18 +55,18 @@ namespace DiscordHaxx
                 {
                     if (bot.SocketClient)
                     {
-                        var results = bot.Relationships.Where(b => b.User.Username == _request.Username && b.User.Discriminator == _request.Discriminator).ToList();
+                        var results = bot.Relationships.Where(b => b.User.Id == _userId).ToList();
 
                         if (results.Count > 0)
                         {
-                            if (results[0].Type == RelationshipType.Friends || results[0].Type == RelationshipType.OutgoingRequest)
+                            if (results[0].Type == RelationshipType.Friends)
                                 return;
                             else if (results[0].Type == RelationshipType.Blocked || results[0].Type == RelationshipType.IncomingRequest)
                                 results[0].Remove();
                         }
                     }
 
-                    bot.Client.SendFriendRequest(_request.Username, _request.Discriminator);
+                    bot.Client.SendFriendRequest(_userId);
                 }
                 catch (DiscordHttpException e)
                 {

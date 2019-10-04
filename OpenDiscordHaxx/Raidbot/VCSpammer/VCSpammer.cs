@@ -1,6 +1,8 @@
 ﻿using Discord.Gateway;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
+using Discord;
 
 namespace DiscordHaxx
 {
@@ -18,6 +20,14 @@ namespace DiscordHaxx
                 throw new CheckException("Invalid server ID");
             if (_request.ChannelId <= 0 && _request.Join)
                 throw new CheckException("Invalid channel ID");
+
+            if (BotStorage.GuildChannels.Where(c => c.Id == _request.ChannelId).Count() > 0)
+            {
+                if (BotStorage.GuildChannels.First(c => c.Id == _request.ChannelId).Type != ChannelType.Voice)
+                {
+                    throw new CheckException("Channel is not a voice channel");
+                }
+            }
 
             _clients = new List<DiscordSocketClient>();
             foreach (var bot in new List<RaidBotClient>(Server.Bots))

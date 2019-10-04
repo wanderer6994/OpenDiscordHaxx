@@ -1,9 +1,13 @@
 # 0.1.1.0
 
 ### Additions
-- Added support for reacting with stuff like :joy: instead of the unicode reprisentation.
+- Added support for reacting with stuff like :joy: instead of the unicode representation (a part of the new BotStorage).
 - Added anti-invite-tracking meassures.
 - Added mass mention option to flooder, allowing you to still make hella noise without any pingable roles.
+
+### Improvements
+- Optimized bot reloading to only load up bots that aren't already loaded.
+- Improved multiple bot attacks using BotStorage.
 
 
 # 0.1.0.0
