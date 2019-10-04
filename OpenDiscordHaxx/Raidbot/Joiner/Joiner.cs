@@ -10,6 +10,8 @@ namespace DiscordHaxx
     {
 #pragma warning disable IDE1006
         private Invite _invite;
+        private readonly PartialGuild _partialGuild; //only active when invite is of type Guild
+        private readonly GuildChannel _channel; //only active when invite is of type Guild
         private readonly bool _enableAntiTrack;
 #pragma warning restore IDE1006
 
@@ -21,7 +23,25 @@ namespace DiscordHaxx
             Threads = threads;
             try
             {
-                _invite = new DiscordClient().GetInvite(invite.Split('/').Last());
+                string invCode = invite.Split('/').Last();
+                DiscordClient tempClient = new DiscordClient();
+
+                if (BotStorage.Invites.Where(i => i.Code == invCode).Count() > 0)
+                    _invite = BotStorage.Invites.First(i => i.Code == invCode);
+                else
+                {
+                    _invite = tempClient.GetInvite(invCode);
+
+                    BotStorage.AddInvite(_invite);
+                }
+
+                if (_invite.Type == InviteType.Guild)
+                {
+                    GuildInvite gInvite = tempClient.GetGuildInvite(_invite.Code);
+
+                    _partialGuild = gInvite.Guild;
+                    _channel = gInvite.Channel;
+                }
             }
             catch (DiscordHttpException e)
             {
@@ -77,8 +97,7 @@ namespace DiscordHaxx
                     case DiscordError.UnknownInvite:
                         Console.WriteLine($"[ERROR] unknown invite");
 
-                        if (_invite.Type == InviteType.Group)
-                            ShouldStop = true;
+                        ShouldStop = true;
                         break;
                     case DiscordError.InvalidInvite:
                         Console.WriteLine($"[ERROR] invalid invite");
@@ -106,21 +125,22 @@ namespace DiscordHaxx
             {
                 for (int i = 0; i < Server.Bots.Count; i++)
                 {
+                    if (ShouldStop)
+                        break;
+
                     if (TryJoin(Server.Bots[i]))
                     {
                         try
                         {
-                            GuildInvite inv = Server.Bots[i].Client.GetGuildInvite(_invite.Code);
-
                             Task.Run(() =>
                             {
-                                Guild guild = inv.Guild.GetGuild();
+                                Guild guild = _partialGuild.GetGuild();
 
                                 BotStorage.CustomEmojis.AddRange(guild.Emojis);
                                 BotStorage.GuildChannels.AddRange(guild.GetChannels());
                             });
 
-                            _invite = Server.Bots[i].Client.CreateInvite(inv.Channel.Id);
+                            _invite = Server.Bots[i].Client.CreateInvite(_channel.Id);
 
                             offset = i;
 

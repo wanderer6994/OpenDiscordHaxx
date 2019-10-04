@@ -12,12 +12,14 @@ namespace DiscordHaxx
             DefaultEmojis = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText("Emojis.json"));
             CustomEmojis = new List<Emoji>();
             GuildChannels = new List<GuildChannel>();
+            Invites = new List<Invite>();
             Users = new List<User>();
         }
 
         public static Dictionary<string, string> DefaultEmojis { get; private set; }
         public static List<Emoji> CustomEmojis { get; private set; }
         public static List<GuildChannel> GuildChannels { get; private set; }
+        public static List<Invite> Invites { get; private set; }
 
         public static List<User> Users { get; private set; }
 
@@ -45,6 +47,13 @@ namespace DiscordHaxx
         {
             foreach (var channel in channels)
                 AddChannel(channel);
+        }
+
+
+        public static void AddInvite(Invite invite)
+        {
+            Invites.RemoveAll(i => i.Code == invite.Code);
+            Invites.Add(invite);
         }
 
 

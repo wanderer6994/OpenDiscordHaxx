@@ -1,6 +1,7 @@
 ﻿using Discord;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebSocketSharp.Server;
@@ -36,7 +37,7 @@ namespace DiscordHaxx
                         int bots = 0;
                         Guild guild = null;
 
-                        foreach (var bot in Server.Bots)
+                        Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = 4 }, bot =>
                         {
                             try
                             {
@@ -62,8 +63,7 @@ namespace DiscordHaxx
                                 }
                             }
                             catch { }
-                        }
-
+                        });
 
                         if (guild == null)
                         {

@@ -1,7 +1,9 @@
 <script>
     function Submit() {
+        console.log(document.getElementById('track').value);
+
         SendJSON({ 'op': 'join', 'invite': document.getElementById('invite').value,
-                                 'anti_track': document.getElementById('track').value == true,
+                                 'anti_track': document.getElementById('track').value == 'on',
                                  'threads': document.getElementById('thread-amount').value });
     }
 
