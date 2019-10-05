@@ -123,6 +123,9 @@ namespace DiscordHaxx
 
             if (_enableAntiTrack && _invite.Type == InviteType.Guild)
             {
+
+                Guild guild = null;
+
                 for (int i = 0; i < Server.Bots.Count; i++)
                 {
                     if (ShouldStop)
@@ -132,15 +135,17 @@ namespace DiscordHaxx
                     {
                         try
                         {
-                            Task.Run(() =>
+                            if (guild == null)
                             {
-                                Guild guild = _partialGuild.GetGuild();
-
+                                guild = Server.Bots[i].Client.GetGuild(_partialGuild.Id);
                                 BotStorage.CustomEmojis.AddRange(guild.Emojis);
                                 BotStorage.GuildChannels.AddRange(guild.GetChannels());
-                            });
+                            }
 
-                            _invite = Server.Bots[i].Client.CreateInvite(_channel.Id);
+                            if (guild.VanityInvite != null)
+                                _invite = Server.Bots[i].Client.GetInvite(guild.VanityInvite);
+                            else
+                                _invite = Server.Bots[i].Client.CreateInvite(_channel.Id);
 
                             offset = i;
 

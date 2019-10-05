@@ -8,8 +8,11 @@
                                'delay': document.getElementById('delay').value });
     }
 
-    function CheckJoin() {
-        document.getElementById('channel_id').parentNode.disabled = document.getElementById('join').checked == false;
+
+    function HandleInfo(info) {
+      if (!info.socket_clients) {
+        FatalError('No socket clients are loaded');
+      }
     }
 </script>
 
@@ -81,10 +84,7 @@
     <br>
 
     <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild_id">
-        
-    <fieldset>
-      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
-    </fieldset>
+    <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
 
     <center>
       <div style="margin-top: 10px">

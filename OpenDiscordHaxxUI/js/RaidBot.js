@@ -9,7 +9,15 @@ window.onload = function() {
 
         switch (payload.op) {
             case 'info':
-                HandleInfo(payload); //all raidbot implementations are expected to have one of these
+                console.log(payload.bots)
+
+                if (payload.bots == 0) {
+                    FatalError('No bots have been loaded');
+                }
+                else {
+                    if (typeof HandleInfo !== 'undefined')
+                        HandleInfo(payload); //all raidbot implementations are expected to have one of these
+                }
                 break;
             case 'raid_success':
                 if (payload.succeeded)

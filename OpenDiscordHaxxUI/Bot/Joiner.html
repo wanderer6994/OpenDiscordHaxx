@@ -1,7 +1,5 @@
 <script>
     function Submit() {
-        console.log(document.getElementById('track').value);
-
         SendJSON({ 'op': 'join', 'invite': document.getElementById('invite').value,
                                  'anti_track': document.getElementById('track').value == 'on',
                                  'threads': document.getElementById('thread-amount').value });
@@ -18,12 +16,10 @@
 
         req.onreadystatechange = function() {
           if (this.readyState == 4) {
-            if (this.status == 200 || this.status == 425) {
+            if (this.status == 200)
               HandleInvite(this.responseText);
-            }
-            else {
+            else
               document.getElementById('invite-preview').style.display = 'none';
-            }
           }
         }
     }

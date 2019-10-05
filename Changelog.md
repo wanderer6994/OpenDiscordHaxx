@@ -4,6 +4,7 @@
 - Added support for reacting with stuff like :joy: instead of the unicode representation (a part of the new BotStorage).
 - Added anti-invite-tracking meassures.
 - Added mass mention option to flooder, allowing you to still make hella noise without any pingable roles.
+- Added more errors.
 
 ### Improvements
 - Optimized bot reloading to only load up bots that aren't already loaded.

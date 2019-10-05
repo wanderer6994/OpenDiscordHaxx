@@ -11,7 +11,7 @@ namespace DiscordHaxx
     {
         protected override void OnOpen()
         {
-            Send(JsonConvert.SerializeObject(new RaidBotInfoRequest() { SocketClients = Server.Bots.Where(b => b.SocketClient).Count() > 0 }));
+            Send(JsonConvert.SerializeObject(new RaidBotInfoRequest() { SocketClients = Server.Bots.Where(b => b.SocketClient).Count() > 0, Bots = Server.Bots.Count }));
         }
 
         protected override void OnMessage(WebSocketSharp.MessageEventArgs e)
