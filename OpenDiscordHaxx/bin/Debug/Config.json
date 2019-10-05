@@ -1,4 +1,4 @@
 {
-    "enable_gateway": false,
-    "gateway_cap": 5
+    "enable_gateway": true,
+    "gateway_cap": 5 //we do not recommend having this higher than 50
 }

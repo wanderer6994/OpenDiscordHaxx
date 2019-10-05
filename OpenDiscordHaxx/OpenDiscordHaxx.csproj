@@ -69,7 +69,7 @@
     <Compile Include="Bots\RaidBotClient.cs" />
     <Compile Include="Raidbot\Universal\BotStartSuccess.cs" />
     <Compile Include="Raidbot\Universal\RaidBot.cs" />
-    <Compile Include="Raidbot\Universal\RaidBotInfoRequest.cs" />
+    <Compile Include="Raidbot\Universal\RaidBotInfo.cs" />
     <Compile Include="Raidbot\VCSpammer\VCSpammer.cs" />
     <Compile Include="Raidbot\Universal\CheckException.cs" />
     <Compile Include="Raidbot\Flooder\FloodClient.cs" />
@@ -118,12 +118,6 @@
     <Compile Include="Tools\Cleaner\Requests\CleanerOpcode.cs" />
     <Compile Include="Tools\Cleaner\Requests\CleanerRequest.cs" />
     <Compile Include="Tools\Cleaner\Requests\CleanOptions.cs" />
-    <Compile Include="Tools\DankFarmer\Farmer.cs" />
-    <Compile Include="Tools\DankFarmer\FarmerEndpoint.cs" />
-    <Compile Include="Tools\DankFarmer\Models\FarmerErrorRequest.cs" />
-    <Compile Include="Tools\DankFarmer\Models\FarmerOpcode.cs" />
-    <Compile Include="Tools\DankFarmer\Models\FarmerRequest.cs" />
-    <Compile Include="Tools\DankFarmer\Models\StartFarmerRequest.cs" />
     <Compile Include="Tools\Recon\Endpoint.cs" />
     <Compile Include="Tools\Recon\Requests\Opcode.cs" />
     <Compile Include="Tools\Recon\Requests\Request.cs" />

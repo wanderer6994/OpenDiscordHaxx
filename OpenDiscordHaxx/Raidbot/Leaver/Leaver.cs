@@ -25,7 +25,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), GetParallelOptions(), bot =>
             {
                 try
                 {

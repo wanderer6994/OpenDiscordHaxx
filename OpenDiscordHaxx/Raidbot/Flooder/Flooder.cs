@@ -87,7 +87,7 @@ namespace DiscordHaxx
                 if (ShouldStop)
                     break;
 
-                Parallel.ForEach(new List<FloodClient>(_clients), new ParallelOptions() { MaxDegreeOfParallelism = _request.Threads }, bot =>
+                Parallel.ForEach(new List<FloodClient>(_clients), GetParallelOptions(), bot =>
                 {
                     if (ShouldStop)
                         return;

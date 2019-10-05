@@ -105,8 +105,6 @@ window.onload = function() {
             case ListOpcode.BotInfo:
 
                 if (payload.guilds != null) {
-                    $('#profile-modal').modal({ show: true });
-
                     document.getElementById('profile-at').innerHTML = payload.at.split('#')[0] + '<span style="font-size: 17px; color: rgb(170,192,195); margin-left: 3px">#' + payload.at.split('#')[1] + '</span>';
                     document.getElementById('profile-pfp').src = 'http://cdn.discordapp.com/avatars/' + payload.id + '/' + payload.avatar_id;
     
@@ -139,11 +137,12 @@ window.onload = function() {
                                         + '<td>' + friend.id + '</td>\n';
     
                         $('#' + row.id).contextMenu({});
-                    });   
+                    });
+
+                    $('#profile-modal').modal({ show: true });
                 }
-                else {
+                else
                     OnModify(payload);
-                }
                 break;
         }
     }

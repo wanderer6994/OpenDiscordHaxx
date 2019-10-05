@@ -23,11 +23,14 @@ namespace DiscordHaxx
         {
             Client = client;
             SocketClient = true;
-            client.OnJoinedGuild += Client_OnJoinedGuild;
-            client.OnLeftGuild += Client_OnLeftGuild;
             client.OnUserUpdated += Client_OnUserUpdated;
-            client.OnRelationshipAdded += Client_OnRelationshipAdded;
-            client.OnRelationshipRemoved += Client_OnRelationshipRemoved;
+            client.OnJoinedGuild += Client_OnJoinedGuild;
+            client.OnLeftGuild += (c, args) => Guilds.Remove(args.Guild);
+            client.OnChannelCreated += (c, args) => BotStorage.AddChannel(args.Channel);
+            client.OnEmojisUpdated += (c, args) => BotStorage.AddEmojis(args.Emojis);
+            client.OnGuildMemberUpdated += (c, args) => BotStorage.AddUser(args.Member.User);
+            client.OnRelationshipAdded += (c, args) => Relationships.Add(args.Relationship);
+            client.OnRelationshipRemoved += (c, args) => Relationships.Remove(args.Relationship);
         }
 
 
@@ -44,28 +47,10 @@ namespace DiscordHaxx
         }
 
 
-        private void Client_OnLeftGuild(DiscordSocketClient client, GuildEventArgs args)
-        {
-            Guilds.Remove(args.Guild);
-        }
-
-
         private void Client_OnUserUpdated(DiscordSocketClient client, UserEventArgs args)
         {
             if (args.User.Id == client.User.Id)
                 BotListEndpoint.UpdateList(ListAction.Update, new RaidBotClient(client));
-        }
-
-
-        private void Client_OnRelationshipAdded(DiscordSocketClient client, RelationshipEventArgs args)
-        {
-            Relationships.Add(args.Relationship);
-        }
-
-
-        private void Client_OnRelationshipRemoved(object sender, RelationshipEventArgs args)
-        {
-            Relationships.Remove(args.Relationship);
         }
 
 

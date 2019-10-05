@@ -24,9 +24,7 @@ namespace DiscordHaxx
             if (BotStorage.GuildChannels.Where(c => c.Id == _request.ChannelId).Count() > 0)
             {
                 if (BotStorage.GuildChannels.First(c => c.Id == _request.ChannelId).Type != ChannelType.Voice)
-                {
                     throw new CheckException("Channel is not a voice channel");
-                }
             }
 
             _clients = new List<DiscordSocketClient>();

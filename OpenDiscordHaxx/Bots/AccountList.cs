@@ -94,34 +94,18 @@ namespace DiscordHaxx
                             });
                         }
 
-                        Accounts.Add(client);
-                        BotListEndpoint.UpdateList(ListAction.Add, client);
+                        if (Accounts.Where(a => a.Client.User.Id == client.Client.User.Id).Count() == 0)
+                        {
+                            Accounts.Add(client);
+
+                            BotListEndpoint.UpdateList(ListAction.Add, client);
+                        }
                     }
                     catch (DiscordHttpException) { }
                     catch (Exception e)
                     {
                         Console.WriteLine($"Unknown error when loading account:\n{e}");
                     }
-                }
-
-
-                var bruh = Accounts.GroupBy(bot => bot.Client.User.Id);
-                List<RaidBotClient> removedAccounts = new List<RaidBotClient>();
-                foreach (var ok in bruh)
-                    removedAccounts.AddRange(ok.ToList().Skip(1));
-
-                Accounts = bruh.Select(group => group.First()).ToList();
-
-
-                if (removedAccounts.Count > 0)
-                {
-                    foreach (var bot in new List<RaidBotClient>(removedAccounts))
-                    {
-                        if (Accounts.Contains(bot))
-                            removedAccounts.RemoveAt(removedAccounts.IndexOf(bot));
-                    }
-
-                    BotListEndpoint.UpdateList(ListAction.Remove, removedAccounts);
                 }
 
 

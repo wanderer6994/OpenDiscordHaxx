@@ -20,7 +20,6 @@ namespace DiscordHaxx
         public static List<Emoji> CustomEmojis { get; private set; }
         public static List<GuildChannel> GuildChannels { get; private set; }
         public static List<Invite> Invites { get; private set; }
-
         public static List<User> Users { get; private set; }
 
 

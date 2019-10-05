@@ -25,7 +25,7 @@ namespace DiscordHaxx
             {
                 case ListOpcode.Token:
                     TokenRequest tokenReq = obj.ToObject<TokenRequest>();
-                    DiscordClient client = Server.Bots.First(c => c.Client.User.Id == tokenReq.Id);
+                    DiscordClient client = Server.Bots.First(c => c.Client.User == tokenReq.Id);
                     tokenReq.Token = client.Token;
                     tokenReq.At = client.User.ToString();
 
@@ -41,7 +41,7 @@ namespace DiscordHaxx
                     }
                     else
                     {
-                        RaidBotClient bot = Server.Bots.First(c => c.Client.User.Id == modReq.Id);
+                        RaidBotClient bot = Server.Bots.First(c => c.Client.User == modReq.Id);
 
                         ModResponse resp = new ModResponse { At = bot.Client.User.ToString() };
                         resp.Success = ModifyUser(bot, modReq);
@@ -53,7 +53,7 @@ namespace DiscordHaxx
                     BotInfoRequest infoReq = JsonConvert.DeserializeObject<BotInfoRequest>(e.Data);
 
                     SocketServer.Broadcast("/list", 
-                                      BotInfo.FromClient(Server.Bots.First(b => b.Client.User.Id == infoReq.Id), infoReq.GetGuildsAndFriends));
+                                      BotInfo.FromClient(Server.Bots.First(b => b.Client.User == infoReq.Id), infoReq.GetGuildsAndFriends));
                     break;
             }
         }

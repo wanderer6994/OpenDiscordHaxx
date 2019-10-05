@@ -1,8 +1,6 @@
 ﻿using Discord;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,7 +41,7 @@ namespace DiscordHaxx
 
                     foreach (var channel in BotStorage.GuildChannels)
                     {
-                        if (channel.Id == _channelId)
+                        if (channel == _channelId)
                         {
                             guildId = channel.GuildId;
 
@@ -69,7 +67,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot => 
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), GetParallelOptions(), bot => 
             {
                 if (ShouldStop)
                     return;

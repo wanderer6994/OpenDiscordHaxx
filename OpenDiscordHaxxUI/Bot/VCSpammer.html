@@ -80,27 +80,36 @@
   </nav>
 
 <body class="dark-body">
-    <h1 class="dark-title" style="margin-top: 40px; text-align: center">VC Spammer</h1>
-    <br>
-
-    <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild_id">
-    <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
-
-    <center>
-      <div style="margin-top: 10px">
-        <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
-          <input id="join" type="radio" name="optradio" onclick="CheckJoin()" checked>Join</label>
+  <div id="bot-options" style="display: none">
+      <h1 class="dark-title" style="margin-top: 40px; text-align: center">VC Spammer</h1>
+      <br>
   
-        <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
-          <input type="radio" name="optradio" onclick="CheckJoin()">Leave</label>
+      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px;" placeholder="Server ID" id="guild_id">
+      <input type="number" min="1" class="form-control dark-input center-block" style="width: 340px; margin-top: 20px" placeholder="Channel ID" id="channel_id">
+  
+      <center>
+        <div style="margin-top: 10px">
+          <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto; margin-right: 25px">
+            <input id="join" type="radio" name="optradio" onclick="CheckJoin()" checked>Join</label>
+    
+          <label class="radio-inline" style="color: rgb(230,252,255); font-family: Roboto;">
+            <input type="radio" name="optradio" onclick="CheckJoin()">Leave</label>
+        </div>
+      </center>
+  
+      <button class="btn dark-btn center-block" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
+  
+      <div style="display: flex">
+        <p style="color: rgb(230,252,255); font-family: Roboto; position: absolute; bottom: 0px; left: 10px;">Disclaimer: Only gateway-enabled bots can use this</p>
+  
+        <input type="number" min="0" class="form-control dark-input" style="width: 180px; position: absolute; bottom: 10px; right: 10px;" placeholder="Delay (in ms)" id="delay">
       </div>
-    </center>
-
-    <button class="btn dark-btn center-block" style="width: 240px; margin-top: 24px" onclick="Submit()">Start</button>
-
-    <div style="display: flex">
-      <p style="color: rgb(230,252,255); font-family: Roboto; position: absolute; bottom: 0px; left: 10px;">Disclaimer: Only gateway-enabled bots can use this</p>
-
-      <input type="number" min="0" class="form-control dark-input" style="width: 180px; position: absolute; bottom: 10px; right: 10px;" placeholder="Delay (in ms)" id="delay">
-    </div>
+  </div>
 </html>
+
+
+<script>
+    window.onload = function() {
+      $('#bot-options').fadeIn(870);
+    }
+</script>

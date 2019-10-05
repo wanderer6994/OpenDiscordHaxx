@@ -10,10 +10,10 @@ namespace DiscordHaxx
         private readonly string _message;
 
 
-        public FloodClient(DiscordClient client, ulong id, bool dm, string message)
+        public FloodClient(DiscordClient client, ulong channelOrUserId, bool dm, string message)
         {
             _client = client;
-            _channelId = dm ? _client.CreateDM(id).Id : id;
+            _channelId = dm ? _client.CreateDM(channelOrUserId).Id : channelOrUserId;
             _message = message;
         }
 

@@ -2,7 +2,7 @@
 
 namespace DiscordHaxx
 {
-    public class RaidBotInfoRequest
+    public class RaidBotInfo
     {
         [JsonProperty("op")]
 #pragma warning disable CS0414, IDE0051

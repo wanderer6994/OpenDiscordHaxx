@@ -1,6 +1,7 @@
 ﻿using Discord;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DiscordHaxx
 {
@@ -37,6 +38,12 @@ namespace DiscordHaxx
                     Console.WriteLine($"[ERROR] Unknown: {ex.Code} | {ex.ErrorMessage}");
                     break;
             }
+        }
+
+
+        public ParallelOptions GetParallelOptions()
+        {
+            return new ParallelOptions() { MaxDegreeOfParallelism = Threads };
         }
     }
 }

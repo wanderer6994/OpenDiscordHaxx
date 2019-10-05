@@ -16,7 +16,7 @@ window.onload = function() {
                 }
                 else {
                     if (typeof HandleInfo !== 'undefined')
-                        HandleInfo(payload); //all raidbot implementations are expected to have one of these
+                        HandleInfo(payload);
                 }
                 break;
             case 'raid_success':

@@ -22,7 +22,7 @@ namespace DiscordHaxx
                 throw new CheckException("Invalid user ID");
             else
             {
-                if (BotStorage.Users.Where(u => u.Id == _userId).Count() == 0)
+                if (BotStorage.Users.Where(u => u == _userId).Count() == 0)
                 {
                     User foundUser = null;
 
@@ -33,6 +33,11 @@ namespace DiscordHaxx
                             foundUser = bot.Client.GetUser(_userId);
 
                             break;
+                        }
+                        catch (DiscordHttpException ex)
+                        {
+                            if (ex.Code == DiscordError.UnknownUser)
+                                break;
                         }
                         catch { }
                     }
@@ -46,7 +51,7 @@ namespace DiscordHaxx
 
         public override void Start()
         {
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots), GetParallelOptions(), bot =>
             {
                 if (ShouldStop)
                     return;
@@ -55,7 +60,7 @@ namespace DiscordHaxx
                 {
                     if (bot.SocketClient)
                     {
-                        var results = bot.Relationships.Where(b => b.User.Id == _userId).ToList();
+                        var results = bot.Relationships.Where(b => b.User == _userId).ToList();
 
                         if (results.Count > 0)
                         {

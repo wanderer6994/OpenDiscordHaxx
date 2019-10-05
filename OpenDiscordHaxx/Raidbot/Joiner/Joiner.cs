@@ -26,8 +26,8 @@ namespace DiscordHaxx
                 string invCode = invite.Split('/').Last();
                 DiscordClient tempClient = new DiscordClient();
 
-                if (BotStorage.Invites.Where(i => i.Code == invCode).Count() > 0)
-                    _invite = BotStorage.Invites.First(i => i.Code == invCode);
+                if (BotStorage.Invites.Where(i => i == invCode).Count() > 0)
+                    _invite = BotStorage.Invites.First(i => i == invCode);
                 else
                 {
                     _invite = tempClient.GetInvite(invCode);
@@ -67,7 +67,7 @@ namespace DiscordHaxx
         {
             int offset = TryMakeInvite();
 
-            Parallel.ForEach(new List<RaidBotClient>(Server.Bots).Skip(offset + 1), new ParallelOptions() { MaxDegreeOfParallelism = Threads }, bot =>
+            Parallel.ForEach(new List<RaidBotClient>(Server.Bots).Skip(offset + 1), GetParallelOptions(), bot =>
             {
                 if (ShouldStop)
                     return;
@@ -145,7 +145,7 @@ namespace DiscordHaxx
                             if (guild.VanityInvite != null)
                                 _invite = Server.Bots[i].Client.GetInvite(guild.VanityInvite);
                             else
-                                _invite = Server.Bots[i].Client.CreateInvite(_channel.Id);
+                                _invite = Server.Bots[i].Client.CreateInvite(_channel);
 
                             offset = i;
 
